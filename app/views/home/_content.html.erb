@@ -7,12 +7,13 @@
 
         <!--<h1>Stories</h1>-->
         <table class="table">
-          <th>
-          <td>#</td>
-          <td>Story Title </td>
-          <td>Story Text </td>
-          <td>Date Time </td>
-          </th>
+          <tr>
+          <th>#</th>
+          <th>Story Title </th>
+          <th>Story Text </th>
+          <th>Date Time </th>
+          <th>actions </th>
+          </tr>
         <% (1..20).to_a.each do |item| %>
             <tr>
               <td><%="#{item}"%></td>
