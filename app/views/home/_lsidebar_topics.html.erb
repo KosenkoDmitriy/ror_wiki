@@ -1,0 +1,20 @@
+
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="#">
+        Topics
+      </a>
+    </li>
+    <li>
+      <a href="#">Barack Obama Updates</a>
+    </li>
+    <% (1..20).to_a.reverse.each do |item| %>
+        <li>
+          <%= link_to "Topic #{item}", story_list_url %></a>
+        </li>
+    <% end %>
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->

@@ -1,0 +1,22 @@
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <li>
+      <h4><%=link_to "<< Topics", root_path%></h4>
+      <!--<a href="#">Barack Obama Updates</a>-->
+    </li>
+
+    <li class="sidebar-brand">
+      <a href="#">
+        Stories
+      </a>
+    </li>
+
+    <% (1..20).to_a.reverse.each do |item| %>
+        <li>
+          <a href="#"><%= "Story #{item}" %></a>
+        </li>
+    <% end %>
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
