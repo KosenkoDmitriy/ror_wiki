@@ -2,14 +2,12 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li>
-      <h4><%= link_to "<< Topics", root_path %></h4>
+      <h4><%= link_to "<< "+t("topics"), root_path %></h4>
       <!--<a href="#">Barack Obama Updates</a>-->
     </li>
 
     <li class="sidebar-brand">
-      <a href="#">
-        Stories
-      </a>
+      <%= link_to t(:stories), topic_stories_path %>
     </li>
 
     <% if @stories.present? && @stories.any? %>
