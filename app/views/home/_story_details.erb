@@ -7,10 +7,10 @@
         <%= @topic.try(:title) %>
         <% if @story.present? %>
             <p align="right">
-              <a href="#" class="btn btn-success" role="button"><%=t("story.new")%></a>
-              <a href="#" class="btn btn-primary" role="button"><%=t("story.edit")%></a>
-              <!--<a href="#" class="btn btn-default" role="button"><%=t("story.prev")%></a>-->
-              <!--<a href="#" class="btn btn-default" role="button"><%=t("story.prev")%></a>-->
+              <a href="#" class="btn btn-success" role="button"><%= t("story.new") %></a>
+              <a href="#" class="btn btn-primary" role="button"><%= t("story.edit") %></a>
+              <!--<a href="#" class="btn btn-default" role="button"><%= t("story.prev") %></a>-->
+              <!--<a href="#" class="btn btn-default" role="button"><%= t("story.prev") %></a>-->
             </p>
 
             <div class="thumbnail text-center">
@@ -23,18 +23,16 @@
               </div>
             </div>
 
-
-            <!--<div class="panel panel-default">-->
-            <!--<div class="panel-heading">-->
-            <!--<h3>Source</h3>-->
-            <!--</div>-->
-            <!--<div class="panel-body">-->
-            <!--<p><a href="#">link to source 1</a></p>-->
-            <!--<p><a href="#">link to source 2</a></p>-->
-            <!--<p><a href="#">link to source 3</a></p>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!-- -->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3><%=t("story.source")%></h3>
+              </div>
+              <div class="panel-body">
+                <% @story.try(:sources).try(:uniq).try(:each) do |source| %>
+                    <p><%=source.try(:title)%> <%=link_to source.try(:url), source.try(:url) %> </p>
+                <% end %>
+              </div>
+            </div>
         <% else %>
             <h3><%= t(:no_story) %></h3>
         <% end %>
