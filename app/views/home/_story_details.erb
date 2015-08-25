@@ -16,11 +16,11 @@
             <div class="thumbnail text-center">
               <h3><%= @story.try(:title) || t(:no_story_title) %> (<%= @story.try(:updated_at) %>)</h3>
 
-              <img src="http://media.jrn.com/images/640*360/Generic+President+Barack+Obama+Smiling.jpg"/>
-
               <div class="caption">
                 <p><%= @story.try(:text) %></p>
               </div>
+              <img src="http://media.jrn.com/images/640*360/Generic+President+Barack+Obama+Smiling.jpg"/>
+
             </div>
 
             <div class="panel panel-default">

@@ -16,7 +16,7 @@ stories_count = 20
   (1..stories_count).to_a.each do |story_no|
     title = "Story # #{story_no} of the Topic # #{topic_no}"
     text = title + " description " * 59
-    stext = text.truncate(25, omission: '... (continued)')
+    stext = text.truncate(50, omission: '...')
     story = Story.find_or_create_by!(title: title, text:text, stext:stext, is_approved:true)
     if story.present?
       puts "+story: #{story.try(:title)}"
