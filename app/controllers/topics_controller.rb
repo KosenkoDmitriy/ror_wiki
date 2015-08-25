@@ -11,6 +11,7 @@ class TopicsController < ApplicationController
     id = params[:id] if params[:id].present?
     @topic = Topic.find(id) if Topic.exists?(id)
     @stories = @topic.try(:stories)
+    @story = @stories.try(:last)
   end
 
   private
