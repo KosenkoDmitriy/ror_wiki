@@ -1,4 +1,3 @@
-
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
@@ -7,13 +6,15 @@
         Topics
       </a>
     </li>
-    <li>
-      <%= link_to "Barack Obama Updates", story_list_url %></a>
-    </li>
-    <% (1..20).to_a.reverse.each do |item| %>
-        <li>
-          <%= link_to "Topic #{item}", story_list_url %></a>
-        </li>
+    <% @topics = topics %>
+    <% if @topics.present? && @topics.any? %>
+        <% @topics.each do |item| %>
+            <li>
+              <%= link_to "Topic #{item.title}", topic_path(item) %></a>
+            </li>
+        <% end %>
+    <% else %>
+    <%=t("no_topics")%>
     <% end %>
   </ul>
 </div>

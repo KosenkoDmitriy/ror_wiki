@@ -11,6 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150825082408) do
+
+  create_table "images", force: :cascade do |t|
+    t.string   "title"
+    t.string   "text"
+    t.text     "url"
+    t.text     "path"
+    t.text     "alt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sources", force: :cascade do |t|
+    t.string   "title"
+    t.text     "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stories", force: :cascade do |t|
+    t.string   "title"
+    t.string   "text"
+    t.string   "stext"
+    t.boolean  "is_approved"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string   "title"
+    t.string   "text"
+    t.string   "stext"
+    t.boolean  "is_approved"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
 end

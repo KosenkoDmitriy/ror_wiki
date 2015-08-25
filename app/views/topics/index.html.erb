@@ -1,0 +1,12 @@
+<div id="wrapper">
+  <%= render partial: "home/lsidebar_topics", locals: {topics: @topics} %>
+  <%= render partial: "home/content" %>
+</div>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
