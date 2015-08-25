@@ -21,4 +21,7 @@
 
 en:
   no_topics: "No any topics found"
+  no_stories_of_the_topic: "No any stories in the topic "
+  no_topic: "topic is no found"
+  no_story: "no story found"
   hello: "Hello world"

@@ -10,7 +10,7 @@
     <% if @topics.present? && @topics.any? %>
         <% @topics.each do |item| %>
             <li>
-              <%= link_to "Topic #{item.title}", topic_path(item) %></a>
+              <%= link_to "Topic #{item.title}", topic_stories_path(item) %></a>
             </li>
         <% end %>
     <% else %>

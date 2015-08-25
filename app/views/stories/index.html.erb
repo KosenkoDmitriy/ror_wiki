@@ -1,0 +1,14 @@
+<div id="wrapper">
+
+  <%=render partial: "home/lsidebar_stories" %>
+  <%=render partial: "home/story_details" %>
+
+</div>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>

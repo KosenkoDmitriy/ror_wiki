@@ -2,7 +2,7 @@
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
     <li>
-      <h4><%=link_to "<< Topics", root_path%></h4>
+      <h4><%= link_to "<< Topics", root_path %></h4>
       <!--<a href="#">Barack Obama Updates</a>-->
     </li>
 
@@ -12,10 +12,14 @@
       </a>
     </li>
 
-    <% (1..20).to_a.reverse.each do |item| %>
-        <li>
-          <a href="#"><%= "Story #{item}" %></a>
-        </li>
+    <% if @stories.present? && @stories.any? %>
+        <% @stories.each do |item| %>
+            <li>
+              <%= link_to item.title, topic_story_path(@topic, item) %>
+            </li>
+        <% end %>
+    <% else %>
+        <%=t(:no_stories_of_the_topic)%> "<%=t(@topic.try(:title) || t(:no_topic) )%>"
     <% end %>
   </ul>
 </div>

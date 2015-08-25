@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825082408) do
+ActiveRecord::Schema.define(version: 20150825105823) do
 
   create_table "images", force: :cascade do |t|
     t.string   "title"
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 20150825082408) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "topic_stories", force: :cascade do |t|
+    t.integer  "topic_id"
+    t.integer  "story_id"
+    t.datetime "date_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "topic_stories", ["story_id"], name: "index_topic_stories_on_story_id"
+  add_index "topic_stories", ["topic_id"], name: "index_topic_stories_on_topic_id"
 
   create_table "topics", force: :cascade do |t|
     t.string   "title"
