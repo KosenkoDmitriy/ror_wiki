@@ -1,0 +1,31 @@
+
+
+.lsidebar a:link {
+    color: lightgray;
+    font-weight: bold;
+}
+
+.lsidebar a:visited {
+    color: #999999;
+    font-weight: normal;
+    font-size: 20px;
+
+}
+
+
+a.btn-story {
+    color: black !important;
+    margin-left:5%;
+    width:85%;
+}
+
+a.btn-story:hover {
+    color: floralwhite;
+}
+
+
+.story-date {
+    color: #999999;
+    margin-top: -5%;
+}
+

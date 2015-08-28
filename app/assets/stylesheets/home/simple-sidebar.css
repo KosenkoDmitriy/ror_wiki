@@ -124,17 +124,3 @@
     }
 }
 
-a.btn-story {
-    color: black !important;
-    margin-left:5%;
-    width:85%;
-}
-
-a.btn-story:hover {
-    color: floralwhite !important;
-}
-
-.story-date {
-    color: #999999;
-    margin-top: -5%;
-}

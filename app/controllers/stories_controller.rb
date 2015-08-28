@@ -29,7 +29,7 @@ class StoriesController < ApplicationController
   def get_stories_and_topic_by_topic_id(topic_id)
     topic = Topic.find_by(id: topic_id) if Topic.exists?(id: topic_id)
     # @stories = Story.include(:topics).where(topics: {id:topic_id}).order(updated_at: :desc, title: :asc)
-    stories = topic.stories.order(updated_at: :desc, title: :asc) if topic.present? && topic.stories.present?
+    stories = topic.try(:stories).try(:order, updated_at: :desc, title: :asc) if topic.present? && topic.stories.present?
     return stories, topic
   end
 end
