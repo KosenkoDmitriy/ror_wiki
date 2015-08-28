@@ -41,4 +41,5 @@ stories_count = 20
   end
   # topic.stories = topic.stories.uniq #now work
   topic.save
-end
+  end
+User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
