@@ -7,7 +7,6 @@ class TopicsController < ApplicationController
 
   def show
     @topics = Topic.order(updated_at: :desc, title: :asc)
-
     id = params[:id] if params[:id].present?
     @topic = Topic.find(id) if Topic.exists?(id)
     @stories = @topic.try(:stories)

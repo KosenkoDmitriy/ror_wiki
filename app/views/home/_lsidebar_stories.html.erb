@@ -5,19 +5,36 @@
       <h4><%= link_to "<< "+t("topics"), topics_path %></h4>
       <!--<a href="#">Barack Obama Updates</a>-->
     </li>
+    <li>
+      <a href="#" class="btn btn-success btn-story" role="button"><%= t("story.new") %></a>
+    </li>
 
     <li class="sidebar-brand">
       <%= link_to t(:stories), stories_path %>
     </li>
-
     <% if @stories.present? && @stories.any? %>
         <% @stories.each do |item| %>
             <li>
-              <%= link_to item.title, story_path(item) %>
+              <div class="media">
+                <!--<div class="media-left">-->
+                <!--<a href="#">-->
+                <!--<img class="media-object" src="..." alt="...">-->
+                <!--</a>-->
+                <!--</div>-->
+                <div class="media-body">
+                  <!--<h4 class="media-heading"></h4>-->
+                  <%= link_to item.try(:title), story_path(item) %>
+
+                  <p class="story-date">
+                    (<%= item.try(:created_at).try(:strftime, "%d %B %Y %H:%M") %>)
+                  </p>
+                </div>
+              </div>
+
             </li>
         <% end %>
     <% else %>
-        <%=t(:no_stories)%>
+        <%= t(:no_stories) %>
     <% end %>
   </ul>
 </div>

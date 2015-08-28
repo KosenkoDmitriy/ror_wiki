@@ -17,11 +17,11 @@ class StoriesController < ApplicationController
       @stories, @topic = get_stories_and_topic_by_topic_id(topic_id)
       @story = Story.find_by(id: id) if Story.exists?(id: id)
     elsif id.present?
-      @stories = Story.order(created_at: :desc, updated_at: :desc, title: :asc)
       @story = Story.find(id)
+      @stories = @story.try(:topics).try(:last).try(:stories).try(:order, created_at: :desc, updated_at: :desc, title: :asc)
     else
-      @stories = Story.order(created_at: :desc, updated_at: :desc, title: :asc)
-      @story = Story.last
+      # @stories = Story.order(created_at: :desc, updated_at: :desc, title: :asc)
+      # @story = Story.last
     end
   end
 
