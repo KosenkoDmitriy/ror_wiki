@@ -9,8 +9,9 @@
             <%= topic.present? ? link_to(topic.try(:title), topic_path(topic)) : "" %>
 
             <p align="right">
+              <%= link_to t("story.edit"), edit_story_path(@story), class: "btn btn-primary btn-edit", role: "button" %>
               <!--<a href="#" class="btn btn-success" role="button"><%= t("story.new") %></a>-->
-              <a href="#" class="btn btn-primary btn-edit" role="button"><%= t("story.edit") %></a>
+              <!--<a href="#" class="btn btn-primary btn-edit" role="button"><%= t("story.edit") %></a>-->
               <!--<a href="#" class="btn btn-default" role="button"><%= t("story.prev") %></a>-->
               <!--<a href="#" class="btn btn-default" role="button"><%= t("story.prev") %></a>-->
             </p>
@@ -21,22 +22,20 @@
               <div class="caption">
                 <p><%= @story.try(:text) %></p>
               </div>
-              <img src="http://media.jrn.com/images/640*360/Generic+President+Barack+Obama+Smiling.jpg"/>
-
+              <!--<img src="http://media.jrn.com/images/640*360/Generic+President+Barack+Obama+Smiling.jpg"/>-->
             </div>
 
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3><%=t("story.source")%></h3>
+                <h3><%= t("story.source") %></h3>
               </div>
               <div class="panel-body">
                 <% @story.try(:sources).try(:uniq).try(:each) do |source| %>
-                    <p><%=source.try(:title)%> <%=link_to source.try(:url), source.try(:url) %> </p>
+                    <p><%= source.try(:title) %> <%= link_to source.try(:url), source.try(:url) %> </p>
                 <% end %>
               </div>
             </div>
-
-      <% else %>
+        <% else %>
             <h3><%= t(:no_story) %></h3>
         <% end %>
       </div>

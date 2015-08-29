@@ -22,13 +22,109 @@ class StoriesController < ApplicationController
     elsif id.present?
       @story = Story.find(id)
       @stories = @story.try(:topics).try(:last).try(:stories).try(:order, updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+      #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc) if @stories.blank?
     else
-      # @stories = Story.order(created_at: :desc, updated_at: :desc, title: :asc)
+      # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc)
       # @story = Story.last
     end
   end
 
+  def edit
+    page = params[:page] || 1
+    id = params[:id]
+
+    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+    @story = Story.find(id) if Story.exists?(id)
+    # @topic = @story.try(:topics).try(:last)
+    @topics = Topic.order(title: :asc)
+    # @topic =
+  end
+
+  def new
+    page = params[:page] || 1
+    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+    @story = Story.new
+    @topics = Topic.order(title: :asc)
+    #@story.build(:moderations)
+    #@story.build(:sources)
+    #@story.build(:images)
+  end
+
+
+  def update
+    page = params[:page] || 1
+    id = params[:id]
+    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+    @story = Story.find(id) if Story.exists?(id)
+    @topic = @story.try(:topics).try(:last)
+    update_or_create_story(params)
+  end
+
+
+  def create
+    update_or_create_story(params)
+  end
+
   private
+
+  def update_or_create_story params
+    # TODO: assign topic to story
+    # @story = Story.find_or_create_by!(story_params)
+    topic_id = params[:topic]
+    title = params[:title]
+    id = params[:id]
+    @topic = Topic.find(topic_id) if Topic.exists?(id:topic_id)
+    if Story.exists?(title:title)
+      @story = Story.find_by(title:title)
+      @story.topics << @topic if !@story.topics.exists?(@topic)
+      #@story.try(:topics).try(:find, @topic)
+      m = Moderation.find_or_create_by!(story_params params)
+      @story.moderations << m
+      if @story.save
+        redirect_to(@story)
+      else
+        render "new"
+      end
+      # if (@story.save)
+      #   #redirect to success page
+      # else
+      #   #redirect to new action with errors
+      # end
+    elsif Story.exists?(id:id) #edit action
+      @story = Story.find(id)
+      @story.topics << @topic if !@story.topics.exists?(@topic)
+      #@story.try(:topics).try(:find, @topic)
+      m = Moderation.find_or_create_by!(story_params params)
+      @story.moderations << m
+
+      #if @story.save
+      if @story.update(story_params params)
+        redirect_to(@story)
+      else
+        render "edit"
+      end
+      # if (@story.save)
+      #   #redirect to success page
+      # else
+      #   #redirect to new action with errors
+      # end
+    else
+      @story = Story.new(story_params params)
+      @story.topics << @topic if !@story.topics.exists?(@topic)
+      @story.is_approved = false
+      if @story.save
+        redirect_to stories_path
+      else
+        render "new"
+      end
+    end
+    # redirect_to stories_path #TODO: must be commented after @story.save implementation
+  end
+
+  def story_params params
+    params.require(:story).permit(:title,:text,:sources)
+  end
+
   def get_stories_and_topic_by_topic_id(topic_id, page)
     topic = Topic.find_by(id: topic_id) if Topic.exists?(id: topic_id)
     # @stories = Story.include(:topics).where(topics: {id:topic_id}).order(updated_at: :desc, title: :asc)

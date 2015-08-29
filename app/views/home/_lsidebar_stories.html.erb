@@ -11,7 +11,8 @@
       <%= link_to t(:stories), stories_path %>
     </li>
     <li>
-      <a href="#" class="btn btn-success btn-story" role="button"><%= t("story.new") %></a>
+      <!--<a href="#" class="btn btn-success btn-story" role="button"><%= t("story.new") %></a>-->
+      <%=link_to t("story.new"), new_story_path, class:"btn btn-success btn-story", role:"button" %>
     </li>
     <% if @stories.present? && @stories.any? %>
         <% @stories.each do |item| %>
@@ -37,7 +38,9 @@
         <%= render partial: "home/pager", locals: {items: @stories, class_name: "btn-more"} %>
 
     <% else %>
-        <%= t(:no_stories) %>
+        <li>
+            <%= t(:no_stories) %>
+        </li>
     <% end %>
   </ul>
 </div>
