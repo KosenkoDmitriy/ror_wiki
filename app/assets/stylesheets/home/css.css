@@ -1,4 +1,6 @@
-
+a {
+    text-decoration:none !important;
+}
 
 .lsidebar a:link {
     font-weight: bold;
@@ -12,9 +14,7 @@
     color: #999999;
     font-weight: normal;
     font-size: 20px;
-
 }
-
 
 a.btn-story {
     color: black !important;
@@ -26,6 +26,9 @@ a.btn-story:hover {
     color: floralwhite;
 }
 
+a.btn-edit {
+    color: black;
+}
 
 .story-date {
     color: #999999;
