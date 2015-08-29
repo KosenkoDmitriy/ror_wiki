@@ -35,3 +35,12 @@ a.btn-edit {
     margin-top: -5%;
 }
 
+a.btn-more {
+    color: #333333 !important;
+    width: 100%;
+}
+
+a.btn-more:hover {
+    color: black !important;
+}
+

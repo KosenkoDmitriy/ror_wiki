@@ -1,16 +1,17 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper" class="lsidebar ">
   <ul class="sidebar-nav">
+    <li class="">
+      <h4><%= link_to t(:home_page), root_path %></h4>
+    </li>
     <li>
-      <h4><%= link_to "<< "+t("topics"), topics_path %></h4>
-      <!--<a href="#">Barack Obama Updates</a>-->
+      <h5><%= link_to "<< "+t("topics"), topics_path %></h5>
+    </li>
+    <li class="sidebar-brand">
+      <%= link_to t(:stories), stories_path %>
     </li>
     <li>
       <a href="#" class="btn btn-success btn-story" role="button"><%= t("story.new") %></a>
-    </li>
-
-    <li class="sidebar-brand">
-      <%= link_to t(:stories), stories_path %>
     </li>
     <% if @stories.present? && @stories.any? %>
         <% @stories.each do |item| %>
@@ -30,9 +31,11 @@
                   </p>
                 </div>
               </div>
-
             </li>
         <% end %>
+
+        <%= render partial: "home/pager", locals: {items: @stories, class_name: "btn-more"} %>
+
     <% else %>
         <%= t(:no_stories) %>
     <% end %>

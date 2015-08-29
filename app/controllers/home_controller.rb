@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
 
   def index
-    @stories = Story.order(updated_at: :asc, created_at: :asc)
+    # page = params[:page] if params[:page].present?
+    page = params[:page] || 1
+    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
   end
 
   # def details

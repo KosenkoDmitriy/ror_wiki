@@ -1,20 +1,41 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
   <ul class="sidebar-nav">
+
+    <li class="">
+      <h4><%= link_to t(:home_page), root_path %></h4>
+    </li>
     <li class="sidebar-brand">
       <a href="#">
-        <%=t(:topics)%>
+        <%= t(:topics) %>
       </a>
     </li>
-    <% @topics = topics %>
     <% if @topics.present? && @topics.any? %>
         <% @topics.each do |item| %>
+
             <li>
-              <%= link_to item.try(:title), topic_path(item) %></a>
+              <div class="media">
+                <!--<div class="media-left">-->
+                <!--<a href="#">-->
+                <!--<img class="media-object" src="..." alt="...">-->
+                <!--</a>-->
+                <!--</div>-->
+                <div class="media-body">
+                  <!--<h4 class="media-heading"></h4>-->
+                  <%= link_to item.try(:title), topic_path(item) %>
+
+                  <p class="story-date">
+                    (<%= item.try(:created_at).try(:strftime, "%d %B %Y %H:%M") %>)
+                  </p>
+                </div>
+              </div>
             </li>
         <% end %>
+
+        <%= render partial: "home/pager", locals: {items: @topics, class_name: "btn-more"} %>
+
     <% else %>
-    <%=t("no_topics")%>
+        <%= t("no_topics") %>
     <% end %>
   </ul>
 </div>

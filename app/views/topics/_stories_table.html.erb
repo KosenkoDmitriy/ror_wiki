@@ -27,6 +27,12 @@
                     <td><%= link_to t("story.more"), topic_story_path(@topic, item) %></td>
                   </tr>
               <% end %>
+              <tr>
+                <td colspan="6" align="center">
+                  <%#= render partial: "home/pager", locals: {items: @stories, class_name: ""} #%>
+                  <%#= link_to_next_page @stories, t("story.more"), class: "btn btn-default", width:"100%" # %>
+                </td>
+              </tr>
           <% else %>
               <tr>
                 <td colspan="6" align="center"><%= t("no_stories") %></td>
