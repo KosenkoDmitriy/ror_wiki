@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828171311) do
+ActiveRecord::Schema.define(version: 20150829071312) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 20150828171311) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "moderations", force: :cascade do |t|
+    t.string   "title"
+    t.text     "text"
+    t.text     "stext"
+    t.boolean  "is_approved"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "sources", force: :cascade do |t|
     t.string   "title"
     t.text     "url"
@@ -53,6 +62,16 @@ ActiveRecord::Schema.define(version: 20150828171311) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "story_moderations", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "moderation_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "story_moderations", ["moderation_id"], name: "index_story_moderations_on_moderation_id"
+  add_index "story_moderations", ["story_id"], name: "index_story_moderations_on_story_id"
 
   create_table "story_sources", force: :cascade do |t|
     t.integer  "story_id"

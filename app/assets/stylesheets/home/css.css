@@ -1,8 +1,11 @@
 
 
 .lsidebar a:link {
-    color: lightgray;
     font-weight: bold;
+}
+
+.lsidebar a:hover {
+    color: lightgray !important;
 }
 
 .lsidebar a:visited {

@@ -1,10 +1,9 @@
-class CreateStories < ActiveRecord::Migration
+class CreateModerations < ActiveRecord::Migration
   def change
-    create_table :stories do |t|
+    create_table :moderations do |t|
       t.string :title
       t.text :text
       t.text :stext
-      t.string :text
       t.boolean :is_approved
 
       t.timestamps null: false
