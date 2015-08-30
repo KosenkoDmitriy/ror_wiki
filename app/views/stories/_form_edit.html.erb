@@ -43,7 +43,7 @@
                 <div class="form-group">
                   <label for="story_source" class="col-sm-2 control-label"><%= t("story.source") %></label>
                   <div class="col-sm-10">
-                    <%= collection_select(:story, :source_ids, Source.order(title: :asc), :id, :title_and_url, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
+                    <%= collection_select(:story, :source_ids, Source.order(title: :asc), :id, :title_and_url, {prompt: false, include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
                   </div>
                 </div>
 
@@ -56,7 +56,7 @@
 
                         <%= f.fields_for :source_ids do |source| %>
                             <%= source.collection_select(:id, Source.order(title: :asc).to_a, :id, :title_and_url, {:selected => @story.try(:sources).try(:map, &:id), include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
-                            <% collection_select(:source, :id, Source.order(title: :asc), :id, :title_and_url, {prompt: true, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
+                            <% collection_select(:source, :id, Source.order(title: :asc), :id, :title_and_url, {prompt: true, include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
                         <% end %>
                         <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
                         <!--<%= source_form.label :title, class: "col-sm-1" %>-->

@@ -6,26 +6,14 @@ ActiveAdmin.register Story do
   #   end
   # end
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
   permit_params :title, :text, :stext, :is_approved, topic_ids: [], source_ids: []
 
   controller do
     # This code is evaluated within the controller class
 
     def update
-      id=params[:id]
-      s=Story.find(id) if Story.exists?(id)
+      id = params[:id]
+      s = Story.find(id) if Story.exists?(id)
       s.update(story_params)
       s.update_attributes(story_params)
       if s.save!
@@ -33,13 +21,26 @@ ActiveAdmin.register Story do
       else
         render "edit"
       end
+    end
 
-      # Instance method
+    def create
+      id = params[:id]
+      if !Story.exists?(id)
+        s = Story.new(story_params)
+        s.update_attributes(story_params)
+        if s.save
+          redirect_to admin_story_path(s)
+        else
+          render "new"
+        end
+      else
+        render "new"
+      end
     end
 
     private
     def story_params
-      params.require(:story).permit(:title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes:[], sources_attributes:[])
+      params.require(:story).permit(:title, :text, :stext, :is_approved, topic_ids: [], source_ids: []) #, topics_attributes: [], sources_attributes: [])
     end
   end
 
@@ -64,7 +65,7 @@ ActiveAdmin.register Story do
     end
 
     f.inputs 'Sources.' do
-      f.input :source_ids, as: :select, multiple: true, selected:f.object.sources.map{|s| s.id } , collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
+      f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
       # f.has_many :sources, new_record: true do |p|
       #   #p.input :title
       #   # or maybe even
@@ -74,7 +75,7 @@ ActiveAdmin.register Story do
     end
 
     f.inputs 'Topics.' do
-      f.input :topic_ids, as: :select, multiple: true, selected:f.object.topics.map{|t| t.id}, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
+      f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
       # f.has_many :topics, new_record: true do |p|
       #   p.input :id, label: 'Topic', as: :select, multiple: false, selected: p.object.id, collection: Topic.all.map { |i| [i.title, i.id] } #collection: Topic.all.map { |i| "#{i.title} (#{i.created_at})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
       #   p.actions
