@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  include SimpleCaptcha::ControllerHelpers
 
   def index
     page = params[:page] || 1
@@ -58,18 +59,29 @@ class StoriesController < ApplicationController
 
   def update
     #page = params[:page] || 1
-    #id = params[:id]
+    id = params[:id]
+    @story = Story.find(id) if Story.exists?(id)
+    @topics = Topic.order(title: :asc)
+    @sources = Source.order(title: :asc)
 
     # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
-    #@story = Story.find(id) if Story.exists?(id)
     # @topic = @story.try(:topics).try(:last)
-
-    update_or_create_story_moderations(params)
+    if simple_captcha_valid?
+      update_or_create_story_moderations(params)
+    else
+      #todo: display error message to frontend
+      render "edit"
+    end
   end
 
 
   def create
-    update_or_create_story_moderations(params)
+    if simple_captcha_valid?
+      update_or_create_story_moderations(params)
+    else
+      render "new"
+      #todo: display error message to frontend
+    end
   end
 
   private

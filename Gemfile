@@ -47,3 +47,5 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise'
 
 gem 'kaminari'
+
+gem 'simple_captcha2', require: 'simple_captcha'
