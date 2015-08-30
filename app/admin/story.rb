@@ -2,14 +2,14 @@ ActiveAdmin.register Story do
   menu priority: 2, label: "Stories"
   sidebar "Story Details", only: [:show, :edit] do
     ul do
-      li link_to "Sources", admin_story_sources_path(story)
+      li link_to "Sources", admin_sources_path(story)
       ul do
         if story.sources.present? && story.sources.any?
           story.sources.each do |source|
-            li link_to "#{source.title} (#{source.created_at.strftime("%d/%m/%y %H:%M")})", admin_story_source_path(story, source)
+            li link_to "#{source.title} (#{source.created_at.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
           end
         else
-        li "Source hasn't been added to the story: "+story.title
+          li "Source hasn't been added to the story: "+story.title
         end
       end
       li link_to "Topics", admin_topics_path()
@@ -20,6 +20,17 @@ ActiveAdmin.register Story do
           end
         else
           li "Topic hasn't been added to the story: "+story.title
+        end
+      end
+
+      li link_to "Moderations", admin_moderations_path()
+      ul do
+        if story.moderations.present? && story.moderations.any?
+          story.moderations.each do |item|
+            li link_to "#{item.title} (#{item.created_at.strftime("%d/%m/%y %H:%M")})", admin_moderation_path(item)
+          end
+        else
+          li "Moderation hasn't been added to the story: "+story.title
         end
       end
     end
@@ -116,16 +127,11 @@ ActiveAdmin.register Story do
         end
       end
     end
-
-    # f.inputs 'Topics.' do
-    #   f.input :topics, as: :select, multiple: true, collection: Topic.all.map { |i| "#{i.title} (#{i.created_at})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
-    # end
-
     f.actions
   end
 
 end
 
-ActiveAdmin.register Source do
-  belongs_to :story
-end
+# ActiveAdmin.register Source do
+#   belongs_to :story
+# end
