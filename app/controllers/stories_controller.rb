@@ -33,19 +33,23 @@ class StoriesController < ApplicationController
     page = params[:page] || 1
     id = params[:id]
 
-    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+    #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
     @story = Story.find(id) if Story.exists?(id)
-    @topic = @story.try(:topics).try(:last)
+    #@topic = @story.try(:topics).try(:last)
+
     @topics = Topic.order(title: :asc)
-    # @topic =
+    @sources = Source.order(title: :asc)
   end
 
   def new
     #todo: params[:topic_id]
     page = params[:page] || 1
-    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+    #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
     @story = Story.new
+
     @topics = Topic.order(title: :asc)
+    @sources = Source.order(title: :asc)
+
     #@story.build(:moderations)
     #@story.build(:sources)
     #@story.build(:images)
@@ -53,18 +57,19 @@ class StoriesController < ApplicationController
 
 
   def update
-    page = params[:page] || 1
-    id = params[:id]
-    @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
-    @story = Story.find(id) if Story.exists?(id)
-    @topic = @story.try(:topics).try(:last)
+    #page = params[:page] || 1
+    #id = params[:id]
 
-    update_or_create_story(params)
+    # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+    #@story = Story.find(id) if Story.exists?(id)
+    # @topic = @story.try(:topics).try(:last)
+
+    update_or_create_story_moderations(params)
   end
 
 
   def create
-    update_or_create_story(params)
+    update_or_create_story_moderations(params)
   end
 
   private
@@ -75,7 +80,7 @@ class StoriesController < ApplicationController
     topic_id = params[:topic]
     title = params[:story][:title]
     id = params[:id]
-    @topic = Topic.find(topic_id) if Topic.exists?(id: topic_id)
+    #@topic = Topic.find(topic_id) if Topic.exists?(id: topic_id)
     if Story.exists?(title: title)
       @story = Story.find_by(title: title)
       #@story.topics << @topic if !@story.topics.exists?(@topic)
@@ -88,7 +93,7 @@ class StoriesController < ApplicationController
       if @story.save
         redirect_to(@story)
       else
-        render "new"
+        render "edit"
       end
       # if (@story.save)
       #   #redirect to success page
@@ -144,6 +149,49 @@ class StoriesController < ApplicationController
       end
     end
     # redirect_to stories_path #TODO: must be commented after @story.save implementation
+  end
+
+  def update_or_create_story_moderations params
+    # TODO: assign topic to story
+    topic_id = params[:topic]
+    title = params[:story][:title]
+    id = params[:id]
+    #@topic = Topic.find(topic_id) if Topic.exists?(id: topic_id)
+    if Story.exists?(title: title) # edit existing story (found by title) >> add a new moderation object to story.moderations for moderation queue
+      @story = Story.find_by(title: title)
+      m = Moderation.find_or_create_by!(moderation_params)
+      m.update(story_params)
+      m.update_attributes(story_params)
+      m.save
+      @story.moderations << m
+      if @story.save
+        redirect_to(m) #todo: edit moderation story if required
+      else
+        render "edit"
+      end
+    elsif Story.exists?(id: id) # edit existing story (found by id) >> add a new moderation object to story.moderations for moderation queue
+      @story = Story.find(id)
+      m = Moderation.find_or_create_by!(moderation_params)
+      m.update(story_params)
+      m.update_attributes(story_params)
+      m.save
+      @story.moderations << m
+      if @story.save!
+        redirect_to(m) #todo: edit moderation story if required
+      else
+        render "edit"
+      end
+    else #create a new story with status: is_approved = false
+      @story = Story.new(story_params)
+      @story.update(story_params)
+      @story.update_attributes(story_params)
+      @story.is_approved = false
+      if @story.save
+        redirect_to stories_path #todo: display unconfirmed story (story in moderation queue) if required
+      else
+        render "new"
+      end
+    end
   end
 
   def story_params

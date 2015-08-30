@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829071312) do
+ActiveRecord::Schema.define(version: 20150830132239) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -62,6 +62,26 @@ ActiveRecord::Schema.define(version: 20150829071312) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "story_moderation_sources", force: :cascade do |t|
+    t.integer  "moderation_id"
+    t.integer  "source_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "story_moderation_sources", ["moderation_id"], name: "index_story_moderation_sources_on_moderation_id"
+  add_index "story_moderation_sources", ["source_id"], name: "index_story_moderation_sources_on_source_id"
+
+  create_table "story_moderation_topics", force: :cascade do |t|
+    t.integer  "moderation_id"
+    t.integer  "topic_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "story_moderation_topics", ["moderation_id"], name: "index_story_moderation_topics_on_moderation_id"
+  add_index "story_moderation_topics", ["topic_id"], name: "index_story_moderation_topics_on_topic_id"
 
   create_table "story_moderations", force: :cascade do |t|
     t.integer  "story_id"
