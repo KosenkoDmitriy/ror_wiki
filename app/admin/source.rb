@@ -1,4 +1,5 @@
 ActiveAdmin.register Source do
+  # menu label: "Sources", parent: "Story"
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -12,6 +13,15 @@ ActiveAdmin.register Source do
 #   permitted << :other if resource.something?
 #   permitted
 # end
+  permit_params :title, :url
 
-
+  index do
+    selectable_column
+    id_column
+    column :title
+    column :url
+    column :created_at
+    column :updated_at
+    actions
+  end
 end
