@@ -3,33 +3,22 @@
     <div class="row">
       <div class="col-lg-12">
         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= t("all_stories") %></a>
+        <%= render partial: "home/story_topics", locals: {items: @story.try(:topics)} %>
 
         <h2><%= t("story.new") %></h2>
-
         <br>
-
         <%= form_for @story, url: {action: "create"}, html: {class: "form-horizontal story_form"} do |f| %>
-
             <% hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
-
 
             <div class="form-group">
               <label for="story_title" class="col-sm-2 control-label"><%= t("topics") %></label>
-
               <div class="col-sm-10">
-
-                <select class="form-control" id="topics" name="topic">
-                  <% @topics.try(:each) do |topic| %>
-                      <option value="<%= topic.try(:id) %>"><%=topic.try(:title)%></option>
-                  <% end %>
-                </select>
-
+                <%= collection_select(:story, :topic_ids, Topic.order(title: :asc), :id, :title_with_date, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
               </div>
             </div>
 
             <div class="form-group">
               <label for="story_title" class="col-sm-2 control-label"><%= t("story.title") %></label>
-
               <div class="col-sm-10">
                 <%= f.text_field :title, class: "form-control", id: "story_title", placeholer: t('story.title') %>
               </div>
@@ -37,30 +26,17 @@
 
             <div class="form-group">
               <label for="story_text" class="col-sm-2 control-label"><%= t("story.text") %></label>
-
               <div class="col-sm-10">
                 <%= f.text_area :text, class: "form-control", rows: 5, id: "story_text", placeholer: t('story.text') %>
               </div>
             </div>
 
-            <%= f.fields_for :sources do |source_form| %>
-
-                <div class="form-group">
-                  <label for="story_source" class="col-sm-2 control-label"><%= t("story.source") %></label>
-
-                  <div class="col-sm-10">
-                    <!--<div class="row">-->
-                    <%= source_form.label :title, class: "col-sm-1" %>
-                    <%= source_form.text_field :title, class: "col-sm-3" %>
-                    <%= source_form.label :url, class: "col-sm-1" %>
-                    <%= source_form.text_field :url, class: "col-sm-7" %>
-                    <!--</div>-->
-                    <% source_form.text_field :sources, class: "form-control", rows: 5, id: "story_source", placeholer: t('story.source') %>
-                  </div>
-                </div>
-            <% end %>
-
-
+            <div class="form-group">
+              <label for="story_source" class="col-sm-2 control-label"><%= t("story.source") %></label>
+              <div class="col-sm-10">
+                <%= collection_select(:story, :source_ids, Source.order(title: :asc), :id, :title_and_url, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
+              </div>
+            </div>
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
@@ -68,7 +44,6 @@
                 <%= f.submit t("story.new"), class: "btn btn-primary btn-block" %>
               </div>
             </div>
-
         <% end %>
 
       </div>

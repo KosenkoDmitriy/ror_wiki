@@ -1,0 +1,2 @@
+<% topic = @story.try(:topics).try(:last) %>
+<% topic.present? ? link_to(topic.try(:title), topic_path(topic)) : "" %>
