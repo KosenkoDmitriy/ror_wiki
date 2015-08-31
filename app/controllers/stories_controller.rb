@@ -8,7 +8,7 @@ class StoriesController < ApplicationController
       @stories, @topic = get_stories_and_topic_by_topic_id(topic_id, page)
       @story = @stories.try(:first)
     else
-      @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+      @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
       @story = @stories.try(:first)
     end
   end
@@ -22,7 +22,7 @@ class StoriesController < ApplicationController
       @story = Story.find_by(id: id) if Story.exists?(id: id)
     elsif id.present?
       @story = Story.find(id)
-      @stories = @story.try(:topics).try(:last).try(:stories).try(:order, updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+      @stories = @story.try(:topics).try(:last).try(:stories).try(:order, updated_at: :desc, created_at: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
       #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc) if @stories.blank?
     else
       # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc)
@@ -126,29 +126,6 @@ class StoriesController < ApplicationController
       else
         render "edit"
       end
-      # if (@story.save)
-      #   #redirect to success page
-      # else
-      #   #redirect to new action with errors
-      # end
-
-      # @story = Story.find(id)
-      # @story.topics << @topic if !@story.topics.exists?(@topic)
-      # #@story.try(:topics).try(:find, @topic)
-      # m = Moderation.find_or_create_by!(moderation_params params)
-      # @story.moderations << m
-      #
-      # #if @story.save
-      # if @story.update(story_params params)
-      #   redirect_to(@story)
-      # else
-      #   render "edit"
-      # end
-      # # if (@story.save)
-      # #   #redirect to success page
-      # # else
-      # #   #redirect to new action with errors
-      # # end
     else
       @story = Story.new(story_params)
       @story.update(story_params)
@@ -251,7 +228,7 @@ class StoriesController < ApplicationController
   def get_stories_and_topic_by_topic_id(topic_id, page)
     topic = Topic.find_by(id: topic_id) if Topic.exists?(id: topic_id)
     # @stories = Story.include(:topics).where(topics: {id:topic_id}).order(updated_at: :desc, title: :asc)
-    stories = topic.try(:stories).try(:order, updated_at: :desc, title: :asc).try(:page, page) if topic.present?
+    stories = topic.try(:stories).try(:order, updated_at: :desc, title: :asc).try(:where, is_approved:true).try(:page, page) if topic.present?
     return stories, topic
   end
 end

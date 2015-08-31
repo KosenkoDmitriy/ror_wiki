@@ -20,7 +20,7 @@ class TopicsController < ApplicationController
   private
   def get_stories_and_story_from_topic(topic)
     count = topic.try(:stories).try(:count) || 0
-    stories = topic.try(:stories).try(:order, updated_at: :desc, created_at: :desc, title: :asc).try(:page,0).try(:per, count)
+    stories = topic.try(:stories).try(:order, updated_at: :desc, created_at: :desc, title: :asc).try(:where, is_approved:true).try(:page,0).try(:per, count)
     story = stories.try(:first)
     return stories, story
   end
