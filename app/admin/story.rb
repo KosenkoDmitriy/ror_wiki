@@ -1,5 +1,6 @@
 ActiveAdmin.register Story do
   menu priority: 2, label: "Stories"
+
   sidebar "Story Details", only: [:show, :edit] do
     ul do
       li link_to "Sources", admin_sources_path(story)
@@ -132,7 +133,3 @@ ActiveAdmin.register Story do
   end
 
 end
-
-# ActiveAdmin.register Source do
-#   belongs_to :story
-# end
