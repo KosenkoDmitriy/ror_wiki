@@ -3,10 +3,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
-        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= t("all_stories") %></a>
+        <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= t("all_stories") %></a>-->
         <% if @story.present? %>
              <%= render partial: "home/link_to_edit" %>
-
 
             <div class="thumbnail text-center">
               <h3><%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:updated_at) %>)</h3>

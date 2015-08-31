@@ -11,6 +11,7 @@ class ModerationsController < ApplicationController
     @moderation = get_moderation_by_params()
 
     @sources, @topics = get_sources_and_topics()
+    @story, @topic = get_story_and_topic_from_params()
   end
 
   def update
@@ -33,9 +34,8 @@ class ModerationsController < ApplicationController
     @story = get_story_by_params()
     @moderation = get_moderation_by_params()
 
-    @story, @topic = get_story_and_topic_from_params()
-
     @sources, @topics = get_sources_and_topics()
+    @story, @topic = get_story_and_topic_from_params()
   end
 
   def create

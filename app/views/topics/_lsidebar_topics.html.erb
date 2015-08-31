@@ -5,11 +5,11 @@
     <li class="">
       <h4><%= link_to t(:home_page), root_path %></h4>
     </li>
-    <li class="sidebar-brand">
-      <a href="#">
-        <%= t(:topics) %>
-      </a>
-    </li>
+    <!--<li class="sidebar-brand">-->
+      <!--<a href="#">-->
+        <!--<%= t(:topics) %>-->
+      <!--</a>-->
+    <!--</li>-->
     <% if @topics.present? && @topics.any? %>
         <% @topics.each do |item| %>
 

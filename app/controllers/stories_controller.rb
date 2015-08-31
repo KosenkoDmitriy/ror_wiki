@@ -224,7 +224,6 @@ class StoriesController < ApplicationController
     params.require(:story).permit(:title, :text) #, sources_attributes:[:title, :url, :_destroy]) #todo: source_ids and topic_ids ?
   end
 
-
   def get_stories_and_topic_by_topic_id(topic_id, page)
     topic = Topic.find_by(id: topic_id) if Topic.exists?(id: topic_id)
     # @stories = Story.include(:topics).where(topics: {id:topic_id}).order(updated_at: :desc, title: :asc)
