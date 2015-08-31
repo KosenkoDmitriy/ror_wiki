@@ -17,8 +17,10 @@ def random_date from = Date.new(1970), to = Time.now.to_date
 end
 
 def random_date_time
-  date_time = DateTime.new(rand(1970..2015), rand(1..12), rand(1..28), rand(1..24), rand(1..60), rand(1..60))
-  return date_time
+  #datetime = DateTime.new(rand(1970..2015),rand(1..12),rand(1..27),rand(1..24),rand(1..60),rand(1..60))
+  datetime = (0..20).to_a.sample.years.ago
+  #puts datetime
+  return datetime
 end
 
 def random_approved_status
@@ -27,15 +29,15 @@ end
 
 email = 'admin@example.com'
 password = 'password'
-User.create(email: email, password: password, password_confirmation: password) if !User.exists?(email:email)
+User.create(email: email, password: password, password_confirmation: password) if !User.exists?(email: email)
 
 topics_count = 20
 stories_count = 20
 moderation_count = 2
-(1..topics_count).to_a.each do |topic_no|
 
+(1..topics_count).to_a.each do |topic_no|
   topic = Topic.find_or_create_by!(title: "Topic #{topic_no}")
-  topic.date_time = random_date_time()
+  topic.date_time = random_date_time
   topic.is_approved = random_approved_status()
   puts "-"*100
   puts "topic: #{topic}\n"
@@ -44,25 +46,19 @@ moderation_count = 2
     text = title + " description " * 59
     stext = text.truncate(50, omission: '...')
     story = Story.find_or_create_by!(title: title, text: text, stext: stext)
-    story.is_approved = random_approved_status()
-    story.save
     if story.present?
       puts "+story: #{story.try(:title)}"
-
       (1..moderation_count).to_a.each do |moderation_no|
         title = "Moderation Story # #{story_no} of the Topic # #{topic_no}"
         text = title + " description " * 59
         stext = text.truncate(50, omission: '...')
         moderation = Moderation.find_or_create_by!(title: title, text: text, stext: stext)
-        moderation.is_approved = random_approved_status()
         moderation.topics << topic if !story.topics.exists?(topics: {id: topic.id})
         puts "++mstory: #{moderation.try(:title)}"
         puts "+++mtopic: #{topic.try(:title)}"
-        sources = [{url: "https://en.wikipedia.org/wiki/Barack_Obama", title: "Wikipedia"},
-                   {url: "https://www.facebook.com/barackobama", title: "Facebook"},
-                   {url: "https://twitter.com/barackobama?lang=ru", title: "Twitter"},
-                   {url: "https://plus.google.com/+BarackObama", title: "Google+"},
-                   {url: "https://www.linkedin.com/in/barackobama", title: "Linkedin"}
+        sources = [
+            {url: "https://www.facebook.com/barackobama", title: "Facebook"},
+            {url: "https://twitter.com/barackobama?lang=ru", title: "Twitter"},
         ]
         sources.each do |source|
           url = source[:url]
@@ -72,7 +68,9 @@ moderation_count = 2
           puts "+++msource: #{source.try(:title)} #{source.try(:url)}"
           moderation.sources << source if !story.sources.exists?(sources: {id: source.id})
         end
-
+        moderation.date_time = random_date_time
+        puts "++mstory datetime: #{story.date_time}"
+        moderation.is_approved = random_approved_status()
         moderation.save
         story.moderations << moderation
       end
@@ -88,10 +86,13 @@ moderation_count = 2
         title = source[:title]
         # source_title = "Source of the story #{story.try(:title)}"
         source = Source.find_or_create_by!(title: title, url: url) # added sources to the story
-        puts "++source: #{source.try(:title)} #{source.try(:url)}"
+        # puts "++source: #{source.try(:title)} #{source.try(:url)}"
         story.sources << source if !story.sources.exists?(sources: {id: source.id})
       end
       # story.sources = story.sources.uniq #now work
+      story.date_time = random_date_time
+      # puts "+story datetime: #{story.date_time}"
+      story.is_approved = random_approved_status()
       story.save
       topic.stories << story if topic.present? && !topic.stories.exists?(stories: {id: story.id}) # added stories in the topic
     end
