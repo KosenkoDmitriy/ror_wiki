@@ -1,4 +1,6 @@
 class ModerationsController < ApplicationController
+  include SimpleCaptcha::ControllerHelpers
+
   def show
     @story = get_story_by_params()
     @moderation = get_moderation_by_params()
@@ -15,17 +17,24 @@ class ModerationsController < ApplicationController
   end
 
   def update
+    @sources, @topics = get_sources_and_topics()
+    @story, @topic = get_story_and_topic_from_params()
+
     @moderation = get_moderation_by_params()
-    # @moderation.update(moderation_params)
-    @moderation.update_attributes(moderation_params)
-    @story = get_story_by_params()
-    if @story.present?
-      @story.moderations << @moderation
-      @story.save
-    end
-    if @moderation.save
-      redirect_to (@moderation)
+    if simple_captcha_valid?
+      # @moderation.update(moderation_params)
+      @moderation.update_attributes(moderation_params)
+      if @story.present?
+        @story.moderations << @moderation
+        @story.save
+      end
+      if @moderation.save
+        redirect_to (@moderation)
+      else
+        render "edit"
+      end
     else
+      #todo: display error message to frontend
       render "edit"
     end
   end
@@ -39,12 +48,19 @@ class ModerationsController < ApplicationController
   end
 
   def create
-    @story = get_story_by_params()
+    @sources, @topics = get_sources_and_topics()
+    @story, @topic = get_story_and_topic_from_params()
+
     @moderation = get_moderation_by_params()
-    @moderation.update_attributes(moderation_params)
-    if @moderation.save!
-      redirect_to (@moderation)
+    if simple_captcha_valid?
+      @moderation.update_attributes(moderation_params)
+      if @moderation.save!
+        redirect_to (@moderation)
+      else
+        render "new"
+      end
     else
+      #todo: display error message to frontend
       render "new"
     end
   end
@@ -76,7 +92,7 @@ class ModerationsController < ApplicationController
   end
 
   def get_sources_and_topics
-    sources = Source.order(title: :asc, date_time: :desc)
+    sources = Source.order(title: :asc, updated_at: :desc)
     topics = Topic.order(title: :asc, date_time: :desc)
     return sources, topics
   end
