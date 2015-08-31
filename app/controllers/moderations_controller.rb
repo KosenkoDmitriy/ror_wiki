@@ -87,7 +87,7 @@ class ModerationsController < ApplicationController
     story = Story.find(story_id) if Story.exists?(story_id)
 
     topic_id = params[:topic_id]
-    topic = Topic.find(topic_id) if Topic.exists?(story_id)
+    topic = Topic.find(topic_id) if Topic.exists?(topic_id)
     return story, topic
   end
 end
