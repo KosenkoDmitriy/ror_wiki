@@ -1,13 +1,15 @@
 ActiveAdmin.register Story do
   menu priority: 2, label: "Stories"
 
+  permit_params :title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy]
+
   sidebar "Story Details", only: [:show, :edit] do
     ul do
       li link_to "Sources", admin_sources_path(story)
       ul do
         if story.sources.present? && story.sources.any?
           story.sources.each do |source|
-            li link_to "#{source.title} (#{source.created_at.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
+            li link_to "#{source.title} (#{source.date_time.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
           end
         else
           li "Source hasn't been added to the story: #{story.try(:title) || 'no story'}"
@@ -17,7 +19,7 @@ ActiveAdmin.register Story do
       ul do
         if story.topics.present? && story.topics.any?
           story.topics.each do |topic|
-            li link_to "#{topic.title} (#{topic.created_at.strftime("%d/%m/%y %H:%M")})", admin_topic_path(topic)
+            li link_to "#{topic.title} (#{topic.date_time.strftime("%d/%m/%y %H:%M")})", admin_topic_path(topic)
           end
         else
           li "Topic hasn't been added to the story: #{story.try(:title) || 'no story'}"
@@ -28,7 +30,7 @@ ActiveAdmin.register Story do
       ul do
         if story.moderations.present? && story.moderations.any?
           story.moderations.each do |item|
-            li link_to "#{item.title} (#{item.created_at.strftime("%d/%m/%y %H:%M")})", admin_moderation_path(item)
+            li link_to "#{item.title} (#{item.date_time.strftime("%d/%m/%y %H:%M")})", admin_moderation_path(item)
           end
         else
           li "Moderation hasn't been added to the story: #{story.try(:title) || 'no story'}"
@@ -37,8 +39,6 @@ ActiveAdmin.register Story do
     end
   end
 
-
-  permit_params :title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy]
 
   controller do
     # This code is evaluated within the controller class
@@ -73,7 +73,7 @@ ActiveAdmin.register Story do
 
     private
     def story_params
-      params.require(:story).permit(:title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy])
+      params.require(:story).permit(:title, :text, :stext, :date_time, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy])
     end
   end
 
@@ -84,8 +84,9 @@ ActiveAdmin.register Story do
     column :title
     column :stext
     column :is_approved
-    column :created_at
-    column :updated_at
+    column :date_time
+    # column :created_at
+    # column :updated_at
     actions
   end
 
@@ -94,12 +95,13 @@ ActiveAdmin.register Story do
       f.input :title
       f.input :stext, as: :text
       f.input :text, as: :text
+      f.input :date_time, as: :datetime_picker
       f.input :is_approved
     end
 
     f.inputs "Sources" do
       #f.inputs 'Existing Sources.' do
-      #  f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
+      #  f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.date_time})", i.id] }
       #end
 
       #f.inputs 'New Sources.' do
@@ -114,13 +116,13 @@ ActiveAdmin.register Story do
 
     f.inputs 'Topics' do
       # f.inputs 'Existing Topics.' do
-      #   f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
+      #   f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.date_time})", i.id] }
       # end
 
       # f.inputs 'New Topics.' do
-        f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
+        f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.date_time})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
         # f.has_many :topics, allow_destroy: true, new_record: true do |p|
-        #   p.input :id, label: 'Topic', as: :select, multiple: false, selected: p.object.id, collection: Topic.all.map { |i| [i.title, i.id] } #collection: Topic.all.map { |i| "#{i.title} (#{i.created_at})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
+        #   p.input :id, label: 'Topic', as: :select, multiple: false, selected: p.object.id, collection: Topic.all.map { |i| [i.title, i.id] } #collection: Topic.all.map { |i| "#{i.title} (#{i.date_time})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
         #   # p.input :title
         #   # p.input :stext
         #   # p.input :text

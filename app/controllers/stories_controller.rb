@@ -8,7 +8,7 @@ class StoriesController < ApplicationController
       @stories, @topic = get_stories_and_topic_by_topic_id(topic_id, page)
       @story = @stories.try(:first)
     else
-      @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
+      @stories = Story.order(date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
       @story = @stories.try(:first)
     end
   end
@@ -22,10 +22,10 @@ class StoriesController < ApplicationController
       @story = Story.find_by(id: id) if Story.exists?(id: id)
     elsif id.present?
       @story = Story.find(id)
-      @stories = @story.try(:topics).try(:last).try(:stories).try(:order, updated_at: :desc, created_at: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
-      #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc) if @stories.blank?
+      @stories = @story.try(:topics).try(:last).try(:stories).try(:order, date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
+      #@stories = Story.order(date_time: :desc, title: :asc) if @stories.blank?
     else
-      # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc)
+      # @stories = Story.order(date_time: :desc, title: :asc)
       # @story = Story.last
     end
   end
@@ -34,7 +34,7 @@ class StoriesController < ApplicationController
   #   page = params[:page] || 1
   #   id = params[:id]
   #
-  #   #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+  #   #@stories = Story.order(date_time: :desc, title: :asc).try(:page, page)
   #   @story = Story.find(id) if Story.exists?(id)
   #   #@topic = @story.try(:topics).try(:last)
   #
@@ -45,7 +45,7 @@ class StoriesController < ApplicationController
   # def new
   #   #todo: params[:topic_id]
   #   page = params[:page] || 1
-  #   #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+  #   #@stories = Story.order(date_time: :desc, title: :asc).try(:page, page)
   #   @story = Story.new
   #
   #   @topics = Topic.order(title: :asc)
@@ -64,7 +64,7 @@ class StoriesController < ApplicationController
   #   @topics = Topic.order(title: :asc)
   #   @sources = Source.order(title: :asc)
   #
-  #   # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+  #   # @stories = Story.order(date_time: :desc, title: :asc).try(:page, page)
   #   # @topic = @story.try(:topics).try(:last)
   #   # if simple_captcha_valid?
   #   update_or_create_story_moderations(params)
@@ -226,8 +226,8 @@ class StoriesController < ApplicationController
 
   def get_stories_and_topic_by_topic_id(topic_id, page)
     topic = Topic.find_by(id: topic_id) if Topic.exists?(id: topic_id)
-    # @stories = Story.include(:topics).where(topics: {id:topic_id}).order(updated_at: :desc, title: :asc)
-    stories = topic.try(:stories).try(:order, updated_at: :desc, title: :asc).try(:where, is_approved:true).try(:page, page) if topic.present?
+    # @stories = Story.include(:topics).where(topics: {id:topic_id}).order(date_time: :desc, title: :asc)
+    stories = topic.try(:stories).try(:order, date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page) if topic.present?
     return stories, topic
   end
 end

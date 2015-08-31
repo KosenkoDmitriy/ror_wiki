@@ -8,7 +8,7 @@
              <%= render partial: "home/link_to_edit" %>
 
             <div class="thumbnail text-center">
-              <h3><%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:updated_at) %>)</h3>
+              <h3><%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:date_time) %>)</h3>
               <%= render partial: "home/story_topics", locals: {items: @story.try(:topics)} %>
 
               <div class="caption">

@@ -28,7 +28,7 @@
                   <%= link_to item.try(:title), story_path(item) %>
 
                   <p class="story-date">
-                    (<%= item.try(:created_at).try(:strftime, "%d %B %Y %H:%M") %>)
+                    (<%= item.try(:date_time).try(:strftime, "%d %B %Y %H:%M") %>)
                   </p>
                 </div>
               </div>

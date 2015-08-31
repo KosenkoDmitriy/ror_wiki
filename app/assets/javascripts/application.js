@@ -14,4 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+// nested fields
 //= require cocoon
+// start date picker
+//= require moment
+//= require bootstrap-datetimepicker
+// end date picker

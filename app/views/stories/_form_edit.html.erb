@@ -5,7 +5,7 @@
         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= t("all_stories") %></a>
         <% if @story.present? %>
 
-            <h3><%= t("story.edit") %> <%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:updated_at) %>)</h3>
+            <h3><%= t("story.edit") %> <%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:date_time) %>)</h3>
             <%= render partial: "home/story_topics", locals: {items: @story.try(:topics)} %>
             <br>
             <%= form_for @story, url: {action: "update"}, html: {class: "form-horizontal story_form"} do |f| %>

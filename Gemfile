@@ -54,3 +54,8 @@ gem 'kaminari' #pagination
 gem 'simple_captcha2', require: 'simple_captcha' #captcha
 
 gem 'cocoon' #to handle nested forms
+
+#start date picker
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
+#ebd date picker

@@ -9,7 +9,7 @@
           <% if @moderation.present? %>
 
               <h3><%= t("story.edit") %> <%= @moderation.try(:title) || t("story.label") %>
-                <%= @moderation.try(:updated_at).try(:present?) ? "(#{@moderation.try(:updated_at)})" : "" %></h3>
+                <%= @moderation.try(:date_time).try(:present?) ? "(#{@moderation.try(:date_time)})" : "" %></h3>
               <%= render partial: "home/story_topics", locals: {items: @moderation.try(:topics)} %>
               <br>
               <%= form_for @moderation, url: {action: "update"}, html: {class: "form-horizontal story_form"} do |f| %>

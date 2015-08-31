@@ -13,4 +13,6 @@
  *= require_tree .
  *= require_self
  *= require home/css
+ * require bootstrap
+ *= require bootstrap-datetimepicker
  */

@@ -51,7 +51,7 @@ class ModerationsController < ApplicationController
 
   private
   def moderation_params
-    params.require(:moderation).permit(:title, :text, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
+    params.require(:moderation).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
 
   def get_story_by_params
@@ -76,8 +76,8 @@ class ModerationsController < ApplicationController
   end
 
   def get_sources_and_topics
-    sources = Source.order(title: :asc, created_at: :desc, updated_at: :desc)
-    topics = Topic.order(title: :asc, created_at: :desc, updated_at: :desc)
+    sources = Source.order(title: :asc, date_time: :desc)
+    topics = Topic.order(title: :asc, date_time: :desc)
     return sources, topics
   end
 

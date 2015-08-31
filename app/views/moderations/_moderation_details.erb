@@ -14,7 +14,7 @@
             </p>
 
             <div class="thumbnail text-center">
-              <h3><%= @moderation.try(:title) || t(:no_story) %> (<%= @moderation.try(:updated_at) %>)</h3>
+              <h3><%= @moderation.try(:title) || t(:no_story) %> (<%= @moderation.try(:date_time) %>)</h3>
               <%= render partial: "home/story_topics", locals: {items: @moderation.try(:topics)} %>
 
               <div class="caption">

@@ -11,8 +11,9 @@
             <th><%= t("story.no") %></th>
             <th><%= t("story.title") %></th>
             <th><%= t("story.stext") %></th>
-            <th><%= t("story.updated_at") %></th>
-            <th><%= t("story.created_at") %></th>
+            <th><%= t("story.date_time") %></th>
+            <!--<th><%= t("story.updated_at") %></th>-->
+            <!--<th><%= t("story.created_at") %></th>-->
             <th><%= t("story.actions") %></th>
           </tr>
           <% no = 0 %>
@@ -22,8 +23,9 @@
                     <td><%= no+=1 %></td>
                     <td><%= link_to item.try(:title), topic_story_path(@topic, item) %></td>
                     <td><%= item.try(:stext).try(:html_safe) %></td>
-                    <td><%= item.try(:updated_at).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>
-                    <td><%= item.try(:created_at).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>
+                    <td><%= item.try(:date_time).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>
+                    <!--<td><%= item.try(:updated_at).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>-->
+                    <!--<td><%= item.try(:created_at).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>-->
                     <td><%= link_to t("story.more"), topic_story_path(@topic, item) %></td>
                   </tr>
               <% end %>

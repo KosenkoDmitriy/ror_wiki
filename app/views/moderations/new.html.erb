@@ -9,12 +9,12 @@
           <% if @moderation.present? %>
               <% if @story.present? # update action %>
                   <h3><%= t("story.edit") %> <%= t("story.label") %> : <%= @story.try(:title) %>
-                    <%= @story.try(:updated_at).try(:present?) ? "(#{@story.try(:updated_at)})" : "" %></h3>
+                    <%= @story.try(:date_time).try(:present?) ? "(#{@story.try(:date_time)})" : "" %></h3>
                   </h3>
 
               <% else # create action %>
                   <h3><%= t("story.new") %> <%= @moderation.try(:title) || t("story.label") %>
-                    <%= @moderation.try(:updated_at).try(:present?) ? "(#{@moderation.try(:updated_at)})" : "" %></h3>
+                    <%= @moderation.try(:date_time).try(:present?) ? "(#{@moderation.try(:date_time)})" : "" %></h3>
                   <%= render partial: "home/story_topics", locals: {items: @moderation.try(:topics)} %>
 
               <% end %>

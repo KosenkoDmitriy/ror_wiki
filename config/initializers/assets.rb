@@ -9,3 +9,14 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
+# Rails.application.config.assets.precompile += ["glyphicons-halflings-regular.ttf",
+#                              "glyphicons-halflings-regular.eot",
+#                              "glyphicons-halflings-regular.svg",
+#                              "glyphicons-halflings-regular.woff"
+#                              "glyphicons-halflings-regular.woff2"]
+
+#Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+#Rails.application.config.assets.precompile += %w( .svg .eot .woff .woff2 .ttf)
+
+# Rails.application.config.assets.precompile += %w( active_admin/active_admin_globalize.css )
+# Rails.application.config.assets.precompile += %w( active_admin/active_admin_globalize.js )

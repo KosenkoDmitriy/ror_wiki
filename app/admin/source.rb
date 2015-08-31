@@ -9,8 +9,9 @@ ActiveAdmin.register Source do
     id_column
     column :title
     column :url
-    column :created_at
-    column :updated_at
+    column :date_time
+    # column :created_at
+    # column :updated_at
     actions
   end
 end

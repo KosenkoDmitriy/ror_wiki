@@ -9,8 +9,9 @@ ActiveAdmin.register Topic do
     column :title
     column :stext
     column :is_approved
-    column :created_at
-    column :updated_at
+    column :date_time
+    # column :created_at
+    # column :updated_at
     actions
   end
 end

@@ -25,14 +25,16 @@ ActiveAdmin.register_page "Dashboard" do
           table do
             th t("activerecord.models.Moderation.other")
             th t("activerecord.attributes.moderation.stext")
-            th "created date"
-            th "updated date"
+            th t("activerecord.attributes.moderation.date_time")
+            # th "created date"
+            # th "updated date"
             Moderation.last(30).reverse.map do |post|
               tr
               td link_to(post.title, admin_moderation_path(post))
               td post.stext
-              td post.created_at
-              td post.updated_at
+              td post.date_time
+              # td post.created_at
+              # td post.updated_at
             end
           end
         end

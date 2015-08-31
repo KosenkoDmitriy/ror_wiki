@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831001312) do
+ActiveRecord::Schema.define(version: 20150831184009) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20150831001312) do
     t.boolean  "is_approved"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "date_time"
   end
 
   create_table "simple_captcha_data", force: :cascade do |t|
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150831001312) do
     t.boolean  "is_approved"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.datetime "date_time"
   end
 
   create_table "story_moderation_sources", force: :cascade do |t|
