@@ -21,7 +21,7 @@
                   <tr>
                     <td><%= no+=1 %></td>
                     <td><%= link_to item.try(:title), topic_story_path(@topic, item) %></td>
-                    <td><%= item.try(:stext) %></td>
+                    <td><%= item.try(:stext).try(:html_safe) %></td>
                     <td><%= item.try(:updated_at).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>
                     <td><%= item.try(:created_at).try(:strftime, "%d/%m/%y %H:%M") %><%#= Time.now.strftime("%d/%m/%Y %H:%M:%S %z") #%></td>
                     <td><%= link_to t("story.more"), topic_story_path(@topic, item) %></td>

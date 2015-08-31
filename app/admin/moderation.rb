@@ -85,8 +85,8 @@ ActiveAdmin.register Moderation do
   form do |f|
     f.inputs "Story: #{moderation.try(:title) || ''}" do
       f.input :title
-      f.input :stext
-      f.input :text
+      f.input :stext, as: :text
+      f.input :text, as: :text
       f.input :is_approved
     end
 

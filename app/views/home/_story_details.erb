@@ -13,7 +13,7 @@
               <%= render partial: "home/story_topics", locals: {items: @story.try(:topics)} %>
 
               <div class="caption">
-                <p><%= @story.try(:text) %></p>
+                <p><%= @story.try(:text).try(:html_safe) %></p>
               </div>
               <!--<img src="http://media.jrn.com/images/640*360/Generic+President+Barack+Obama+Smiling.jpg"/>-->
             </div>

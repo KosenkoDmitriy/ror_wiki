@@ -92,8 +92,8 @@ ActiveAdmin.register Story do
   form do |f|
     f.inputs "Story: #{story.try(:title) || 'no story'}" do
       f.input :title
-      f.input :stext
-      f.input :text
+      f.input :stext, as: :text
+      f.input :text, as: :text
       f.input :is_approved
     end
 
