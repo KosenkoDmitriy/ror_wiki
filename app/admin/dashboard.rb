@@ -14,7 +14,7 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         panel "Info" do
-          para "Welcome to Matthew Wiki."
+          para "Welcome to Mattnhew Wiki."
         end
       end
     end
