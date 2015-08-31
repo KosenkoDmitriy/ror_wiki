@@ -66,3 +66,36 @@ en:
     sources:
       add: "Add new source"
       remove: "Remove old source"
+  activerecord:
+    models:
+      Story:
+        one: "Story"
+        other: "Stories"
+      Source:
+        one: "Source"
+        other: "Sources"
+      Topic:
+        one: "Topic"
+        other: "Topics"
+      Moderation:
+        one: "Moderation Story"
+        other: "Moderation Stories"
+    attributes:
+      story:
+        title: "Title/Name"
+        text: "Description"
+        stext: "Short Description"
+        is_approved: "Confirmed/Approved ?"
+      source:
+        title: "Title/Name"
+        url: "URL/Link"
+      topic:
+        title: "Title/Name"
+        text: "Description"
+        stext: "Short Description"
+        is_approved: "Confirmed/Approved ?"
+      moderation:
+        title: "Title/Name"
+        text: "Description"
+        stext: "Short Description"
+        is_approved: "Confirmed/Approved ?"

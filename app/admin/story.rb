@@ -96,7 +96,7 @@ ActiveAdmin.register Story do
       f.input :is_approved
     end
 
-    f.inputs 'Sources.' do
+    f.inputs "Sources" do
       #f.inputs 'Existing Sources.' do
       #  f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
       #end
@@ -111,7 +111,7 @@ ActiveAdmin.register Story do
       #end
     end
 
-    f.inputs 'Topics.' do
+    f.inputs 'Topics' do
       # f.inputs 'Existing Topics.' do
       #   f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
       # end

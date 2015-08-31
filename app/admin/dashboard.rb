@@ -23,8 +23,8 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent stories of the Moderation Queue" do
           table do
-            th "title"
-            th "stext"
+            th t("activerecord.models.Moderation.other")
+            th t("activerecord.attributes.moderation.stext")
             th "created date"
             th "updated date"
             Moderation.last(30).reverse.map do |post|
