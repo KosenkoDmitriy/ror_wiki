@@ -17,7 +17,7 @@ ActiveAdmin.register Moderation do
       ul do
         if moderation.sources.present? && moderation.sources.any?
           moderation.sources.each do |source|
-            li link_to "#{source.title} (#{source.date_time.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
+            li link_to "#{source.title} (#{source.updated_at.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
           end
         else
           li "Source hasn't been added to the story: #{moderation.try(:title) || ''}"
