@@ -17,7 +17,7 @@ def random_date from = Date.new(1970), to = Time.now.to_date
 end
 
 def random_date_time
-  date_time = DateTime.new(rand(1970..2015), rand(1..12), rand(1..30), rand(1..24), rand(1..60), rand(1..60))
+  date_time = DateTime.new(rand(1970..2015), rand(1..12), rand(1..28), rand(1..24), rand(1..60), rand(1..60))
   return date_time
 end
 
