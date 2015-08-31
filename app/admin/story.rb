@@ -9,7 +9,7 @@ ActiveAdmin.register Story do
             li link_to "#{source.title} (#{source.created_at.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
           end
         else
-          li "Source hasn't been added to the story: "+story.title
+          li "Source hasn't been added to the story: #{story.try(:title) || 'no story'}"
         end
       end
       li link_to "Topics", admin_topics_path()
@@ -19,7 +19,7 @@ ActiveAdmin.register Story do
             li link_to "#{topic.title} (#{topic.created_at.strftime("%d/%m/%y %H:%M")})", admin_topic_path(topic)
           end
         else
-          li "Topic hasn't been added to the story: "+story.title
+          li "Topic hasn't been added to the story: #{story.try(:title) || 'no story'}"
         end
       end
 
@@ -30,7 +30,7 @@ ActiveAdmin.register Story do
             li link_to "#{item.title} (#{item.created_at.strftime("%d/%m/%y %H:%M")})", admin_moderation_path(item)
           end
         else
-          li "Moderation hasn't been added to the story: "+story.title
+          li "Moderation hasn't been added to the story: #{story.try(:title) || 'no story'}"
         end
       end
     end
@@ -88,7 +88,7 @@ ActiveAdmin.register Story do
   end
 
   form do |f|
-    f.inputs "Story: "+story.title do
+    f.inputs "Story: #{story.try(:title) || 'no story'}" do
       f.input :title
       f.input :stext
       f.input :text
@@ -96,18 +96,18 @@ ActiveAdmin.register Story do
     end
 
     f.inputs 'Sources.' do
-      f.inputs 'Existing Sources.' do
-        f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
-      end
+      #f.inputs 'Existing Sources.' do
+      #  f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
+      #end
 
-      f.inputs 'New Sources.' do
+      #f.inputs 'New Sources.' do
         f.has_many :sources, allow_destroy: true, new_record: true do |p|
           p.input :title
           p.input :url, as: :url
           #p.input :id, label: 'Source', as: :select, multiple: false, selected: p.object.id, collection: Source.all.map { |i| ["#{i.title}:#{i.url}",i.id] }
           p.actions
         end
-      end
+      #end
     end
 
     f.inputs 'Topics.' do

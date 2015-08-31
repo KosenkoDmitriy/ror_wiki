@@ -10,7 +10,7 @@ ActiveAdmin.register Moderation do
             li link_to "#{source.title} (#{source.created_at.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
           end
         else
-          li "Source hasn't been added to the story: "+moderation.title
+          li "Source hasn't been added to the story: #{moderation.try(:title) || ''}"
         end
       end
       li link_to "Topics", admin_topics_path()
@@ -20,7 +20,7 @@ ActiveAdmin.register Moderation do
             li link_to "#{topic.title} (#{topic.created_at.strftime("%d/%m/%y %H:%M")})", admin_topic_path(topic)
           end
         else
-          li "Topic hasn't been added to the story: "+moderation.title
+          li "Topic hasn't been added to the story: #{moderation.try(:title) || ''}"
         end
       end
     end
@@ -83,34 +83,34 @@ ActiveAdmin.register Moderation do
   end
 
   form do |f|
-    f.inputs "Story: "+moderation.title do
+    f.inputs "Story: #{moderation.try(:title) || ''}" do
       f.input :title
       f.input :stext
       f.input :text
       f.input :is_approved
     end
 
-    f.inputs 'Sources.' do
-      f.inputs 'Existing Sources.' do
-        f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
-      end
+    f.inputs 'Sources' do
+      #f.inputs 'Existing Sources' do
+      #  f.input :source_ids, as: :select, include_blank: true, multiple: true, selected: f.object.sources.map { |s| s.id }, collection: Source.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
+      #end
 
-      f.inputs 'New Sources.' do
+      #f.inputs 'New Sources' do
         f.has_many :sources, allow_destroy: true, new_record: true do |p|
           p.input :title
           p.input :url, as: :url
           #p.input :id, label: 'Source', as: :select, multiple: false, selected: p.object.id, collection: Source.all.map { |i| ["#{i.title}:#{i.url}",i.id] }
           p.actions
         end
-      end
+      #end
     end
 
-    f.inputs 'Topics.' do
-      f.inputs 'Existing Topics.' do
+    f.inputs 'Topics' do
+      f.inputs 'Existing Topics' do
         f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
       end
 
-      f.inputs 'New Topics.' do
+      f.inputs 'New Topics' do
         # f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
         f.has_many :topics, allow_destroy: true, new_record: true do |p|
           # p.input :id, label: 'Topic', as: :select, multiple: false, selected: p.object.id, collection: Topic.all.map { |i| [i.title, i.id] } #collection: Topic.all.map { |i| "#{i.title} (#{i.created_at})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
