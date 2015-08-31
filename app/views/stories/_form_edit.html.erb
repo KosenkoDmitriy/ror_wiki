@@ -5,9 +5,8 @@
         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= t("all_stories") %></a>
         <% if @story.present? %>
 
+            <h3><%= t("story.edit") %> <%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:updated_at) %>)</h3>
             <%= render partial: "home/story_topics", locals: {items: @story.try(:topics)} %>
-
-            <h2><%= t("story.edit") %></h2>
             <br>
             <%= form_for @story, url: {action: "update"}, html: {class: "form-horizontal story_form"} do |f| %>
 
@@ -17,7 +16,6 @@
                   <label for="story_title" class="col-sm-2 control-label"><%= t("topics") %></label>
                   <div class="col-sm-10">
                     <%= collection_select(:story, :topic_ids, @topics, :id, :title_with_date, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
-
                     <% f.select :topic_ids, options_for_select(@topics.map { |t| [t.try(:title), t.try(:id)] }, :selected => @topic.try(:id)), {}, {:class => 'form-control'} %>
                     <% f.fields_for :topic do |topic| %>
                         <% topic.collection_select(:ids, @topics.to_a, :id, :title_with_date, {:selected => @story.try(:topics).try(:map, &:id), include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
@@ -41,44 +39,20 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="story_source" class="col-sm-2 control-label"><%= t("story.source") %></label>
+                  <label for="story_source" class="col-sm-2 control-label"><%= t("story.sources") %></label>
                   <div class="col-sm-10">
-                    <%= collection_select(:story, :source_ids, @sources, :id, :title_and_url, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
+                    <% collection_select(:story, :source_ids, @sources, :id, :title_and_url, {prompt: false, include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
+                    <%= render partial: "stories/sources", locals: {f: f} %>
                   </div>
                 </div>
 
-                <% f.fields_for :source_ids do |source_form| %>
-
-                    <div class="form-group">
-                      <label for="story_source" class="col-sm-2 control-label"><%= t("story.source") %></label>
-
-                      <div class="col-sm-10">
-
-                        <%= f.fields_for :source_ids do |source| %>
-                            <%= source.collection_select(:id, @sources.to_a, :id, :title_and_url, {:selected => @story.try(:sources).try(:map, &:id), include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
-                            <% collection_select(:source, :id, @sources, :id, :title_and_url, {prompt: true, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
-                        <% end %>
-                        <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
-                        <!--<%= source_form.label :title, class: "col-sm-1" %>-->
-                        <!--<%= source_form.text_field :title, class: "col-sm-3" %>-->
-                        <!--<%= source_form.label :url, class: "col-sm-1" %>-->
-                        <!--<%= source_form.text_field :url, class: "col-sm-7" %>-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--
-                        <% source_form.text_field :sources, class: "form-control", rows: 5, id: "story_source", placeholer: t('story.source') %>-->
-                        <!-- -->
-
-                      </div>
-                    </div>
-                <% end %>
-
                 <div class="form-group">
-                  <label for="story_source" class="col-sm-2 control-label"><%= t(:captcha) %></label>
-
+                  <label for="story_captcha" class="col-sm-2 control-label"><%= t("captcha") %></label>
                   <div class="col-sm-10">
                     <%= show_simple_captcha %>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <!--<button type="submit" class="btn btn-default">t("story.new")</button>-->

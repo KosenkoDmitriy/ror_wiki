@@ -1,0 +1,50 @@
+<%= hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
+<%= hidden_field_tag "story_id", @story.try(:id) || 0 %>
+
+<div class="form-group">
+  <label for="story_title" class="col-sm-2 control-label"><%= t("topics") %></label>
+
+  <div class="col-sm-10">
+    <%= collection_select(:moderation, :topic_ids, @topics, :id, :title_with_date, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="story_title" class="col-sm-2 control-label"><%= t("story.title") %></label>
+
+  <div class="col-sm-10">
+    <%= f.text_field :title, class: "form-control", id: "story_title", placeholer: t('story.title') %>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="story_text" class="col-sm-2 control-label"><%= t("story.text") %></label>
+
+  <div class="col-sm-10">
+    <%= f.text_area :text, class: "form-control", rows: 5, id: "story_text", placeholer: t('story.text') %>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="story_source" class="col-sm-2 control-label"><%= t("story.sources") %></label>
+
+  <div class="col-sm-10">
+    <% collection_select(:story, :source_ids, @sources, :id, :title_and_url, {prompt: false, include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
+    <%= render partial: "stories/sources", locals: {f: f} %>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="story_captcha" class="col-sm-2 control-label"><%= t("captcha") %></label>
+
+  <div class="col-sm-10">
+    <%= show_simple_captcha %>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <!--<button type="submit" class="btn btn-default">t("story.new")</button>-->
+    <%= f.submit t("story.edit"), class: "btn btn-primary btn-block" %>
+  </div>
+</div>

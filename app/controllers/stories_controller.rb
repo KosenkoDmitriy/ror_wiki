@@ -30,59 +30,60 @@ class StoriesController < ApplicationController
     end
   end
 
-  def edit
-    page = params[:page] || 1
-    id = params[:id]
+  # def edit
+  #   page = params[:page] || 1
+  #   id = params[:id]
+  #
+  #   #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+  #   @story = Story.find(id) if Story.exists?(id)
+  #   #@topic = @story.try(:topics).try(:last)
+  #
+  #   @topics = Topic.order(title: :asc)
+  #   @sources = Source.order(title: :asc)
+  # end
 
-    #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
-    @story = Story.find(id) if Story.exists?(id)
-    #@topic = @story.try(:topics).try(:last)
-
-    @topics = Topic.order(title: :asc)
-    @sources = Source.order(title: :asc)
-  end
-
-  def new
-    #todo: params[:topic_id]
-    page = params[:page] || 1
-    #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
-    @story = Story.new
-
-    @topics = Topic.order(title: :asc)
-    @sources = Source.order(title: :asc)
-
-    #@story.build(:moderations)
-    #@story.build(:sources)
-    #@story.build(:images)
-  end
-
-
-  def update
-    #page = params[:page] || 1
-    id = params[:id]
-    @story = Story.find(id) if Story.exists?(id)
-    @topics = Topic.order(title: :asc)
-    @sources = Source.order(title: :asc)
-
-    # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
-    # @topic = @story.try(:topics).try(:last)
-    if simple_captcha_valid?
-      update_or_create_story_moderations(params)
-    else
-      #todo: display error message to frontend
-      render "edit"
-    end
-  end
+  # def new
+  #   #todo: params[:topic_id]
+  #   page = params[:page] || 1
+  #   #@stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+  #   @story = Story.new
+  #
+  #   @topics = Topic.order(title: :asc)
+  #   @sources = Source.order(title: :asc)
+  #
+  #   #@story.build(:moderations)
+  #   #@story.build(:sources)
+  #   #@story.build(:images)
+  # end
 
 
-  def create
-    if simple_captcha_valid?
-      update_or_create_story_moderations(params)
-    else
-      render "new"
-      #todo: display error message to frontend
-    end
-  end
+  # def update
+  #   #page = params[:page] || 1
+  #   id = params[:id]
+  #   @story = Story.find(id) if Story.exists?(id)
+  #   @topics = Topic.order(title: :asc)
+  #   @sources = Source.order(title: :asc)
+  #
+  #   # @stories = Story.order(updated_at: :desc, created_at: :desc, title: :asc).try(:page, page)
+  #   # @topic = @story.try(:topics).try(:last)
+  #   # if simple_captcha_valid?
+  #   update_or_create_story_moderations(params)
+  #   # else
+  #   #todo: display error message to frontend
+  #   # render "edit"
+  #   # end
+  # end
+  #
+  #
+  # def create
+  #   if simple_captcha_valid?
+  #     update_or_create_story_moderations(params)
+  #   else
+  #     render "new"
+  #     #todo: display error message to frontend
+  #   end
+  # end
+
 
   private
 
@@ -163,6 +164,43 @@ class StoriesController < ApplicationController
     # redirect_to stories_path #TODO: must be commented after @story.save implementation
   end
 
+  def get_moderation
+    m=Moderation.find_or_create_by(story_params.except(:sources_attributes, :topic_ids))
+    m.save
+    m.update_attributes(story_params.except(:sources_attributes))
+    m.update_attributes(story_params.except(:topic_ids))
+
+
+    # sources = params[:story][:sources_attributes]
+    # #source_ids = []
+    #
+    # sources.each do |i, source|
+    #   if (source[:_destroy]=="1")
+    #     # Source.delete(source[:id])
+    #   else
+    #     s = Source.find_or_create_by(title: source["title"], url: source["url"])
+    #     m.sources << s
+    #   end
+    #
+    # end
+    #
+    # m.sources = m.sources.uniq!
+
+
+
+    # story = Story.new(story_params.except(:sources_attributes))
+    # m = Moderation.find_or_create_by!(title: story.title, text: story.text, stext: story.stext)
+    # story.try(:sources).try(:each) do |source|
+    #   m.sources << source
+    # end
+    # m.sources = story.sources
+    # m.topic_ids = story.topic_ids
+    #m.attributes = story.attributes
+    #m.update_attributes(story_params.except(:sources_attributes))
+    m.save
+    return m
+  end
+
   def update_or_create_story_moderations params
     # TODO: assign topic to story
     topic_id = params[:topic]
@@ -171,25 +209,19 @@ class StoriesController < ApplicationController
     #@topic = Topic.find(topic_id) if Topic.exists?(id: topic_id)
     if Story.exists?(title: title) # edit existing story (found by title) >> add a new moderation object to story.moderations for moderation queue
       @story = Story.find_by(title: title)
-      m = Moderation.find_or_create_by!(moderation_params)
-      m.update(story_params)
-      m.update_attributes(story_params)
-      m.save
-      @story.moderations << m
+      moderation = get_moderation()
+      @story.moderations << moderation
       if @story.save
-        redirect_to(m) #todo: edit moderation story if required
+        redirect_to(moderation) #todo: edit moderation story if required
       else
         render "edit"
       end
     elsif Story.exists?(id: id) # edit existing story (found by id) >> add a new moderation object to story.moderations for moderation queue
       @story = Story.find(id)
-      m = Moderation.find_or_create_by!(moderation_params)
-      m.update(story_params)
-      m.update_attributes(story_params)
-      m.save
-      @story.moderations << m
+      moderation = get_moderation()
+      @story.moderations << moderation
       if @story.save!
-        redirect_to(m) #todo: edit moderation story if required
+        redirect_to(moderation) #todo: edit moderation story if required
       else
         render "edit"
       end
@@ -208,20 +240,13 @@ class StoriesController < ApplicationController
 
   def story_params
     #params.require(:story).permit(:title, :text, :topic_ids, :source_ids,  topic_ids:[], source_ids:[], :topic_ids=>{:id=>[]}, :source_ids=>{:id=>[]})
-    params.require(:story).permit(:title, :text, topic_ids: [], source_ids: [])
+    params.require(:story).permit(:title, :text, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
 
   def moderation_params
-    params.require(:story).permit(:title, :text) #todo: source_ids and topic_ids ?
+    params.require(:story).permit(:title, :text) #, sources_attributes:[:title, :url, :_destroy]) #todo: source_ids and topic_ids ?
   end
 
-  # def story_params params
-  #   params.require(:story).permit(:title, :text, :topic_ids=>[:id], :source_ids=>[:id])
-  # end
-
-  # def moderation_params params
-  #   params.require(:story).permit(:title, :text, topic_ids:[], source_ids:[], :topic_ids=>{:id=>[]}, :source_ids=>{:id=>[]})
-  # end
 
   def get_stories_and_topic_by_topic_id(topic_id, page)
     topic = Topic.find_by(id: topic_id) if Topic.exists?(id: topic_id)

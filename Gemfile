@@ -43,9 +43,14 @@ group :development, :test do
   gem 'spring'
 end
 
+#start admin
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise'
+#end admin
 
-gem 'kaminari'
 
-gem 'simple_captcha2', require: 'simple_captcha'
+gem 'kaminari' #pagination
+
+gem 'simple_captcha2', require: 'simple_captcha' #captcha
+
+gem 'cocoon' #to handle nested forms

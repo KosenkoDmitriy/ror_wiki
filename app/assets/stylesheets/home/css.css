@@ -1,5 +1,5 @@
 a {
-    text-decoration:none !important;
+    text-decoration: none !important;
 }
 
 .lsidebar a:link {
@@ -18,8 +18,8 @@ a {
 
 a.btn-story {
     color: black !important;
-    margin-left:5%;
-    width:85%;
+    margin-left: 5%;
+    width: 85%;
 }
 
 a.btn-story:hover {
@@ -44,3 +44,10 @@ a.btn-more:hover {
     color: black !important;
 }
 
+.add_fields {
+
+}
+
+.remove_fields {
+
+}

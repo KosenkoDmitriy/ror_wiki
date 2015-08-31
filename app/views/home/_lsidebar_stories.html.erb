@@ -12,7 +12,7 @@
     </li>
     <li>
       <!--<a href="#" class="btn btn-success btn-story" role="button"><%= t("story.new") %></a>-->
-      <%=link_to t("story.new"), new_story_path, class:"btn btn-success btn-story", role:"button" %>
+      <%=link_to t("story.new"), new_moderation_path, class:"btn btn-success btn-story", role:"button" %>
     </li>
     <% if @stories.present? && @stories.any? %>
         <% @stories.each do |item| %>

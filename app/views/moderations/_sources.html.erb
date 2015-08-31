@@ -1,0 +1,13 @@
+<div id="sources">
+  <%= f.fields_for :sources, allow_destroy: true, new_record: true do |source| %>
+      <% source.collection_select(:id, @sources.to_a, :id, :title_and_url, {:selected => @story.try(:sources).try(:map, &:id), include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
+      <% collection_select(:source, :id, @sources, :id, :title_and_url, {prompt: true, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
+      <div class="row">
+        <%= render partial: "stories/source_fields", locals: {f: source} %>
+      </div>
+  <% end %>
+  <div class="links">
+    <%= link_to_add_association t("cocoon.defaults.add"), f, :sources, class: "btn btn-success btn-block" %>
+  </div>
+</div>
+<% f.text_field :sources, class: "form-control", rows: 5, id: "story_source", placeholer: t('story.source') %>

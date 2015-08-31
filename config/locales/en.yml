@@ -29,7 +29,13 @@ en:
   topics: "Topics"
   all_stories: "All Stories"
   all_topics: "All Topics"
+  sources: "Sources"
+  source:
+    lable: "Source"
+    title: "Name/Title"
+    url: "URL/Link"
   story:
+    label: "Story"
     title: "Story title"
     text: "Story description"
     stext: "Story short description"
@@ -43,6 +49,7 @@ en:
     next: "Next >>"
     prev: "<< Prev"
     source: "Source"
+    sources: "Sources"
   home_page: "<< Go to Home Page"
   simple_captcha:
     placeholder: "Enter the image value"
@@ -52,3 +59,10 @@ en:
       default: "Secret Code did not match with the Image"
       user: "The secret Image and code were different"
   captcha: "Captcha"
+  cocoon:
+    defaults:
+      add: "+"
+      remove: "-"
+    sources:
+      add: "Add new source"
+      remove: "Remove old source"
