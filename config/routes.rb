@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  root 'stories#index' #TODO uncomment after implement an infinite ajax scroll
-  #root 'home#index' #TODO comment after implement an infinite ajax scroll
+  #root 'stories#index' #TODO uncomment after implement an infinite ajax scroll
+  root 'home#index' #TODO comment after implement an infinite ajax scroll
 
   resources :stories
   resources :topics

@@ -44,7 +44,7 @@ moderation_count = 2
   (1..stories_count).to_a.each do |story_no|
     title = "Story # #{story_no} of the Topic # #{topic_no}"
     text = title + " description " * 59
-    stext = text.truncate(50, omission: '...')
+    stext = text.truncate(150, omission: '...')
     story = Story.find_or_create_by!(title: title, text: text, stext: stext)
     if story.present?
       puts "+story: #{story.try(:title)}"
