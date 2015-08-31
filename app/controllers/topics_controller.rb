@@ -1,15 +1,13 @@
 class TopicsController < ApplicationController
 
   def index
-    page = params[:page] || 1
-    @topics = get_approved_topics(page)
+    @topics = get_approved_topics()
     @topic = @topics.try(:first)
     @stories, @story = get_stories_and_story_from_topic(@topic)
   end
 
   def show
-    page = params[:page] || 1
-    @topics = get_approved_topics(page)
+    @topics = get_approved_topics()
     id = params[:id] if params[:id].present?
     if Topic.exists?(id)
       @topic = Topic.find(id)
@@ -18,7 +16,8 @@ class TopicsController < ApplicationController
   end
 
   private
-  def get_approved_topics(page)
+  def get_approved_topics()
+    page = params[:page] || 1
     topics = Topic.order(updated_at: :desc, title: :asc).try(:where, is_approved: true).try(:page, page)
     return topics
   end
