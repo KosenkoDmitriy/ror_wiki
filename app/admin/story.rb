@@ -46,7 +46,7 @@ ActiveAdmin.register Story do
       id = params[:id]
       s = Story.find(id) if Story.exists?(id)
       s.update(story_params)
-      s.update_attributes(story_params)
+      #s.update_attributes(story_params)
       if s.save!
         redirect_to admin_story_path(s)
       else
@@ -57,8 +57,9 @@ ActiveAdmin.register Story do
     def create
       id = params[:id]
       if !Story.exists?(id)
-        s = Story.new(story_params)
-        s.update_attributes(story_params)
+        s = Story.create!(story_params)
+        #s = Story.new(story_params)
+        #s.update_attributes(story_params)
         if s.save
           redirect_to admin_story_path(s)
         else
@@ -111,21 +112,21 @@ ActiveAdmin.register Story do
     end
 
     f.inputs 'Topics.' do
-      f.inputs 'Existing Topics.' do
-        f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
-      end
+      # f.inputs 'Existing Topics.' do
+      #   f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] }
+      # end
 
-      f.inputs 'New Topics.' do
-        # f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
-        f.has_many :topics, allow_destroy: true, new_record: true do |p|
-          # p.input :id, label: 'Topic', as: :select, multiple: false, selected: p.object.id, collection: Topic.all.map { |i| [i.title, i.id] } #collection: Topic.all.map { |i| "#{i.title} (#{i.created_at})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
-          p.input :title
-          p.input :stext
-          p.input :text
-          p.input :is_approved, as: :radio
-          p.actions
-        end
-      end
+      # f.inputs 'New Topics.' do
+        f.input :topic_ids, as: :select, include_blank: true, multiple: true, selected: f.object.topics.map { |t| t.id }, collection: Topic.all.map { |i| ["#{i.title} (#{i.created_at})", i.id] } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
+        # f.has_many :topics, allow_destroy: true, new_record: true do |p|
+        #   p.input :id, label: 'Topic', as: :select, multiple: false, selected: p.object.id, collection: Topic.all.map { |i| [i.title, i.id] } #collection: Topic.all.map { |i| "#{i.title} (#{i.created_at})" } #, options_for_select(["Page", "Organization", "Promotion"], p.object)
+        #   # p.input :title
+        #   # p.input :stext
+        #   # p.input :text
+        #   # p.input :is_approved, as: :radio
+        #   p.actions
+        # end
+      # end
     end
     f.actions
   end
