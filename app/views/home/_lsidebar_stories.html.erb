@@ -1,15 +1,16 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper" class="lsidebar ">
   <ul class="sidebar-nav">
-    <li class="">
-      <h4><%= link_to t(:home_page), root_path %></h4>
-    </li>
+    <br/>
+    <!--<li class="">-->
+      <!--<h4><%= link_to t(:home_page), root_path %></h4>-->
+    <!--</li>-->
     <!--<li>-->
       <!--<h5><%= link_to "<< "+t("topics"), topics_path %></h5>-->
     <!--</li>-->
-    <li class="sidebar-brand">
-      <%= link_to t(:stories), stories_path %>
-    </li>
+    <!--<li class="sidebar-brand">-->
+      <!--<%= link_to t(:stories), stories_path %>-->
+    <!--</li>-->
     <li>
       <!--<a href="#" class="btn btn-success btn-story" role="button"><%= t("story.new") %></a>-->
       <%=link_to t("story.new"), new_moderation_path, class:"btn btn-success btn-story", role:"button" %>
