@@ -51,3 +51,8 @@ a.btn-more:hover {
 .remove_fields {
 
 }
+
+.scrollbar {
+    height: 480px !important;
+    overflow-y: scroll !important;
+}

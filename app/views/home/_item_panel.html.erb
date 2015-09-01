@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <% topic = item.try(:topics).try(:first) %>
+    <%= link_to topic.title, topic_path(topic) %>
+    / <%= link_to item.title, story_path(item) %>
+
+  </div>
+  <div class="panel-body">
+    <p><%= item.text.html_safe.truncate(150) %></p>
+    <%= render partial: "links/link_to_more_with_modal", locals: {item: item, topic: topic} %>
+  </div>
+
+  <div class="panel-footer">
+    <%= item.date_time %>
+  </div>
+</div>

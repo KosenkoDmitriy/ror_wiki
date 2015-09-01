@@ -1,0 +1,17 @@
+<% @moderation = Moderation.new if @moderation.blank? %>
+
+<% if @moderation.present? %>
+
+    <%= form_tag(new_moderation_path, method: "get", class: "form-horizontal story_form") do %>
+        <%= hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
+        <%= hidden_field_tag "story_id", @story.try(:id) || 0 %>
+        <p align="">
+          <% link_to t("story.view_original"), story_path(@story), class: "btn btn-success btn-edit", role: "button" %>
+
+          <%= submit_tag t("story.edit"), class: "btn btn-success" %>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </p>
+
+    <% end %>
+
+<% end %>

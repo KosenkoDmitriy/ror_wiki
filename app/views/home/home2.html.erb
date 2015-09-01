@@ -1,0 +1,75 @@
+<div class="lsidebar">
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--<h4><%= link_to t(:home_page), root_path %></h4>-->
+          <p>
+            <%= link_to "New Story", new_moderation_path, class: "btn btn-default btn-block", role: "button" %>
+          </p>
+          <div class="scrollbar">
+          <% @stories.each do |item| %>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="media">
+                    <div class="media-left text-center">
+                      <h4><%= item.date_time.strftime("%Y") %></h4>
+                      <h5><%= item.date_time.strftime("%b") %></h5>
+                      <h6><%= item.date_time.strftime("%H:%M") %></h6>
+                      <!--<a href="#">-->
+                      <!--<img class="media-object" src="..." alt="...">-->
+                      <!--</a>-->
+                    </div>
+                    <div class="media-body">
+                      <!--<div class="panel panel-default">-->
+                      <!--<div class="panel-heading">-->
+
+                      <% topic = item.try(:topics).try(:first) %>
+                      <h4 class="media-heading"><%= link_to topic.title, topic_path(topic) %>
+                        / <%= link_to item.title, story_path(item) %></h4>
+                      <!--</div>-->
+                      <!--<div class="panel-body">-->
+
+                      <%= item.stext.html_safe %>
+                      <!--</div>-->
+                      <!--</div>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <% if @story.present? %>
+              <%= render partial: "home/link_to_edit" %>
+
+              <div class="thumbnail text-center">
+                <h3><%= @story.try(:title) || t(:no_story) %> (<%= @story.try(:date_time) %>)</h3>
+                <%= render partial: "home/story_topics", locals: {items: @story.try(:topics)} %>
+
+                <div class="caption">
+                  <p><%= @story.try(:text).try(:html_safe) %></p>
+                </div>
+                <!--<img src="http://media.jrn.com/images/640*360/Generic+President+Barack+Obama+Smiling.jpg"/>-->
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3><%= t("story.source") %></h3>
+                </div>
+                <div class="panel-body">
+                  <% @story.try(:sources).try(:uniq).try(:each) do |source| %>
+                      <p><%= source.try(:title) %> <%= link_to source.try(:url), source.try(:url) %> </p>
+                  <% end %>
+                </div>
+              </div>
+          <% else %>
+              <h3><%= t(:no_story) %></h3>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<% @moderation = Moderation.new if @moderation.blank? %>
+
+
+<% modalId="myModal#{item.id}" %>
+<% modalLabel="myModal#{item.id}" %>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<%= modalId %>">
+  <%= t("story.more") %>
+</button>
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="<%= modalId %>" tabindex="-1" role="dialog" aria-labelledby="<%= modalLabel %>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="<%= modalLabel %>"><%= link_to topic.try(:title), topic_path(topic) %> / <%= item.try(:title) %></h4>
+
+      </div>
+      <div class="modal-body">
+
+        <%= item.try(:text).try(:html_safe) %>
+      </div>
+      <div class="modal-footer">
+        <%= render partial: "links/link_to_edit_only", locals: {} %>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>

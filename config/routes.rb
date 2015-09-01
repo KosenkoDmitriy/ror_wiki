@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   root 'stories#index' #TODO uncomment after implement an infinite ajax scroll
   #root 'home#index' #TODO comment after implement an infinite ajax scroll
 
+  get 'home' => 'home#home', as: :home
+  get 'home2' => 'home#home2', as: :home2
+
   resources :stories
   resources :topics
   resources :moderations
