@@ -1,73 +1,41 @@
-<%= hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
-<%= hidden_field_tag "story_id", @story.try(:id) || 0 %>
+<div class="row center-block">
+  <div class="col-lg-offset-2 col-lg-7 col-md-offset-2 col-md-7  col-sm-offset-1 col-sm-9 ">
+    <form class="form-horizontal" role="form">
+      <div class="form-group add-topic">
+        <label class="col-lg-4 col-md-4 col-sm-4 col-xs-3  control-label">Topic:</label>
 
-<div class="form-group">
-  <label for="story_title" class="col-sm-2 control-label"><%= t("story.date_time") %></label>
-
-  <div class="col-sm-10">
-    <div class="container">
-      <div class="row">
-        <div class='col-sm-6'>
-          <!--<input type='text' class="form-control" id='datetimepicker4' />-->
-          <%= f.text_field :date_time, class: "form-control", id: "datetimepicker4", placeholer: t('story.date_time') %>
-          <% f.datetime_field :date_time, class: "form-control", placeholer: t('story.date_time') %>
-
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-9">
+          <p class="topic">Barac Obama</p>
         </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker4').datetimepicker();
-            });
-        </script>
       </div>
-    </div>
-    <%render partial:("moderations/date_time_picker")%>
-  </div>
-</div>
+      <div class="form-group">
+        <label for="title" class="col-lg-4  col-md-4 col-sm-4 control-label">Story title:</label>
 
-<div class="form-group">
-  <label for="story_title" class="col-sm-2 control-label"><%= t("topics") %></label>
+        <div class="col-lg-8  col-md-8 col-sm-8 ">
+          <input class="form-control" id="title">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description" class="col-lg-4 col-md-4 col-sm-4 control-label">Story Description:</label>
 
-  <div class="col-sm-10">
-    <%= collection_select(:moderation, :topic_ids, @topics, :id, :title_with_date, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
-  </div>
-</div>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <textarea class="form-control" rows="9" id="description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="source" class="col-lg-4 col-md-4 col-sm-4 control-label">Sourse:</label>
 
-<div class="form-group">
-  <label for="story_title" class="col-sm-2 control-label"><%= t("story.title") %></label>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <input class="form-control" id="source">
 
-  <div class="col-sm-10">
-    <%= f.text_field :title, class: "form-control", id: "story_title", placeholer: t('story.title') %>
-  </div>
-</div>
-
-<div class="form-group">
-  <label for="story_text" class="col-sm-2 control-label"><%= t("story.text") %></label>
-
-  <div class="col-sm-10">
-    <%= f.text_area :text, class: "form-control", rows: 5, id: "story_text", placeholer: t('story.text') %>
-  </div>
-</div>
-
-<div class="form-group">
-  <label for="story_source" class="col-sm-2 control-label"><%= t("story.sources") %></label>
-
-  <div class="col-sm-10">
-    <% collection_select(:story, :source_ids, @sources, :id, :title_and_url, {prompt: false, include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
-    <%= render partial: "stories/sources", locals: {f: f} %>
-  </div>
-</div>
-
-<div class="form-group">
-  <label for="story_captcha" class="col-sm-2 control-label"><%= t("captcha") %></label>
-
-  <div class="col-sm-10">
-    <%= show_simple_captcha %>
-  </div>
-</div>
-
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-10">
-    <!--<button type="submit" class="btn btn-default">t("story.new")</button>-->
-    <%= f.submit t("story.edit"), class: "btn btn-primary btn-block" %>
+          <p class="add-new-source"><span><a href="#"> + Add Another Source</a></span></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-offset-4 col-lg-8 col-md-offset-4 col-md-8 col-sm-offset-4 col-sm-8">
+          <button type="submit" class="btn-submit form-control">Submit</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,0 +1,13 @@
+<% @moderation = Moderation.new if @moderation.blank? %>
+
+<% if @moderation.present? %>
+
+    <%= form_tag(new_moderation_path, method: "get", class: "") do %>
+        <%= hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
+        <%= hidden_field_tag "story_id", @story.try(:id) || 0 %>
+        <% link_to t("story.view_original"), story_path(@story), class: "btn btn-success btn-edit", role: "button" %>
+
+        <%= submit_tag t("story.edit").try(:upcase), class: "pull-right btn-edit" %>
+    <% end %>
+
+<% end %>

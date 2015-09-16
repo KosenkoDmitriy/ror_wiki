@@ -1,4 +1,16 @@
-<div id="wrapper">
-  <%= render partial: "home/lsidebar_stories" %>
-  <%= render partial: "home/story_details" %>
+<div class="container container-story">
+  <div class="title-header text-center">
+    <h1><%= @topic.try(:title) %></h1>
+
+    <p><%= t("timeline") %></p>
+  </div>
+
+  <div class=" text-center">
+    <!--<button class="">+ ADD STORY</button>-->
+    <%link_to t("story.add").try(:upcase), new_moderation_path, class:"pull-right btn-edit", role:"button" %>
+    <%=button_to t("story.add").try(:upcase), new_moderation_path, class:"pull-right btn-edit" %>
+  </div>
+
+  <%= render partial: "shared/timeline" %>
+
 </div>

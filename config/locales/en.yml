@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  header:
+    title: "WikiTimelines"
+  timeline: "timeline"
   no_topics: "No any topics found"
   no_stories_of_the_topic: "No any stories in the topic "
   no_stories: "No any stories found "
@@ -35,6 +38,7 @@ en:
     title: "Name/Title"
     url: "URL/Link"
   story:
+    add: "+ Add Story"
     label: "Story"
     title: "Story title"
     text: "Story description"
@@ -43,9 +47,10 @@ en:
     actions: "Actions"
     more: "more ..."
     details: "deatails ..."
+    read_more: "Read More"
     no: "#"
     new: "New"
-    edit: "Edit"
+    edit: "+ Edit Story"
     next: "Next >>"
     prev: "<< Prev"
     source: "Source"

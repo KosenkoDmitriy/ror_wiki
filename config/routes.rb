@@ -8,17 +8,18 @@ Rails.application.routes.draw do
   #root 'home#index' #TODO comment after implement an infinite ajax scroll
 
   get 'home' => 'home#home', as: :home
-  get 'home2' => 'home#home2', as: :home2
 
   resources :stories
   resources :topics
   resources :moderations
 
+
   # get 'stories' => 'home#stories', as: :story_list
 
-  resources :topics do
-    resources :stories
-  end
+  # resources :topics do
+  #   resources :stories do
+  #   end
+  # end
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

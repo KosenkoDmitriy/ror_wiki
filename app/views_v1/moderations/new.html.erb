@@ -1,0 +1,35 @@
+<div id="wrapper">
+  <%= render partial: "home/lsidebar_stories" %>
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><%= t("all_stories") %></a>-->
+          <% @topic.try(:title) %>
+          <% if @moderation.present? %>
+              <% if @story.present? # update action %>
+                  <h3><%= t("story.edit") %> <%= t("story.label") %> : <%= @story.try(:title) %>
+                    <%= @story.try(:date_time).try(:present?) ? "(#{@story.try(:date_time)})" : "" %></h3>
+                  </h3>
+
+              <% else # create action %>
+                  <h3><%= t("story.new") %> <%= @moderation.try(:title) || t("story.label") %>
+                    <%= @moderation.try(:date_time).try(:present?) ? "(#{@moderation.try(:date_time)})" : "" %></h3>
+                  <%= render partial: "home/story_topics", locals: {items: @moderation.try(:topics)} %>
+
+              <% end %>
+              <br>
+              <%= form_for @moderation, url: {action: "create"}, html: {class: "form-horizontal story_form"} do |f| %>
+
+                  <%= render partial: "form", locals: {f: f} %>
+
+              <% end %>
+          <% else %>
+              <h3><%= t("no_story") %></h3>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

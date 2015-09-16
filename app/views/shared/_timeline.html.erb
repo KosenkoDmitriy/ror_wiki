@@ -1,0 +1,62 @@
+<% if @stories.present? and @stories.any? %>
+
+    <ul class="timeline timeline-home">
+      <% current_m_y = @stories.try(:first).try(:date_time).try(:strftime, "%b %Y")
+         is_print = true
+         i = 0
+      %>
+      <% @stories.try(:each) do |item| %>
+          <%
+             if i > 0
+               is_print = false
+             else
+               is_print = true
+             end
+          %>
+
+          <% if is_print %>
+              <li>
+
+                <div class="timeline-badge">
+                  <%= item.try(:date_time).try(:strftime, "%b %Y") %>
+                </div>
+                <div class="timeline-panel">
+          <% end %>
+
+
+          <div class="timeline-heading">
+            <div class="round"></div>
+            <p class="text-muted"><%= item.try(:date_time).try(:strftime, "%d %B %H:%M") %></p>
+            <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), story_path(item) %></h4>
+          </div>
+          <div class="timeline-body">
+            <p>
+              <%= @story.try(:stext).try(:html_safe) %>
+              (<%= link_to t("story.read_more"), story_path(item), class: "read-more" %>)</p>
+
+            <p class="autor">Listed Under:
+              <!--<a href="#">Barac Obama</a>-->
+              <% item.try(:topics).try(:each) do |topic| %>
+                  <%= link_to topic.try(:title), topic_path(topic) %>
+              <% end %>
+            </p>
+          </div>
+
+          <% if current_m_y == item.try(:date_time).try(:strftime, "%b %Y")
+               i+=1
+             else
+               i=0
+             end %>
+          <% if i == 0 %>
+              </div>
+              </li>
+          <% end %>
+
+      <% end %>
+
+    </ul>
+    <%= render partial: "shared/spinner" %>
+
+<% else %>
+    <p class="text-center"><%= t("no_stories") %></p>
+<% end %>
