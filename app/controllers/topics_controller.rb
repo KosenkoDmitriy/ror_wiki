@@ -7,6 +7,16 @@ class TopicsController < ApplicationController
   end
 
   def show
+    get_stories_of_topic()
+  end
+
+  def ajax
+    get_stories_of_topic()
+  end
+
+  private
+
+  def get_stories_of_topic
     @topics = get_approved_topics()
     id = params[:id] if params[:id].present?
     if Topic.exists?(id)
@@ -15,7 +25,6 @@ class TopicsController < ApplicationController
     end
   end
 
-  private
   def get_approved_topics()
     page = params[:page] || 1
     topics = Topic.order(date_time: :desc, title: :asc).try(:where, is_approved: true).try(:page, page)
@@ -23,8 +32,10 @@ class TopicsController < ApplicationController
   end
 
   def get_stories_and_story_from_topic(topic)
-    count = topic.try(:stories).try(:count) || 0
-    stories = topic.try(:stories).try(:order, date_time: :desc, title: :asc).try(:where, is_approved: true).try(:page, 0).try(:per, count)
+    # count = topic.try(:stories).try(:count) || 0
+    # stories = topic.try(:stories).try(:order, date_time: :desc, title: :asc).try(:where, is_approved: true).try(:page, 0).try(:per, count)
+    page = params[:page] || 1
+    stories = topic.try(:stories).try(:order, date_time: :desc, title: :asc).try(:where, is_approved: true).try(:page, page)
     story = stories.try(:first)
     return stories, story
   end
