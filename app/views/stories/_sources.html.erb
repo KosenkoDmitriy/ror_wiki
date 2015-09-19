@@ -1,31 +1,13 @@
-<% collection_select(:story, :source_ids, @sources, :id, :title_and_url, {prompt: false, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
-<div id="sources">
+ <div id="sources">
   <%= f.fields_for :sources, allow_destroy: true, new_record: true do |source| %>
-      <% source.collection_select(:id, @sources.to_a, :id, :title_and_url, {:selected => @story.try(:sources).try(:map, &:id), include_blank: true, include_hidden: false}, {multiple: true, class: 'form-control'}) %>
-      <% collection_select(:source, :id, @sources, :id, :title_and_url, {prompt: true, include_blank: true, include_hidde: false}, {multiple: true, class: 'form-control'}) %>
-
       <div class="row">
         <%= render partial: "stories/source_fields", locals: {f: source} %>
       </div>
-      <!--<div class="row">-->
-      <!--<div class="col-sm-4">-->
-      <!--
-      <% source.label :title, class: "" %>-->
-      <!--<%= source.text_field :title, class: "btn-block", placeholder: t("source.title") %>-->
-      <!--</div>-->
-      <!--<div class="col-sm-8">-->
-      <!--
-      <% source.label :url, class: "" %>-->
-      <!--<%= source.text_field :url, class: "btn-block", placeholder: t("source.url") %>-->
-      <!--</div>-->
-      <!--</div>-->
+      <% source.label :title, class: "" %>
+      <% source.label :url, class: "" %>
   <% end %>
   <div class="links">
-    <!--<p class="add-new-source">-->
       <%= link_to_add_association t("cocoon.sources.add"), f, :sources, class: "add-new-source-span" %>
-    <!--</p>-->
-    <!--<p class="add-new-source"><span><a href="#"> + Add Another Source</a></span></p>-->
-
   </div>
 </div>
 <% f.text_field :sources, class: "form-control", rows: 5, id: "story_source", placeholer: t('story.source') %>

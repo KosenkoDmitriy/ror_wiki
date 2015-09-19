@@ -3,17 +3,16 @@
 
     <% if @moderation.present? %>
 
-        <h3><%= t("story.edit") %> <%= @moderation.try(:title) || t("story.label") %>
+        <h3><%= t("moderation.edit") %>: <%= @moderation.try(:title).present? ? @moderation.try(:title)  : t("moderation.no_title") %>
           <%#= @moderation.try(:date_time).try(:present?) ? "(#{@moderation.try(:date_time)})" : "" #%></h3>
-        <%= render partial: "shared/story_topics", locals: {items: @moderation.try(:topics)} %>
-        <br>
+         <br>
         <%= form_for @moderation, url: {action: "update"}, html: {class: "form-horizontal story_form"} do |f| %>
 
             <%= render partial: "form", locals: {f: f} %>
 
         <% end %>
     <% else %>
-        <h3><%= t("no_story") %></h3>
+        <h3><%= t("moderation.not_found") %></h3>
     <% end %>
 
   </div>

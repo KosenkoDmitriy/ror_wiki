@@ -3,8 +3,10 @@ class ModerationsController < ApplicationController
 
   def show
     @story = get_story_by_params()
+    @topic = @story.try(:topics).try(:last)
     @moderation = get_moderation_by_params()
     @story = @moderation.try(:story)  if !@story.present?# && @moderation.present?
+    @topic = @moderation.try(:topics).try(:last)
   end
 
   def edit
@@ -45,6 +47,13 @@ class ModerationsController < ApplicationController
 
     @sources, @topics = get_sources_and_topics()
     @story, @topic = get_story_and_topic_from_params()
+
+    if @story.present?
+      @moderation.title = @story.title
+      @moderation.text = @story.text
+      # @moderation.sources = @story.sources
+      @moderation.date_time = @story.date_time
+    end
   end
 
   def create
@@ -53,19 +62,48 @@ class ModerationsController < ApplicationController
 
     @moderation = get_moderation_by_params()
     if simple_captcha_valid?
+      # @moderation.update_attributes(moderation_params.except(:id,:sources_attributes))
       @moderation.update_attributes(moderation_params)
+
       if @moderation.save!
-        redirect_to (@moderation)
+        # redirect_to (@moderation)
+        redirect_to_edit_moderation()
       else
-        render "new"
+        redirect_to_new_moderation()
       end
     else
       #todo: display error message to frontend
-      render "new"
+      redirect_to_new_moderation
     end
   end
 
   private
+
+  def redirect_to_edit_moderation
+    if @topic.present? && @moderation.present?
+      if  @story.present?
+        redirect_to edit_topic_story_moderation_path(@topic, @story, @moderation)
+      else
+        redirect_to edit_topic_moderation_path(@topic, @moderation)
+      end
+    else
+      render "edit"
+    end
+  end
+
+  def redirect_to_new_moderation
+    if @topic.present?
+      if  @story.present?
+        redirect_to new_topic_story_moderation_path(@topic, @story)
+      else
+        redirect_to new_topic_moderation_path(@topic)
+      end
+    else
+      render "new"
+    end
+  end
+
+
   def moderation_params
     params.require(:moderation).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end

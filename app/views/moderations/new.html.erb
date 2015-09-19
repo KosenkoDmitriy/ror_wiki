@@ -7,6 +7,7 @@
 
             <h1><%= t("story.edit") %>: <%= @story.try(:title) %>
               <%#= @story.try(:date_time).try(:present?) ? "(#{@story.try(:date_time).try(:strftime, "%b %Y %H:%M")})" : "" #%></h1>
+            <%= render partial: "shared/story_topics", locals: {items: @moderation.try(:topics)} %>
 
         <% else # create action   %>
             <h1><%= t("story.new") %></h1>

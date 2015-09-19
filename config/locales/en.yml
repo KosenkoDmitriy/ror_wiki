@@ -39,6 +39,10 @@ en:
     url: "URL/Link"
   topic:
     title: "Topic"
+  moderation:
+    edit: "+ Edit Moderation"
+    no_title: "Empty title"
+    not_found: "Moderation is not found"
   story:
     submit: "Submit"
     add: "+ Add Story"
