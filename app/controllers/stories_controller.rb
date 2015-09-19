@@ -2,28 +2,12 @@ class StoriesController < ApplicationController
   include SimpleCaptcha::ControllerHelpers
 
   def ajax
-    page = params[:page] || 1
-    topic_id = params[:topic_id] if params[:topic_id].present?
-    if topic_id.present?
-      @stories, @topic = get_stories_and_topic_by_topic_id(topic_id, page)
-      @story = @stories.try(:first)
-    else
-      @stories = Story.order(date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
-      @story = @stories.try(:first)
-    end
+    get_stories
   end
 
 
   def index
-    page = params[:page] || 1
-    topic_id = params[:topic_id] if params[:topic_id].present?
-    if topic_id.present?
-      @stories, @topic = get_stories_and_topic_by_topic_id(topic_id, page)
-      @story = @stories.try(:first)
-    else
-      @stories = Story.order(date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
-      @story = @stories.try(:first)
-    end
+    get_stories
   end
 
   def show
@@ -100,6 +84,20 @@ class StoriesController < ApplicationController
 
 
   private
+
+
+  def get_stories
+    page = params[:page] || 1
+    topic_id = params[:topic_id] if params[:topic_id].present?
+    if topic_id.present?
+      @stories, @topic = get_stories_and_topic_by_topic_id(topic_id, page)
+      @story = @stories.try(:first)
+    else
+      @stories = Story.order(date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
+      @story = @stories.try(:first)
+    end
+  end
+
 
   def update_or_create_story params
     # TODO: assign topic to story
