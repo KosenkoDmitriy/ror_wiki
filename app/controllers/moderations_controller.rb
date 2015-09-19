@@ -31,13 +31,16 @@ class ModerationsController < ApplicationController
         @story.save
       end
       if @moderation.save
-        redirect_to (@moderation)
+        redirect_to_edit_moderation()
+        # redirect_to (@moderation)
       else
-        render "edit"
+        # render "edit"
+        redirect_to_edit_moderation()
       end
     else
       #todo: display error message to frontend
-      render "edit"
+      # render "edit"
+      redirect_to_edit_moderation()
     end
   end
 

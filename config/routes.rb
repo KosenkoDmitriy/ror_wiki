@@ -9,9 +9,9 @@ Rails.application.routes.draw do
 
   get 'home' => 'home#home', as: :home
 
-  resources :stories
+  # resources :stories
   resources :topics
-  resources :moderations
+  # resources :moderations
 
 
   # get 'stories' => 'home#stories', as: :story_list

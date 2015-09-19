@@ -19,5 +19,6 @@ class HomeController < ApplicationController
     per_page = params[:per] || 10
     @stories = Story.order(date_time: :desc, title: :asc).try(:page, page).try(:per,per_page)
     @story = @stories.try(:first)
+    @topic = @story.try(:topics).try(:last)
   end
 end

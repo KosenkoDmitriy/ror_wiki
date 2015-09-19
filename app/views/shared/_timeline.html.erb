@@ -23,16 +23,16 @@
                 <div class="timeline-panel">
           <% end %>
 
-
+          <% url_story=topic_story_path(item.try(:topics).try(:last), item) %>
           <div class="timeline-heading">
             <div class="round"></div>
             <p class="text-muted"><%= item.try(:date_time).try(:strftime, "%d %B %H:%M") %></p>
-            <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), story_path(item) %></h4>
+            <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story %></h4>
           </div>
           <div class="timeline-body">
             <p>
               <%= @story.try(:stext).try(:html_safe) %>
-              (<%= link_to t("story.read_more"), story_path(item), class: "read-more" %>)</p>
+              (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)</p>
 
             <p class="autor">Listed Under:
               <!--<a href="#">Barac Obama</a>-->

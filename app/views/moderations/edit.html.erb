@@ -5,9 +5,11 @@
 
         <h3><%= t("story.edit") %> <%= @moderation.try(:title) || t("story.label") %>
           <%#= @moderation.try(:date_time).try(:present?) ? "(#{@moderation.try(:date_time)})" : "" #%></h3>
-        <%= render partial: "shared/story_topics", locals: {items: @moderation.try(:topics)} %>
+            <%= render partial: "shared/story_topics", locals: {items: @moderation.try(:topics)} %>
         <br>
-        <%= form_for @moderation, url: {action: "update"}, html: {class: "form-horizontal story_form"} do |f| %>
+        <% form_url = topic_story_moderation_url(@topic, @story, @moderation) if @topic.present? && @story.present? && @moderation.present? %>
+        <% form_url = topic_moderation_url(@topic, @moderation) if @topic.present? && @moderation.present? %>
+        <%= form_for @moderation, url:form_url, action:"update", html: {class: "form-horizontal story_form"} do |f| %>
 
             <%= render partial: "form", locals: {f: f} %>
 
