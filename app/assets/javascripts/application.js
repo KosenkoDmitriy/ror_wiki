@@ -20,3 +20,4 @@
 //= require moment
 //= require bootstrap-datetimepicker
 // end date picker
+//= require javascript_infinite_scroll
