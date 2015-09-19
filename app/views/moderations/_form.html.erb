@@ -1,3 +1,6 @@
+<%=link_to t("back.story").try(:upcase), topic_story_path(@topic, @story), method:"get", class:"pull-left btn-edit" if @topic.present? && @story.present?%>
+<%=link_to t("back.topic").try(:upcase), topic_path(@topic), method:"get", class:"pull-right btn-edit" if @topic.present? %>
+
 <%= hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
 <%= hidden_field_tag "story_id", @story.try(:id) || 0 %>
 <div class="row center-block">
