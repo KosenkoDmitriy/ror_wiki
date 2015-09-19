@@ -11,15 +11,17 @@ Rails.application.routes.draw do
 
   resources :stories
   resources :topics
-  resources :moderations
+  # resources :moderations
 
 
   # get 'stories' => 'home#stories', as: :story_list
 
-  # resources :topics do
-  #   resources :stories do
-  #   end
-  # end
+  resources :topics do
+    resources :moderations
+    resources :stories do
+      resources :moderations
+    end
+  end
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

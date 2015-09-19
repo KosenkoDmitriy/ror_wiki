@@ -37,7 +37,10 @@ en:
     lable: "Source"
     title: "Name/Title"
     url: "URL/Link"
+  topic:
+    title: "Topic"
   story:
+    submit: "Submit"
     add: "+ Add Story"
     label: "Story"
     title: "Story title"
@@ -49,7 +52,7 @@ en:
     details: "deatails ..."
     read_more: "Read More"
     no: "#"
-    new: "New"
+    new: "Create New Story"
     edit: "+ Edit Story"
     next: "Next >>"
     prev: "<< Prev"
@@ -68,9 +71,12 @@ en:
     defaults:
       add: "+"
       remove: "-"
-    sources:
+    sources_old:
       add: "Add new source"
       remove: "Remove old source"
+    sources:
+      add: "+ Add Another Source"
+      remove: "x"
   activerecord:
     models:
       Story:

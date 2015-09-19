@@ -1,0 +1,20 @@
+<div class="nested-fields">
+  <div class="row">
+      <div class="field">
+        <div class="col-sm-4">
+          <%= f.text_field :title, class: "form-control btn-block", placeholder: t("source.title") %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="col-sm-7">
+          <%= f.text_field :url, class: "form-control btn-block", placeholder: t("source.url") %>
+        </div>
+      </div>
+
+      <div class="col-sm-1">
+        <%= link_to_remove_association (t("cocoon.sources.remove")), f, class: "remove-new-source-span" %>
+      </div>
+    </div>
+  <br>
+
+</div>

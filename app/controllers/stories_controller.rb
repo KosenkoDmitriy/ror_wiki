@@ -22,6 +22,7 @@ class StoriesController < ApplicationController
       @story = Story.find_by(id: id) if Story.exists?(id: id)
     elsif id.present?
       @story = Story.find(id)
+      @topic = @story.try(:topics).try(:last)
       @stories = @story.try(:topics).try(:last).try(:stories).try(:order, date_time: :desc, title: :asc).try(:where, is_approved:true).try(:page, page)
       #@stories = Story.order(date_time: :desc, title: :asc) if @stories.blank?
     else

@@ -25,7 +25,8 @@ html, body{ height: 100%; font-family: ProximaNova; font-weight: 300;}
 .form-horizontal .control-label{font-size: 20px;font-weight: 300;} .form-group{margin-bottom: 20px;}
 .form-control {color: #333; font-size: 16px;  border: 1px solid #ccc; border-radius: 20px; -webkit-box-shadow: none; box-shadow: none;  }
 .form-control:focus {border-color: #dedede;;outline: 0;-webkit-box-shadow: none;box-shadow: none;}  textarea{resize: none;}
-.add-new-source{margin-top: 10px;} .add-new-source span a{color:  #adafb1; font-size: 14px; border-bottom: 1px solid #adafb1;padding: 10px 0 0; text-decoration: none;}
+.add-new-source{margin-top: 10px;}
+
 .topic{margin-top: 7px;color:  #a7a9ac; font-size: 20px;} .add-topic{margin: 45px 0 1px;}
 
 .btn-donate{border: 2px solid #16B0B9; margin-top: 10px; border-radius: 18px;color:#16B0B9; width: 110px; height: 30px; background-color:transparent;outline: none; }
@@ -65,4 +66,22 @@ html, body{ height: 100%; font-family: ProximaNova; font-weight: 300;}
     .pull-right{float: none!important;}
     .form-control{margin-top: 10px;}
     .navbar{max-height: 100%;}
+}
+
+
+a.add-new-source-span {
+  color:  #adafb1;
+  font-size: 18px;
+  //border-bottom: 1px solid #adafb1;
+  padding: 10px 0 0;
+  text-decoration: underline;
+  font-style:normal;
+}
+
+a.remove-new-source-span{
+  color: #adafb1 !important;
+  font-size: 22px;
+  //border-bottom: 1px solid #adafb1;
+  padding: 10px 0 0;
+  text-decoration: none;
 }
