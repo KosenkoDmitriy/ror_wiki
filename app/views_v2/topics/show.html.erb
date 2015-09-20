@@ -1,0 +1,21 @@
+<div class="container container-story">
+  <div class="title-header text-center">
+    <h1><%= @topic.try(:title) %></h1>
+
+    <p><%= t("timeline") %></p>
+  </div>
+
+  <div class=" text-center">
+    <!--<button class="">+ ADD STORY</button>-->
+    <% hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
+
+    <%#=link_to t("story.add").try(:upcase), new_moderation_path, class:"pull-right btn-edit", role:"button" #%>
+    <%#=button_to t("story.add").try(:upcase), new_topic_story_moderation_path(@topic, @story), method:"get", class:"pull-right btn-edit" #%>
+    <%#= button_to("Add WorkRequest", {:controller => "moderation", :action => "new", :topic_id => @topic.try(:id)}, class:"pull-right btn-edit")#%>
+    <%=button_to t("story.add").try(:upcase), new_topic_moderation_path(@topic), method:"get", class:"pull-right btn-edit" %>
+
+  </div>
+
+  <%= render partial: "shared/timeline" %>
+
+</div>

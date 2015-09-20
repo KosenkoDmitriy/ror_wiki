@@ -1,0 +1,14 @@
+<% items = @stories %>
+$("#append_items").append("<%= escape_javascript(render partial: 'shared/timeline_for_append', locals: { errors:@errors, items: items } ) %>");
+//    console.log("append");
+console.log("cur_page: "+<%=items.current_page%>);
+/* Updating of the ajax pagination. */
+<% if items.current_page == items.total_pages %>
+$('nav .pager a').remove();
+<% else %>
+var url = '<%= url_for(page: items.current_page + 1) %>';
+var url_filter_params = $('form#form_filters').serialize();
+url = url + "&" + url_filter_params;
+//    console.log(url);
+$('nav .pager a').attr('href', url);
+<% end %>

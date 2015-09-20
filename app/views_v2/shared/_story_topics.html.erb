@@ -1,0 +1,7 @@
+<%# if items.present? && items.any? #%>
+    <% items.try(:each) do |topic| %>
+        <%= topic.present? ? link_to(topic.try(:title), topic_path(topic)) : "" %>,
+    <% end %>
+<%# else #%>
+
+<%# end #%>

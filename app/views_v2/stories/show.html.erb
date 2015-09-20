@@ -17,7 +17,7 @@
           <p><%=@story.try(:text).try(:html_safe)%></p>
 
           <p class="autor line">Listed Under:
-            <%= render partial: "shared/story_topics", locals: {items: @story.try(:topics)} %></p>
+          <%= render partial: "shared/story_topics", locals: {items: @story.try(:topics)} %></p>
 
           <div class="row">
             <div class="col-lg-12 clearfix">

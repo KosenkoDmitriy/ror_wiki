@@ -1,0 +1,27 @@
+<% items =  @stories if @stories.present? and @stories.any? %>
+<% if items.present? and items.any? %>
+
+    <!--<div id="append_items" class="append_items"></div>-->
+    <ul id="append_items" class="timeline timeline-home">
+      <%= render partial: "shared/timeline_for_append", locals: {items: items} %>
+    </ul>
+
+    <% render partial: "shared/spinner" %>
+
+    <% if items.present? %>
+        <!--pagination with load_more button-->
+        <div class="col-md-12">
+          <% unless items.current_page == items.total_pages %>
+              <nav>
+                <ul class="pager">
+                  <li id="view-more ">
+                    <%= link_to(t("load_more"), url_for(:controller => 'stories', :action => 'ajax', page: items.current_page + 1), remote: true, class: "btn-group-justified") %>
+                  <li>
+                </ul>
+              </nav>
+          <% end %>
+    <% end %>
+
+<% else %>
+    <p class="text-center"><%= t("no_stories") %></p>
+<% end %>

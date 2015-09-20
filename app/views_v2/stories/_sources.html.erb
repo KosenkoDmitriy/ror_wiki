@@ -1,0 +1,13 @@
+ <div id="sources">
+  <%= f.fields_for :sources, allow_destroy: true, new_record: true do |source| %>
+      <div class="row">
+        <%= render partial: "stories/source_fields", locals: {f: source} %>
+      </div>
+      <% source.label :title, class: "" %>
+      <% source.label :url, class: "" %>
+  <% end %>
+  <div class="links">
+      <%= link_to_add_association t("cocoon.sources.add"), f, :sources, class: "add-new-source-span" %>
+  </div>
+</div>
+<% f.text_field :sources, class: "form-control", rows: 5, id: "story_source", placeholer: t('story.source') %>

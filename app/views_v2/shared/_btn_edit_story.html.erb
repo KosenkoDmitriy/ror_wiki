@@ -1,0 +1,9 @@
+<% @moderation = Moderation.new if @moderation.blank? %>
+
+<% if @moderation.present? %>
+    <% if @moderation.try(:id).try(:present?)%>
+        <%=button_to t("story.edit").try(:upcase), edit_topic_story_moderation_path(@topic, @story, @moderation), method:"get", class:"pull-right btn-edit" %>
+    <% else %>
+        <%=button_to t("story.edit").try(:upcase), new_topic_story_moderation_path(@topic, @story), method:"get", class:"pull-right btn-edit" %>
+    <% end %>
+<% end %>

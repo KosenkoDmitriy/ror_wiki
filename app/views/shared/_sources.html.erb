@@ -1,3 +1,3 @@
 <% @story.try(:sources).try(:uniq).try(:each) do |source| %>
-<p class="links"><%= source.try(:title) %> <%= link_to source.try(:url), source.try(:url) %> </p>
+    <p class="links"><%= source.try(:title) %> <%= link_to source.try(:url), source.try(:url) %> </p>
 <% end %>

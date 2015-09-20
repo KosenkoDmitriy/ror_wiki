@@ -1,0 +1,81 @@
+<%=link_to t("back.story").try(:upcase), topic_story_path(@topic, @story), method:"get", class:"pull-left btn-edit" if @topic.try(:id).try(:present?) && @story.try(:id).try(:present?) %>
+<%=link_to t("back.topic").try(:upcase), topic_path(@topic), method:"get", class:"pull-right btn-edit" if @topic.try(:id).try(:present?) %>
+
+<%= hidden_field_tag "topic_id", @topic.try(:id) || 0 %>
+<%= hidden_field_tag "story_id", @story.try(:id) || 0 %>
+<div class="row center-block">
+  <div class="col-lg-offset-2 col-lg-7 col-md-offset-2 col-md-7  col-sm-offset-1 col-sm-9 ">
+    <form class="form-horizontal" role="form">
+
+      <div class="form-group add-topic">
+        <label class="col-lg-4 col-md-4 col-sm-4 col-xs-3  control-label"><%= t("topic.title") %>:</label>
+
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-9">
+          <p class="topic"><%=@topic.try(:title) || t("no_topic")%></p>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="title" class="col-lg-4  col-md-4 col-sm-4 control-label"><%= t("story.title") %>:</label>
+
+        <div class="col-lg-8  col-md-8 col-sm-8 ">
+          <%= f.text_field :title, class: "form-control", id: "story_title", placeholer: t('story.title') %>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="description" class="col-lg-4 col-md-4 col-sm-4 control-label"><%=t("story.text")%>:</label>
+
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <!--<textarea class="form-control" rows="9" id="description"></textarea>-->
+          <%= f.text_area :text, class: "form-control", rows: 9, id: "story_text", placeholer: t('story.text') %>
+        </div>
+      </div>
+
+
+      <div class="form-group add-topic">
+        <label class="col-lg-4 col-md-4 col-sm-4 col-xs-3  control-label"><%=t("story.date_time")%>:</label>
+
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-9">
+          <p class="date_time">
+            <%= f.text_field :date_time, class: "form-control", id: "datetimepicker4", placeholer: t('story.date_time') %></p>
+          <% f.datetime_field :date_time, class: "form-control", placeholer: t('story.date_time') %>
+          <script type="text/javascript">
+              $(function () {
+                  $('#datetimepicker4').datetimepicker();
+              });
+          </script>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="source" class="col-lg-4 col-md-4 col-sm-4 control-label"><%=t("story.sources")%>:</label>
+
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <%= render partial: "stories/sources", locals: {f: f} %>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="story_captcha" class="col-lg-4 col-md-4 col-sm-4 control-label"><%= t("captcha") %>:</label>
+
+        <div class="col-lg-8 col-md-8 col-sm-8">
+          <%= show_simple_captcha %>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-lg-offset-4 col-lg-8 col-md-offset-4 col-md-8 col-sm-offset-4 col-sm-8">
+
+          <%= f.submit t("story.submit").try(:upcase), class: "btn btn-submit form-control" %>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
