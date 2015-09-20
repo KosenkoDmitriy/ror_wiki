@@ -1,0 +1,14 @@
+<div class="container container-story center-block">
+  <div class="title-header text-center">
+    <% if @story.try(:present?) %>
+        <h1><%= t("story.new") %>
+          <% form_url = topic_unconfirmed_stories_url(@topic) if @topic.present? %>
+
+          <%= form_for @story, url: form_url, action: "create", method: "POST", html: {class: "form-horizontal story_form"} do |f| %>
+              <%= render partial: "stories/form", locals: {f: f} %>
+          <% end %>
+    <% else %>
+        <h3><%= t(:no_story)%></h3>
+    <% end %>
+  </div>
+</div>

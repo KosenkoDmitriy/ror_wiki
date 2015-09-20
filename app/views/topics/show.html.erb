@@ -6,7 +6,7 @@
   </div>
 
   <div class=" text-center">
-    <%= button_to t("story.add").try(:upcase), new_topic_story_path(@topic), method: "get", class: "pull-right btn-edit" %>
+    <%= button_to t("story.add").try(:upcase), new_topic_unconfirmed_story_path(@topic), method: "get", class: "pull-right btn-edit" %>
   </div>
 
   <%= render partial: "shared/timeline" %>

@@ -1,0 +1,8 @@
+<% errors = @errors %>
+<% if errors.present? and errors.any? %>
+    <% errors.each do |error| %>
+        <p class="text-danger">
+          <%= error %>
+        </p>
+    <% end %>
+<% end %>
