@@ -10,15 +10,6 @@ class StoriesController < ApplicationController
     get_stories
   end
 
-  def unconfirmed
-    # id = params[:id] if params[:id].present?
-    # tid = params[:topic_id] if params[:topic_id].present?
-    # sid = params[:story_id] if params[:story_id].present?
-    # @story = Story.find_by(id: sid) if Story.exists?(id: sid)
-    # @topic = Topic.find_by(id: tid) if Topic.exists?(id: tid)
-    @story, @topic = get_uncofirmed_story_and_topic_from_params()
-    render template: "stories/unconfirmed/show"
-  end
 
   def show
     id = params[:id] if params[:id].present?
@@ -42,7 +33,7 @@ class StoriesController < ApplicationController
     if simple_captcha_valid?
       @story = Story.new(story_params)
       if @story.save!
-        redirect_to topic_story_story_unconfirmed_path(@topic, @story)
+        redirect_to topic_unconfirmed_story_path(@topic, @story)
       else
         render new_topic_story_path(@topic)
       end
@@ -71,7 +62,7 @@ class StoriesController < ApplicationController
     if simple_captcha_valid?
       if new_story.save!
         # redirect_to_edit new_story
-        redirect_to topic_story_story_unconfirmed_path @topic, new_story
+        redirect_to topic_unconfirmed_story_path @topic, new_story
       else
         redirect_to_edit @story
       end
@@ -84,12 +75,10 @@ class StoriesController < ApplicationController
 
   private
 
-  def get_uncofirmed_story_and_topic_from_params
-    tid = params[:topic_id] if params[:topic_id].present?
-    sid = params[:story_id] if params[:story_id].present?
-    story = Story.find_by(id: sid) if Story.exists?(id: sid)
-    topic = Topic.find_by(id: tid) if Topic.exists?(id: tid)
-    return story, topic
+
+  def story_params
+    #params.require(:story).permit(:title, :text, :topic_ids, :source_ids,  topic_ids:[], source_ids:[], :topic_ids=>{:id=>[]}, :source_ids=>{:id=>[]})
+    params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
 
   def create_story_unconfirmed
@@ -101,7 +90,10 @@ class StoriesController < ApplicationController
     @story = Story.find(id) if Story.exists?(id)
 
 
-    new_story = Story.new(story_params.except(:id, :is_approved))
+    new_story = Story.new(story_params.except(:id, :is_approved,:sources_attributes ))
+    new_story.save!
+    # new_story.topics.build
+    # new_story.topics = [topic]
     # story.attributes = story_orig.attributes
     # story.id=nil
     # story.is_approved=false
@@ -129,11 +121,6 @@ class StoriesController < ApplicationController
       @stories = Story.order(date_time: :desc, title: :asc).try(:where, is_approved: true).try(:page, page)
       @story = @stories.try(:first)
     end
-  end
-
-  def story_params
-    #params.require(:story).permit(:title, :text, :topic_ids, :source_ids,  topic_ids:[], source_ids:[], :topic_ids=>{:id=>[]}, :source_ids=>{:id=>[]})
-    params.require(:story).permit(:title, :text, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
 
   def get_stories_and_topic_by_topic_id(topic_id, page)

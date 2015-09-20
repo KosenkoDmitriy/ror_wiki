@@ -1,6 +1,6 @@
 ActiveAdmin.register Moderation do
   menu priority: 1, label: "Moderation Queue"
-
+  menu false
   # permit_params do
   #   permitted = [:title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy]]
   #   # permitted << :id if resource.Moderation

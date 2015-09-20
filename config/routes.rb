@@ -10,7 +10,10 @@ Rails.application.routes.draw do
 
   resources :topics do
     resources :stories do
-      get 'unconfirmed' => 'stories#unconfirmed', as: :story_unconfirmed
+      # get 'unconfirmed' => 'stories#unconfirmed', as: :story_unconfirmed
+    end
+    namespace :unconfirmed do
+      resources :stories
     end
   end
 

@@ -1,9 +1,0 @@
-<% @story = Strory.new if @story.blank? %>
-
-<% if @story.present? %>
-    <% if @story.try(:id).try(:present?)%>
-        <%=button_to t("story.edit").try(:upcase), edit_topic_story_path(@topic, @story), method:"get", class:"pull-right btn-edit" %>
-    <% else %>
-        <%=button_to t("story.add").try(:upcase), new_topic_story_path(@topic), method:"get", class:"pull-right btn-edit" %>
-    <% end %>
-<% end %>

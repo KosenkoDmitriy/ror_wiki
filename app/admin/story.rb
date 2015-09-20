@@ -9,7 +9,7 @@ ActiveAdmin.register Story do
       ul do
         if story.sources.present? && story.sources.any?
           story.sources.each do |source|
-            li link_to "#{source.title} (#{source.updated_at.strftime("%d/%m/%y %H:%M")})", admin_source_path(source)
+            li link_to "#{source.try(:title)} (#{source.try(:updated_at).try(:strftime, "%d/%m/%y %H:%M")})", admin_source_path(source)
           end
         else
           li "Source hasn't been added to the story: #{story.try(:title) || 'no story'}"
@@ -19,23 +19,23 @@ ActiveAdmin.register Story do
       ul do
         if story.topics.present? && story.topics.any?
           story.topics.each do |topic|
-            li link_to "#{topic.title} (#{topic.date_time.strftime("%d/%m/%y %H:%M")})", admin_topic_path(topic)
+            li link_to "#{topic.try(:title)} (#{topic.try(:date_time).try(:strftime, "%d/%m/%y %H:%M")})", admin_topic_path(topic)
           end
         else
           li "Topic hasn't been added to the story: #{story.try(:title) || 'no story'}"
         end
       end
 
-      li link_to "Moderations", admin_moderations_path()
-      ul do
-        if story.moderations.present? && story.moderations.any?
-          story.moderations.each do |item|
-            li link_to "#{item.title} (#{item.date_time.strftime("%d/%m/%y %H:%M")})", admin_moderation_path(item)
-          end
-        else
-          li "Moderation hasn't been added to the story: #{story.try(:title) || 'no story'}"
-        end
-      end
+      # li link_to "Moderations", admin_moderations_path()
+      # ul do
+      #   if story.moderations.present? && story.moderations.any?
+      #     story.moderations.each do |item|
+      #       li link_to "#{item.title} (#{item.date_time.strftime("%d/%m/%y %H:%M")})", admin_moderation_path(item)
+      #     end
+      #   else
+      #     li "Moderation hasn't been added to the story: #{story.try(:title) || 'no story'}"
+      #   end
+      # end
     end
   end
 

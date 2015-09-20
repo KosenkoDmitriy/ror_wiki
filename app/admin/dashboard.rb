@@ -11,35 +11,35 @@ ActiveAdmin.register_page "Dashboard" do
     # end
 
     #Here is an example of a simple dashboard with columns and panels.
-    columns do
-      column do
-        panel "Info" do
-          para "Welcome to Mattnhew Wiki."
-        end
-      end
-    end
+    # columns do
+    #   column do
+    #     panel "Info" do
+    #       para "Welcome to Matthew Wiki."
+    #     end
+    #   end
+    # end
 
-    columns do
-      column do
-        panel "Recent stories of the Moderation Queue" do
-          table do
-            th t("activerecord.models.Moderation.other")
-            th t("activerecord.attributes.moderation.stext")
-            th t("activerecord.attributes.moderation.date_time")
-            # th "created date"
-            # th "updated date"
-            Moderation.last(30).reverse.map do |post|
-              tr
-              td link_to(post.title, admin_moderation_path(post))
-              td post.stext
-              td post.date_time
-              # td post.created_at
-              # td post.updated_at
-            end
-          end
-        end
-      end
-    end
+    # columns do
+    #   column do
+    #     panel "Recent stories of the Moderation Queue" do
+    #       table do
+    #         th t("activerecord.models.Moderation.other")
+    #         th t("activerecord.attributes.moderation.stext")
+    #         th t("activerecord.attributes.moderation.date_time")
+    #         # th "created date"
+    #         # th "updated date"
+    #         Moderation.last(30).reverse.map do |post|
+    #           tr
+    #           td link_to(post.title, admin_moderation_path(post))
+    #           td post.stext
+    #           td post.date_time
+    #           # td post.created_at
+    #           # td post.updated_at
+    #         end
+    #       end
+    #     end
+    #   end
+    # end
 
     columns do
       column do
