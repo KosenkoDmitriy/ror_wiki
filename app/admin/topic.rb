@@ -6,7 +6,7 @@ ActiveAdmin.register Topic do
   filter :stext
   filter :text
   filter :date_time
-  
+
   permit_params :title, :text, :stext, :is_approved
 
   index do
