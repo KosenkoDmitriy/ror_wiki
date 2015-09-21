@@ -10,9 +10,11 @@ class Unconfirmed::StoriesController < ApplicationController
   end
 
   def new
-    tid = params[:topic_id] if params[:topic_id].present?
-    @topic = Topic.find(tid) if Topic.exists?(tid)
-    @story = Story.new
+    # tid = params[:topic_id] if params[:topic_id].present?
+    # @topic = Topic.find(tid) if Topic.exists?(tid)
+    # @story = Story.new
+    @story, @topic = get_uncofirmed_story_and_topic_from_params
+
   end
 
   def update
@@ -39,6 +41,8 @@ class Unconfirmed::StoriesController < ApplicationController
     @story, @topic = get_uncofirmed_story_and_topic_from_params()
 
     if simple_captcha_valid?
+      @story = Story.new story_params if @story.id.blank? && params[:story].present?
+
       # @moderation.update_attributes(moderation_params.except(:id,:sources_attributes))
       @story.update_attributes(story_params)
       # dt=story_params[:date_time]
@@ -74,8 +78,11 @@ class Unconfirmed::StoriesController < ApplicationController
     sid = params[:story_id] if params[:story_id].present?
 
     id = sid if id.blank? and sid.present?
-    story = Story.find(id) if Story.exists?(id)
-    story = Story.new story_params if story.blank?
+
+    # if Story.exists?(id)
+      story = Story.find(id)
+    #   story = story_orig.dup
+    # end
     return story, topic
   end
 

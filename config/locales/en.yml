@@ -41,6 +41,7 @@ en:
     title: "Name/Title"
     url: "URL/Link"
   topic:
+    no_topic: "Default Topic"
     title: "Topic"
   moderation:
     edit: "+ Edit Moderation"

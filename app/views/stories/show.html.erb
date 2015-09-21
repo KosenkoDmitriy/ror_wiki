@@ -2,11 +2,12 @@
   <div class="title-header text-center">
     <h1><%= @story.try(:title)%></h1>
     <p class="text-muted"><%= @story.try(:date_time).try(:strftime, "%d %B %H:%M") %></p>
-
   </div>
+
   <div class="text-center">
     <%= render partial: "shared/btn_edit_story"%>
   </div>
+
   <ul class="timeline one-story">
     <li>
       <div class="timeline-badge"><%= @story.try(:date_time).try(:strftime, "%b %Y") %></div>

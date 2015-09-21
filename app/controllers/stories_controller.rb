@@ -48,33 +48,32 @@ class StoriesController < ApplicationController
   # end
 
 
-  # def edit
-  #   id = params[:id]
-  #   @story = Story.find(id) if Story.exists?(id)
-  #
-  #   tid = params[:topic_id]
-  #   @topic = Topic.find(tid) if Topic.exists?(tid)
-  #   # @topic = @story.try(:topics).try(:last)
-  #
-  #   # redirect_to_edit
-  # end
+  def edit
+    id = params[:id]
+    @story = Story.find(id) if Story.exists?(id)
+
+    tid = params[:topic_id]
+    @topic = Topic.find(tid) if Topic.exists?(tid)
+    # @topic = @story.try(:topics).try(:last)
+
+  end
 
 
-  # def update
-  #   new_story, @topic = create_story_unconfirmed
-  #
-  #   if simple_captcha_valid?
-  #     if new_story.save!
-  #       # redirect_to_edit new_story
-  #       redirect_to topic_unconfirmed_story_path @topic, new_story
-  #     else
-  #       redirect_to_edit @story
-  #     end
-  #   else
-  #     #todo: display error message to frontend
-  #     redirect_to_edit @story
-  #   end
-  # end
+  def update
+    new_story, @topic = create_story_unconfirmed
+
+    if simple_captcha_valid?
+      if new_story.save!
+        # redirect_to_edit new_story
+        redirect_to topic_unconfirmed_story_path @topic, new_story
+      else
+        redirect_to_edit @story
+      end
+    else
+      #todo: display error message to frontend
+      redirect_to_edit @story
+    end
+  end
 
 
   private
@@ -92,41 +91,13 @@ class StoriesController < ApplicationController
   def create_story_unconfirmed
     tid = params[:topic_id]
     topic = Topic.find(tid) if Topic.exists?(tid)
-    # topic = story.try(:topics).try(:last)
 
     id = params[:id]
     @story = Story.find(id) if Story.exists?(id)
 
-
-    # new_story = Story.new(story_params.except(:id, :is_approved,:sources_attributes ))
-    #new_story.save!
-    # new_story.topics.build
-    # new_story.topics = [topic]
-    # story.attributes = story_orig.attributes
-    # story.id=nil
-    # story.is_approved=false
-    # story.save!
-    #@story.save!
-
     new_story = @story.dup #@story.clone for rails < 3.1
-    new_story.save
+    # new_story.save
 
-    #new_story = Story.new(story_params.except(:id, :is_approved, :sources_attributes ))
-    # new_story.save!
-    # new_story.update_attributes(params[:story][:sources_attributes])
-
-    # new_story.update_attributes(story_params)
-    # new_story.update_attributes(sources_params)
-    # new_story.assign_attributes( sources_params)
-    # source_ids = params[:story][:sources_attributes]
-    # if source_ids.present? and source_ids.any?
-    #   source_ids.each do |source_id|
-    #     if Source.exists?(source)
-    #       source = Source.find(source)
-    #       new_story.sources << source if new_story.present? and new_story.sources.present? and !new_story.sources.exists?(source)
-    #     end
-    #   end
-    # end
     return new_story, topic
   end
 

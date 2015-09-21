@@ -1,13 +1,13 @@
 <div class="container container-story center-block">
   <div class="title-header text-center">
 
-    <% if @story.present? && @topic.try(:id).try(:present?)  && @story.try(:id).try(:present?) %>
+    <% if @story.present? && @story.try(:id).try(:present?) && @topic.try(:id).try(:present?)  %>
 
         <h3><%= t("story.edit") %> <%= @story.try(:title) || t("story.label") %>
-            <%#= render partial: "shared/story_topics", locals: {items: @story.try(:topics)} #%>
         <br>
         <% form_url = topic_unconfirmed_story_url(@topic, @story) if @topic.present? && @story.present? %>
-        <%= form_for @story, url:form_url, action:"update", html: {class: "form-horizontal story_form"} do |f| %>
+          <%= form_for @story, url:form_url, action:"update", html: {class: "form-horizontal story_form"} do |f| %>
+              <%#= form_for @story, url:form_url, action:"create", html: {class: "form-horizontal story_form"} do |f| #%>
             <%= render partial: "stories/form", locals: {f: f} %>
         <% end %>
     <% else %>
