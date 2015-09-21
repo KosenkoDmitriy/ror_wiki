@@ -18,44 +18,24 @@ class StoriesController < ApplicationController
     tid = params[:topic_id]
     @topic = Topic.find(tid) if Topic.exists?(tid)
     # @topic = @story.try(:topics).try(:last)
+    redirect_to topic_unconfirmed_story_path @topic, @story
   end
 
 
-  # def new
-  #   tid = params[:topic_id]
-  #   @topic = Topic.find(tid) if Topic.exists?(tid)
-  #
-  #   @story = Story.new
-  #   # @topic = @story.try(:topics).try(:last)
-  # end
+  def new
+    @topic, @story = get_topic_story()
+    redirect_to new_topic_unconfirmed_story_path @topic
+  end
 
 
-  # def create
-  #   tid = params[:topic_id]
-  #   @topic = Topic.find(tid) if Topic.exists?(tid)
-  #
-  #   if simple_captcha_valid?
-  #     @story = Story.new(story_params)
-  #     if @story.save!
-  #       redirect_to topic_unconfirmed_story_path(@topic, @story)
-  #     else
-  #       render new_topic_story_path(@topic)
-  #     end
-  #   else
-  #     #todo: display error message to frontend
-  #     render new_topic_story_path(@topic)
-  #   end
-  # end
+  def create
+    @topic, @story = get_topic_story()
+    redirect_to new_topic_unconfirmed_story_path @topic
+  end
 
 
   def edit
-    id = params[:id]
-    @story = Story.find(id) if Story.exists?(id)
-
-    tid = params[:topic_id]
-    @topic = Topic.find(tid) if Topic.exists?(tid)
-    # @topic = @story.try(:topics).try(:last)
-
+    @topic, @story = get_topic_story()
   end
 
 
@@ -78,6 +58,14 @@ class StoriesController < ApplicationController
 
   private
 
+  def get_topic_story
+    id = params[:id]
+    @story = Story.find(id) if Story.exists?(id)
+
+    tid = params[:topic_id]
+    @topic = Topic.find(tid) if Topic.exists?(tid)
+    # @topic = @story.try(:topics).try(:last)
+  end
 
   def story_params
     #params.require(:story).permit(:title, :text, :topic_ids, :source_ids,  topic_ids:[], source_ids:[], :topic_ids=>{:id=>[]}, :source_ids=>{:id=>[]})

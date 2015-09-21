@@ -10,11 +10,7 @@ class Unconfirmed::StoriesController < ApplicationController
   end
 
   def new
-    # tid = params[:topic_id] if params[:topic_id].present?
-    # @topic = Topic.find(tid) if Topic.exists?(tid)
-    # @story = Story.new
     @story, @topic = get_uncofirmed_story_and_topic_from_params
-
   end
 
   def update
@@ -30,36 +26,26 @@ class Unconfirmed::StoriesController < ApplicationController
         render "edit"
       end
     else
-      #todo: display error message to frontend
-      # redirect_to_new_moderation
       @errors << I18n.t("simple_captcha.message.default")
       render "edit"
     end
   end
 
   def create
+    @errors = []
     @story, @topic = get_uncofirmed_story_and_topic_from_params()
-
     if simple_captcha_valid?
       @story = Story.new story_params if @story.id.blank? && params[:story].present?
-
-      # @moderation.update_attributes(moderation_params.except(:id,:sources_attributes))
       @story.update_attributes(story_params)
-      # dt=story_params[:date_time]
-      # dt3=params[:story][:date_time]
-      # @story.date_time = dt
-      @story.topics << @topic if !@story.topics.exists?(@topic)
+      # @story.topics << @topic if !@story.topics.exists?(id: @topic.id)
       if @story.save!
-        # redirect_to (@story)
-        # redirect_to "show"
-        # render "new"
         redirect_to topic_unconfirmed_story_path(@topic, @story)
-
       else
+        @errors << I18n.t("simple_captcha.message.default")
         render "new"
       end
     else
-      #todo: display error message to frontend
+      @errors << I18n.t("simple_captcha.message.default")
       render "new"
     end
   end
@@ -79,10 +65,15 @@ class Unconfirmed::StoriesController < ApplicationController
 
     id = sid if id.blank? and sid.present?
 
-    # if Story.exists?(id)
+    if Story.exists?(id)
       story = Story.find(id)
-    #   story = story_orig.dup
-    # end
+    else
+      begin
+        story = Story.new story_params
+      rescue Exception => e
+        story = Story.new
+      end
+    end
     return story, topic
   end
 

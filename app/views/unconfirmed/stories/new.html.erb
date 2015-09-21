@@ -1,6 +1,6 @@
 <div class="container container-story center-block">
   <div class="title-header text-center">
-    <% if @story.try(:present?) %>
+    <% if @story %>
         <h1><%= t("story.new") %>
           <% form_url = topic_unconfirmed_stories_url(@topic) if @topic.present? %>
 
