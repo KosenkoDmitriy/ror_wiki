@@ -59,3 +59,14 @@ gem 'cocoon' #to handle nested forms
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
 #ebd date picker
+
+
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rails', '~> 1.1.1'
+
+# Add this if you're using rbenv
+# gem 'capistrano-rbenv', github: "capistrano/rbenv"
+
+# Add this if you're using rvm
+gem 'capistrano-rvm', github: "capistrano/rvm"
