@@ -6,6 +6,7 @@ ActiveAdmin.register Topic do
   filter :stext
   filter :text
   filter :date_time
+  # filter :stories
 
   permit_params :title, :text, :stext, :is_approved
 

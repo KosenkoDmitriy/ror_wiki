@@ -3,6 +3,7 @@ ActiveAdmin.register Story do
 
   # preserve_default_filters!
   filter :is_approved
+  filter :topics
   filter :title
   filter :stext
   filter :text
