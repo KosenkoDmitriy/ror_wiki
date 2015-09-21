@@ -18,7 +18,7 @@ class StoriesController < ApplicationController
     tid = params[:topic_id]
     @topic = Topic.find(tid) if Topic.exists?(tid)
     # @topic = @story.try(:topics).try(:last)
-    redirect_to topic_unconfirmed_story_path @topic, @story
+    # redirect_to topic_unconfirmed_story_path @topic, @story
   end
 
 
@@ -60,11 +60,12 @@ class StoriesController < ApplicationController
 
   def get_topic_story
     id = params[:id]
-    @story = Story.find(id) if Story.exists?(id)
+    story = Story.find(id) if Story.exists?(id)
 
     tid = params[:topic_id]
-    @topic = Topic.find(tid) if Topic.exists?(tid)
+    topic = Topic.find(tid) if Topic.exists?(tid)
     # @topic = @story.try(:topics).try(:last)
+    return topic, story
   end
 
   def story_params
