@@ -1,6 +1,12 @@
 ActiveAdmin.register Topic do
   menu priority: 3, label: "Topics"
 
+  filter :is_approved
+  filter :title
+  filter :stext
+  filter :text
+  filter :date_time
+  
   permit_params :title, :text, :stext, :is_approved
 
   index do
