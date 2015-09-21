@@ -12,8 +12,8 @@ class StoriesController < ApplicationController
 
 
   def show
-    id = params[:id] if params[:id].present?
-    @story = Story.find(id)
+    id = params[:id].to_i if params[:id].present?
+    @story = Story.find(id) if Story.exists?(id)
 
     tid = params[:topic_id]
     @topic = Topic.find(tid) if Topic.exists?(tid)

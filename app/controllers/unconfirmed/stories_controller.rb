@@ -17,7 +17,6 @@ class Unconfirmed::StoriesController < ApplicationController
     @errors = []
     @story, @topic = get_uncofirmed_story_and_topic_from_params
     if simple_captcha_valid?
-      # @moderation.update_attributes(story_params.except(:id,:sources_attributes))
       @story.update_attributes(story_params)
       @story.is_approved = false
       if @story.save!
@@ -61,8 +60,8 @@ class Unconfirmed::StoriesController < ApplicationController
     tid = params[:topic_id] if params[:topic_id].present?
     topic = Topic.find(tid) if Topic.exists?(tid)
 
-    id = params[:id] if params[:id].present?
-    sid = params[:story_id] if params[:story_id].present?
+    id = params[:id].to_i if params[:id].present?
+    sid = params[:story_id].to_i if params[:story_id].present?
 
     id = sid if id.blank? and sid.present?
 
