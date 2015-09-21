@@ -100,10 +100,10 @@ ActiveAdmin.register Story do
 
   form do |f|
     f.inputs "Story: #{story.try(:title) || 'no story'}" do
+      f.input :date_time, as: :datetime_picker
       f.input :title
       f.input :stext, as: :text
       f.input :text, as: :text
-      f.input :date_time, as: :datetime_picker
       f.input :is_approved
     end
 
