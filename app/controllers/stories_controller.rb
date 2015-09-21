@@ -40,7 +40,9 @@ class StoriesController < ApplicationController
 
 
   def update
-    new_story, @topic = create_story_unconfirmed
+    @topic, @story = get_topic_story()
+
+    new_story = create_story_unconfirmed
 
     if simple_captcha_valid?
       if new_story.save!
@@ -78,16 +80,10 @@ class StoriesController < ApplicationController
   end
 
   def create_story_unconfirmed
-    tid = params[:topic_id]
-    topic = Topic.find(tid) if Topic.exists?(tid)
-
-    id = params[:id]
-    @story = Story.find(id) if Story.exists?(id)
-
+    @story.attributes = story_params
     new_story = @story.dup #@story.clone for rails < 3.1
-    # new_story.save
-
-    return new_story, topic
+    # new_story = Story.new story_params
+    return new_story
   end
 
   def redirect_to_edit story
