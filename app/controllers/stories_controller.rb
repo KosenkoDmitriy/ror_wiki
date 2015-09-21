@@ -41,7 +41,6 @@ class StoriesController < ApplicationController
 
   def update
     @topic, @story = get_topic_story()
-
     new_story = create_story_unconfirmed
 
     if simple_captcha_valid?
@@ -82,7 +81,9 @@ class StoriesController < ApplicationController
   def create_story_unconfirmed
     @story.attributes = story_params
     new_story = @story.dup #@story.clone for rails < 3.1
-    # new_story = Story.new story_params
+    new_story.topics = @story.topics.dup
+    new_story.sources = @story.sources.dup
+    new_story.is_appoved = false
     return new_story
   end
 

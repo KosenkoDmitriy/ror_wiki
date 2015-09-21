@@ -21,7 +21,9 @@
                 <p><%= @story.try(:text).try(:html_safe) %></p>
 
                 <p class="autor line">Listed Under:
-                  <%= render partial: "shared/story_topics", locals: {items: @story.try(:topics)} %></p>
+                  <%#= render partial: "shared/story_topics", locals: {items: @story.try(:topics)} #%>
+                  <%=link_to @topic.try(:title), topic_path(@topic)%>
+                </p>
 
                 <div class="row">
                   <div class="col-lg-12 clearfix">

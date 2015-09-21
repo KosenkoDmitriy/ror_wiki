@@ -19,7 +19,7 @@ class Unconfirmed::StoriesController < ApplicationController
     if simple_captcha_valid?
       # @moderation.update_attributes(story_params.except(:id,:sources_attributes))
       @story.update_attributes(story_params)
-
+      @story.is_approved = false
       if @story.save!
         redirect_to topic_unconfirmed_story_path @topic, @story
       else
@@ -37,6 +37,7 @@ class Unconfirmed::StoriesController < ApplicationController
     if simple_captcha_valid?
       @story = Story.new story_params if @story.id.blank? && params[:story].present?
       @story.update_attributes(story_params)
+      @story.is_approved = false
       # @story.topics << @topic if !@story.topics.exists?(id: @topic.id)
       if @story.save!
         redirect_to topic_unconfirmed_story_path(@topic, @story)
