@@ -1,6 +1,13 @@
 ActiveAdmin.register Story do
   menu priority: 2, label: "Stories"
 
+  # preserve_default_filters!
+  filter :is_approved
+  filter :title
+  filter :stext
+  filter :text
+  filter :date_time
+
   permit_params :title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy]
 
   sidebar "Story Details", only: [:show, :edit] do

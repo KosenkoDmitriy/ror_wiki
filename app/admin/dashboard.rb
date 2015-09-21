@@ -45,7 +45,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Stories" do
           ul do
-            Story.last(10).reverse.map do |post|
+            Story.last(30).reverse.map do |post|
               li link_to(post.title, admin_story_path(post))
             end
           end
@@ -55,7 +55,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Topics" do
           ul do
-            Topic.last(10).reverse.map do |post|
+            Topic.last(30).reverse.map do |post|
               li link_to(post.title, admin_topic_path(post))
             end
           end

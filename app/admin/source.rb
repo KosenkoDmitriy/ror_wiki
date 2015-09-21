@@ -1,6 +1,7 @@
 ActiveAdmin.register Source do
   # menu label: "Sources", parent: "Story"
   menu false
+  # conditionally show a custom controller scope
 
   permit_params :title, :url
 
