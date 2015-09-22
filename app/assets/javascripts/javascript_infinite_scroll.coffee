@@ -2,11 +2,14 @@
 $ ->
   content = $('#content')    # where to load new content
   viewMore = $('nav .pager') # tag containing the "View More" link
+  spinner = $('#spinner')
 
   isLoadingNextPage = false  # keep from loading two pages at once
   lastLoadAt = null          # when you loaded the last page
   minTimeBetweenPages = 5000 # milliseconds to wait between loading pages
   loadNextPageAt = 1000      # pixels above the bottom
+
+  spinner.hide() # hide the loading indicator/spinner
 
   waitedLongEnoughBetweenPages = ->
     return lastLoadAt == null || new Date() - lastLoadAt > minTimeBetweenPages
@@ -23,6 +26,8 @@ $ ->
     #    url = url + url_filter_params
     #    console.log(url)
 
+    spinner.show() # display the loading indicator/spinner
+
     viewMore.addClass('loading')
     isLoadingNextPage = true
     lastLoadAt = new Date()
@@ -35,6 +40,7 @@ $ ->
         viewMore.removeClass('loading');
         isLoadingNextPage = false;
         lastLoadAt = new Date();
+        spinner.hide() #hide the loading indicator/spinner
     })
 
   # watch the scrollbar

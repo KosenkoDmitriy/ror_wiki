@@ -6,7 +6,7 @@
       <%= render partial: "shared/timeline_for_append", locals: {items: items} %>
     </ul>
 
-    <% render partial: "shared/spinner" %>
+    <%= render partial: "shared/spinner" %>
 
     <% if items.present? %>
         <!--pagination with load_more button-->
@@ -15,7 +15,7 @@
               <nav>
                 <ul class="pager">
                   <li id="view-more ">
-                    <%= link_to(t("load_more"), url_for(:controller => 'stories', :action => 'ajax', page: items.current_page + 1), remote: true, class: "btn-group-justified") %>
+                    <%= link_to(t("load_more"), url_for(:controller => 'stories', :action => 'ajax', page: items.current_page + 1), remote: true, class: "form-control") %>
                   <li>
                 </ul>
               </nav>
