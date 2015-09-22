@@ -22,6 +22,20 @@ ActiveAdmin.register Topic do
     actions
   end
 
+  show do |f|
+    attributes_table do
+      row :title
+      row :text
+      row :stext
+      row :date_time
+      # row :image do
+        # image_tag ad.image.url
+      # end
+    end
+    # active_admin_comments
+  end
+
+
   form do |f|
     f.inputs do
       f.input :date_time, as: :datetime_picker
