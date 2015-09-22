@@ -2,37 +2,40 @@
    items = group_by_date_time(items)
 %>
 <% items.try(:each) do |dt_item| %>
+    <% main_date_time = dt_item.try(:[], :date_time) %>
+    <% main_items = dt_item.try(:[], :items) %>
+    <% if main_date_time.present? && main_items.present? && main_items.any? %>
+        <li>
+          <div class="timeline-badge">
+            <%= main_date_time %>
+          </div>
+          <div class="timeline-panel">
 
-    <li>
-      <div class="timeline-badge">
-        <%= dt_item.try(:[], :date_time) %>
-      </div>
-      <div class="timeline-panel">
+            <% main_items.try(:each) do |hitem| %>
+                <% item = hitem.try(:[], :item) %>
+                <% date_time = hitem.try(:[], :dt) %>
+                <% url_story=topic_story_path(item.try(:topics).try(:last), item) %>
+                <div class="timeline-heading">
+                  <div class="round"></div>
+                  <p class="text-muted"><%= date_time %></p>
+                  <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story %></h4>
+                </div>
+                <div class="timeline-body">
+                  <p>
+                    <%= @story.try(:stext).try(:html_safe) %>
+                    (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)</p>
 
-        <% dt_item.try(:[], :items).try(:each) do |hitem| %>
-            <% item = hitem.try(:[], :item) %>
-            <% date_time = hitem.try(:[], :dt)%>
-            <% url_story=topic_story_path(item.try(:topics).try(:last), item) %>
-            <div class="timeline-heading">
-              <div class="round"></div>
-              <p class="text-muted"><%= date_time %></p>
-              <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story %></h4>
-            </div>
-            <div class="timeline-body">
-              <p>
-                <%= @story.try(:stext).try(:html_safe) %>
-                (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)</p>
-
-              <p class="autor">Listed Under:
-                <!--<a href="#">Barac Obama</a>-->
-                <% item.try(:topics).try(:each) do |topic| %>
-                    <%= link_to topic.try(:title), topic_path(topic) %>
-                <% end %>
-              </p>
-            </div>
-        <% end %>
-      </div>
-    </li>
+                  <p class="autor">Listed Under:
+                    <!--<a href="#">Barac Obama</a>-->
+                    <% item.try(:topics).try(:each) do |topic| %>
+                        <%= link_to topic.try(:title), topic_path(topic) %>
+                    <% end %>
+                  </p>
+                </div>
+            <% end %>
+          </div>
+        </li>
+    <% end %>
 <% end %>
 
 
