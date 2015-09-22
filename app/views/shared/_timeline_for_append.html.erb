@@ -1,57 +1,38 @@
 <%
-   default_topic = Topic.find_or_create_by(title: t("topic.no_topic"), is_approved: true)
-   current_m_y = items.try(:first).try(:date_time).try(:strftime, "%b %Y")
-   is_print = true
-   i = 0
+   items = group_by_date_time(items)
 %>
-<% items.try(:each) do |item| %>
-    <%
-       topic = item.try(:topics).try(:last)
+<% items.try(:each) do |dt_item| %>
 
-       if i > 0
-         is_print = false
-       else
-         is_print = true
-       end
-    %>
+    <li>
+      <div class="timeline-badge">
+        <%= dt_item.try(:[], :date_time) %>
+      </div>
+      <div class="timeline-panel">
 
-    <% if is_print %>
-        <li>
-          <div class="timeline-badge">
-            <%= item.try(:date_time).try(:strftime, "%b %Y") %>
-          </div>
-          <div class="timeline-panel">
-    <% end %>
+        <% dt_item.try(:[], :items).try(:each) do |hitem| %>
+            <% item = hitem.try(:[], :item) %>
+            <% date_time = hitem.try(:[], :dt)%>
+            <% url_story=topic_story_path(item.try(:topics).try(:last), item) %>
+            <div class="timeline-heading">
+              <div class="round"></div>
+              <p class="text-muted"><%= date_time %></p>
+              <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story %></h4>
+            </div>
+            <div class="timeline-body">
+              <p>
+                <%= @story.try(:stext).try(:html_safe) %>
+                (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)</p>
 
-    <% url_story=topic_story_path(topic||default_topic, item) %>
-    <div class="timeline-heading">
-      <div class="round"></div>
-      <p class="text-muted"><%= item.try(:date_time).try(:strftime, "%d %B %H:%M") %></p>
-      <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story %></h4>
-    </div>
-    <div class="timeline-body">
-      <p>
-        <%= @story.try(:stext).try(:html_safe) %>
-        (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)</p>
-
-      <p class="autor">Listed Under:
-        <!--<a href="#">Barac Obama</a>-->
-        <% item.try(:topics).try(:each) do |topic| %>
-            <%= link_to topic.try(:title), topic_path(topic) %>
+              <p class="autor">Listed Under:
+                <!--<a href="#">Barac Obama</a>-->
+                <% item.try(:topics).try(:each) do |topic| %>
+                    <%= link_to topic.try(:title), topic_path(topic) %>
+                <% end %>
+              </p>
+            </div>
         <% end %>
-      </p>
-    </div>
-
-    <% if current_m_y == item.try(:date_time).try(:strftime, "%b %Y")
-         i+=1
-       else
-         i=0
-       end %>
-    <% if i == 0 %>
-        </div>
-        </li>
-    <% end %>
-
+      </div>
+    </li>
 <% end %>
 
 
