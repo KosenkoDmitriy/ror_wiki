@@ -13,6 +13,11 @@ class Unconfirmed::StoriesController < ApplicationController
     @story, @topic = get_uncofirmed_story_and_topic_from_params
   end
 
+  def index
+    @story, @topic = get_uncofirmed_story_and_topic_from_params
+    redirect_to topic_path @topic
+  end
+
   def update
     @errors = []
     @story, @topic = get_uncofirmed_story_and_topic_from_params
@@ -22,6 +27,7 @@ class Unconfirmed::StoriesController < ApplicationController
       if @story.save!
         redirect_to topic_unconfirmed_story_path @topic, @story
       else
+        @errors << I18n.t("story.error.edit")
         render "edit"
       end
     else
@@ -34,14 +40,14 @@ class Unconfirmed::StoriesController < ApplicationController
     @errors = []
     @story, @topic = get_uncofirmed_story_and_topic_from_params()
     if simple_captcha_valid?
-      @story = Story.new story_params if @story.id.blank? && params[:story].present?
+      # @story = Story.new story_params if @story.id.blank? && params[:story].present?
       @story.update_attributes(story_params)
       @story.is_approved = false
       # @story.topics << @topic if !@story.topics.exists?(id: @topic.id)
       if @story.save!
         redirect_to topic_unconfirmed_story_path(@topic, @story)
       else
-        @errors << I18n.t("simple_captcha.message.default")
+        @errors << I18n.t("story.error.create")
         render "new"
       end
     else

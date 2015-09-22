@@ -12,13 +12,7 @@ class StoriesController < ApplicationController
 
 
   def show
-    id = params[:id].to_i if params[:id].present?
-    @story = Story.find(id) if Story.exists?(id)
-
-    tid = params[:topic_id]
-    @topic = Topic.find(tid) if Topic.exists?(tid)
-    # @topic = @story.try(:topics).try(:last)
-    # redirect_to topic_unconfirmed_story_path @topic, @story
+    @topic, @story = get_topic_story()
   end
 
 
@@ -28,19 +22,10 @@ class StoriesController < ApplicationController
   end
 
 
-  def create
-    @topic, @story = get_topic_story()
-    redirect_to new_topic_unconfirmed_story_path @topic
-  end
-
-
   def edit
     @errors = []
     @topic, @story = get_topic_story()
-    new_story = @story.dup #@story.clone for rails < 3.1
-    new_story.topics = @story.topics.dup
-    new_story.sources = @story.sources.dup
-    new_story.is_approved = false
+    new_story = clone_story(@story)
     if new_story.save!
       redirect_to edit_topic_unconfirmed_story_path @topic, new_story
     else
@@ -49,25 +34,15 @@ class StoriesController < ApplicationController
   end
 
 
-  def update
-    @topic, @story = get_topic_story()
-    new_story = create_story_unconfirmed
-
-    if simple_captcha_valid?
-      if new_story.save!
-        # redirect_to_edit new_story
-        redirect_to topic_unconfirmed_story_path @topic, new_story
-      else
-        redirect_to_edit @story
-      end
-    else
-      #todo: display error message to frontend
-      redirect_to_edit @story
-    end
-  end
-
-
   private
+
+  def clone_story orig_story
+    new_story = orig_story.dup #orig_story.clone for rails < 3.1
+    new_story.topics = orig_story.topics.dup
+    new_story.sources = orig_story.sources.dup
+    new_story.is_approved = false
+    return new_story
+  end
 
   def get_topic_story
     id = params[:id]
@@ -75,26 +50,11 @@ class StoriesController < ApplicationController
 
     tid = params[:topic_id]
     topic = Topic.find(tid) if Topic.exists?(tid)
-    # @topic = @story.try(:topics).try(:last)
     return topic, story
   end
 
   def story_params
-    #params.require(:story).permit(:title, :text, :topic_ids, :source_ids,  topic_ids:[], source_ids:[], :topic_ids=>{:id=>[]}, :source_ids=>{:id=>[]})
     params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
-  end
-
-  def sources_params
-    params.require(:story).permit(sources_attributes: [:id, :title, :url, :_destroy])
-  end
-
-  def create_story_unconfirmed
-    @story.attributes = story_params
-    new_story = @story.dup #@story.clone for rails < 3.1
-    new_story.topics = @story.topics.dup
-    new_story.sources = @story.sources.dup
-    new_story.is_approved = false
-    return new_story
   end
 
   def redirect_to_edit story

@@ -49,7 +49,8 @@ en:
     not_found: "Moderation is not found"
   story:
     error:
-      edit: "error edit story"
+      edit: "can't update a story"
+      create: "can't create a story"
     submit: "Submit"
     add: "+ Add Story"
     label: "Story"
