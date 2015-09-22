@@ -9,7 +9,7 @@ ActiveAdmin.register Story do
   filter :text
   filter :date_time
 
-  permit_params :title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy]
+  # permit_params :date_time, :title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy]
 
   sidebar "Story Details", only: [:show, :edit] do
     ul do
@@ -55,7 +55,8 @@ ActiveAdmin.register Story do
       id = params[:id]
       s = Story.find(id) if Story.exists?(id)
       s.update(story_params)
-      #s.update_attributes(story_params)
+      # s.update_attributes(story_params)
+      # s.date_time = DateTime.now
       if s.save!
         redirect_to admin_story_path(s)
       else
@@ -69,7 +70,7 @@ ActiveAdmin.register Story do
         s = Story.create!(story_params)
         #s = Story.new(story_params)
         #s.update_attributes(story_params)
-        if s.save
+        if s.save!
           redirect_to admin_story_path(s)
         else
           render "new"
@@ -81,7 +82,7 @@ ActiveAdmin.register Story do
 
     private
     def story_params
-      params.require(:story).permit(:title, :text, :stext, :date_time, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy])
+      params.require(:story).permit(:date_time, :title, :text, :stext, :is_approved, topic_ids: [], source_ids: [], topics_attributes: [:id, :title, :stext, :text, :is_approved, :_destroy], sources_attributes: [:id, :title, :url, :_destroy])
     end
   end
 
@@ -100,7 +101,8 @@ ActiveAdmin.register Story do
 
   form do |f|
     f.inputs "Story: #{story.try(:title) || 'no story'}" do
-      f.input :date_time, as: :datetime_picker
+      # f.input :date_time, as: :datetime_picker, :label => 'Date field', input_html: {data: {date_options: {defaultDate: '2012/12/25'}}}
+      f.input :date_time, as: :datetime_picker, :label => 'Date field', input_html: {date_format: 'YYYY/MM/DD hh:mm A/PM'}
       f.input :title
       f.input :stext, as: :text
       f.input :text, as: :text

@@ -27,8 +27,8 @@ def random_approved_status
   [true, false].sample
 end
 
-email = 'admin@example.com'
-password = 'password'
+email = 'wiki@wiki.wiki'
+password = 'wiki@wiki.wiki'
 User.create(email: email, password: password, password_confirmation: password) if !User.exists?(email: email)
 
 topics_count = 20

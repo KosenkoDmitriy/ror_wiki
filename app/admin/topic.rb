@@ -8,7 +8,7 @@ ActiveAdmin.register Topic do
   filter :date_time
   # filter :stories
 
-  permit_params :title, :text, :stext, :is_approved
+  permit_params :date_time, :title, :text, :stext, :is_approved
 
   index do
     selectable_column

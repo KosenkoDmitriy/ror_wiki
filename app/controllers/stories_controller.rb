@@ -83,7 +83,7 @@ class StoriesController < ApplicationController
     new_story = @story.dup #@story.clone for rails < 3.1
     new_story.topics = @story.topics.dup
     new_story.sources = @story.sources.dup
-    new_story.is_appoved = false
+    new_story.is_approved = false
     return new_story
   end
 
