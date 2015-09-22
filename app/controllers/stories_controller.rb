@@ -35,7 +35,17 @@ class StoriesController < ApplicationController
 
 
   def edit
+    @errors = []
     @topic, @story = get_topic_story()
+    new_story = @story.dup #@story.clone for rails < 3.1
+    new_story.topics = @story.topics.dup
+    new_story.sources = @story.sources.dup
+    new_story.is_approved = false
+    if new_story.save!
+      redirect_to edit_topic_unconfirmed_story_path @topic, new_story
+    else
+      @errors << t("story.error.edit")
+    end
   end
 
 

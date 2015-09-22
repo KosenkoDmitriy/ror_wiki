@@ -48,6 +48,8 @@ en:
     no_title: "Empty title"
     not_found: "Moderation is not found"
   story:
+    error:
+      edit: "error edit story"
     submit: "Submit"
     add: "+ Add Story"
     label: "Story"
