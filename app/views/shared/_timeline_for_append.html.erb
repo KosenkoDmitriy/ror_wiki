@@ -15,26 +15,30 @@
                 <% item = hitem.try(:[], :item) %>
                 <% date_time = hitem.try(:[], :dt) %>
                 <% topic = hitem.try(:[], :topic) %>
+                <% url_story = topic_story_path(topic, item) %>
 
-                <% url_story=topic_story_path(topic, item) %>
-                <div class="timeline-heading">
-                  <div class="round"></div>
-                  <p class="text-muted"><%= date_time %></p>
-                  <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story if url_story %></h4>
-                </div>
-                <div class="timeline-body">
-                  <p>
-                    <%= @story.try(:stext).try(:html_safe) %>
-                    <% if url_story %>
-                    (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)</p>
-                    <% end %>
-                  <p class="autor">Listed Under:
-                    <!--<a href="#">Barac Obama</a>-->
-                    <% item.try(:topics).try(:each) do |topic| %>
-                        <%= link_to topic.try(:title), topic_path(topic) %>
-                    <% end %>
-                  </p>
-                </div>
+                <% if url_story.present? %>
+                    <div class="timeline-heading">
+                      <div class="round"></div>
+                      <p class="text-muted"><%= date_time %></p>
+                      <h4 class="timeline-title"><a href="#"><%= link_to item.try(:title), url_story %></h4>
+                    </div>
+                    <div class="timeline-body">
+                      <p>
+                        <%= @story.try(:stext).try(:html_safe) %>
+                        (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)
+                      </p>
+
+                      <p class="autor">Listed Under:
+                        <!--<a href="#">Barac Obama</a>-->
+                        <% item.try(:topics).try(:each) do |itopic| %>
+                            <%= link_to topic.try(:title), topic_path(itopic) if itopic.present? and itopic.try(:id).try(:present?) %>
+                        <% end %>
+                      </p>
+                    </div>
+                <% else %>
+                    <!--story_url_invalid-->
+                <% end %>
             <% end %>
           </div>
         </li>
