@@ -41,6 +41,8 @@ class Unconfirmed::StoriesController < ApplicationController
     @story, @topic = get_uncofirmed_story_and_topic_from_params()
     if simple_captcha_valid?
       @story.is_approved = false
+      # @story.try(:topics) << @topic if !@story.try(:topics).try(:exists?, @topic.try(:id))
+      @story.try(:topics) << @topic if !@story.try(:topics).try(:exists?, @topic)
       if @story.save!
         redirect_to topic_unconfirmed_story_path(@topic, @story)
       else

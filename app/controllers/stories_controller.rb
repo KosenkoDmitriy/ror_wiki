@@ -38,8 +38,8 @@ class StoriesController < ApplicationController
 
   def clone_story orig_story
     new_story = orig_story.dup #orig_story.clone for rails < 3.1
-    new_story.topics = orig_story.topics.dup
-    new_story.sources = orig_story.sources.dup
+    new_story.topics = orig_story.try(:topics).try(:dup)
+    new_story.sources = orig_story.try(:sources).try(:dup)
     new_story.is_approved = false
     return new_story
   end
