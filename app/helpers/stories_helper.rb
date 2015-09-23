@@ -15,7 +15,7 @@ module StoriesHelper
         item_date_time_d_b_h_m = item.try(:date_time).try(:strftime, "%d %B %H:%M") || item.try(:updated_at).try(:strftime, "%d %B %H:%M")
 
         if dt_item.try(:[], :date_time) == item_date_time
-          dt_item[:items] << {"item": item, "topic":topic, "dt":item_date_time_d_b_h_m}
+          dt_item[:items] << {"item": item, "topic": topic, "dt": item_date_time_d_b_h_m}
         end
       end
     end
