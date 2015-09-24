@@ -18,29 +18,42 @@ class StoriesController < ApplicationController
 
   def new
     @topic, @story = get_topic_story()
-    redirect_to new_topic_unconfirmed_story_path @topic
+    redirect_to_unconfirmed_new_url()
   end
 
 
   def edit
     @errors = []
     @topic, @story = get_topic_story()
+    redirect_to_unconfirmed_new_url()
+  end
+
+
+  private
+
+  def story_params
+    params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
+  end
+
+  def redirect_to_unconfirmed_edit_url
     begin
       url = "/topics/#{@topic.try(:id)}/unconfirmed/stories/#{@story.try(:id)}/edit?orig_story_id=#{@story.try(:id)}" #todo: quick fix
       redirect_to url
     rescue Exception => e
       redirect_to topic_story_path(@topic, @story)
     end
-      # new_story = clone_story(@story)
-    # if new_story.save!
-    #   redirect_to edit_topic_unconfirmed_story_path @topic, new_story
-    # else
-    #   @errors << t("story.error.edit")
-    # end
   end
 
-
-  private
+  def redirect_to_unconfirmed_new_url
+    begin
+      id = params[:format]
+      tid = params[:topic_id]
+      url = "/topics/#{tid}/unconfirmed/stories/new?orig_story_id=#{id}" #todo: quick fix
+      redirect_to url
+    rescue Exception => e
+      redirect_to topic_story_path(@topic, @story)
+    end
+  end
 
   def get_topic_story
     id = params[:id]
@@ -49,10 +62,6 @@ class StoriesController < ApplicationController
     tid = params[:topic_id]
     topic = Topic.find(tid) if Topic.exists?(tid)
     return topic, story
-  end
-
-  def story_params
-    params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
 
   def redirect_to_edit story

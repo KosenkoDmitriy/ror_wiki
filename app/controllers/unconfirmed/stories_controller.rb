@@ -6,6 +6,10 @@ class Unconfirmed::StoriesController < ApplicationController
   end
 
   def edit
+    @story, @topic = get_uncofirmed_story_and_topic_from_params
+  end
+
+  def new
     @errors = []
     @story, @topic = get_uncofirmed_story_and_topic_from_params
     orig_story_id = params[:orig_story_id].to_i if params[:orig_story_id].present?
@@ -24,10 +28,6 @@ class Unconfirmed::StoriesController < ApplicationController
     else
       # @errors << t("no_story")
     end
-  end
-
-  def new
-    @story, @topic = get_uncofirmed_story_and_topic_from_params
   end
 
   def index
