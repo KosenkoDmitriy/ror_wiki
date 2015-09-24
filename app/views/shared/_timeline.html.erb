@@ -15,7 +15,16 @@
               <nav>
                 <ul class="pager">
                   <li id="view-more ">
+                    <%#= link_to(t("load_more"), url_for(:controller => 'stories', :action => 'ajax', page: items.current_page + 1), data: {confirm: "Are you sure?"}, remote: true, class: "form-control") #%>
                     <%= link_to(t("load_more"), url_for(:controller => 'stories', :action => 'ajax', page: items.current_page + 1), remote: true, class: "form-control") %>
+                  <script>
+                      $('[data-remote=true]').on('click', function (e) {
+                          e.preventdefault();
+                          $($(this).attr('data-remote')).load($(this).attr('href'));
+                      });
+
+
+                  </script>
                   <li>
                 </ul>
               </nav>
