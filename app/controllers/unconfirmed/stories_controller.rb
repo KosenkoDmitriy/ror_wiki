@@ -17,11 +17,11 @@ class Unconfirmed::StoriesController < ApplicationController
       if Story.exists?(id:orig_story_id)
         story = Story.find(orig_story_id)
         @story = clone_story(story) if story.present? and story.try(:id).try(:present?)
-        if @story.save!
-          redirect_to edit_topic_unconfirmed_story_path @topic, @story
-        else
-          @errors << t("story.error.create")
-        end
+        # if @story.save!
+        #   redirect_to edit_topic_unconfirmed_story_path @topic, @story
+        # else
+        #   @errors << t("story.error.create")
+        # end
       else
         @errors << t("no_story")
       end
@@ -78,6 +78,9 @@ class Unconfirmed::StoriesController < ApplicationController
     params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
 
+  def story_params_for_create
+    params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:title, :url, :_destroy])
+  end
 
   def clone_story orig_story
     new_story = orig_story.dup #orig_story.clone for rails < 3.1
@@ -101,8 +104,8 @@ class Unconfirmed::StoriesController < ApplicationController
       story = Story.find(id)
     else
       begin
-        story = Story.new story_params
-      rescue Exception => e
+        story = Story.new story_params_for_create
+      rescue Exception => exception
         story = Story.new
       end
     end
