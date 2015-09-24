@@ -6,7 +6,24 @@ class Unconfirmed::StoriesController < ApplicationController
   end
 
   def edit
+    @errors = []
     @story, @topic = get_uncofirmed_story_and_topic_from_params
+    orig_story_id = params[:orig_story_id].to_i if params[:orig_story_id].present?
+    if orig_story_id.present? && orig_story_id > 0
+      if Story.exists?(id:orig_story_id)
+        story = Story.find(orig_story_id)
+        @story = clone_story(story) if story.present? and story.try(:id).try(:present?)
+        if @story.save!
+          redirect_to edit_topic_unconfirmed_story_path @topic, @story
+        else
+          @errors << t("story.error.create")
+        end
+      else
+        @errors << t("no_story")
+      end
+    else
+      # @errors << t("no_story")
+    end
   end
 
   def new
@@ -60,6 +77,16 @@ class Unconfirmed::StoriesController < ApplicationController
   def story_params
     params.require(:story).permit(:title, :text, :date_time, topic_ids: [], sources_attributes: [:id, :title, :url, :_destroy])
   end
+
+
+  def clone_story orig_story
+    new_story = orig_story.dup #orig_story.clone for rails < 3.1
+    new_story.topics = orig_story.try(:topics).try(:dup)
+    new_story.sources = orig_story.try(:sources).try(:dup)
+    new_story.is_approved = false
+    return new_story
+  end
+
 
   def get_uncofirmed_story_and_topic_from_params
     tid = params[:topic_id] if params[:topic_id].present?

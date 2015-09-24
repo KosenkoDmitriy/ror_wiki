@@ -25,24 +25,22 @@ class StoriesController < ApplicationController
   def edit
     @errors = []
     @topic, @story = get_topic_story()
-    new_story = clone_story(@story)
-    if new_story.save!
-      redirect_to edit_topic_unconfirmed_story_path @topic, new_story
-    else
-      @errors << t("story.error.edit")
+    begin
+      url = "/topics/#{@topic.try(:id)}/unconfirmed/stories/#{@story.try(:id)}/edit?orig_story_id=#{@story.try(:id)}" #todo: quick fix
+      redirect_to url
+    rescue Exception => e
+      redirect_to topic_story_path(@topic, @story)
     end
+      # new_story = clone_story(@story)
+    # if new_story.save!
+    #   redirect_to edit_topic_unconfirmed_story_path @topic, new_story
+    # else
+    #   @errors << t("story.error.edit")
+    # end
   end
 
 
   private
-
-  def clone_story orig_story
-    new_story = orig_story.dup #orig_story.clone for rails < 3.1
-    new_story.topics = orig_story.try(:topics).try(:dup)
-    new_story.sources = orig_story.try(:sources).try(:dup)
-    new_story.is_approved = false
-    return new_story
-  end
 
   def get_topic_story
     id = params[:id]
