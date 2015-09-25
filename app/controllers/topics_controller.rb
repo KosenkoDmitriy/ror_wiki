@@ -1,9 +1,10 @@
 class TopicsController < ApplicationController
 
   def index
-    @topics = get_approved_topics()
-    @topic = @topics.try(:first)
-    @stories, @story = get_stories_and_story_from_topic(@topic)
+    # @topics = get_approved_topics()
+    # @topic = @topics.try(:first)
+    # @stories, @story = get_stories_and_story_from_topic(@topic)
+    redirect_to root_path
   end
 
   def show

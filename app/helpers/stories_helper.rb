@@ -21,4 +21,18 @@ module StoriesHelper
 
     return dt_items
   end
+
+  def stext_or_text stext, text, size
+    result = stext
+    if result.blank?
+      if text.present?
+        result = text.truncate(size||150, omission: '...')
+      else
+
+        # result = t(:none)
+      end
+    end
+
+    return result.try(:html_safe)
+  end
 end

@@ -25,14 +25,14 @@
                     </div>
                     <div class="timeline-body">
                       <p>
-                        <%= @story.try(:stext).try(:html_safe) %>
+                        <%=stext_or_text(item.try(:stext), item.try(:text), 150) %>
+                        <%#= item.try(:stext).try(:html_safe) || item.try(:text).try(:html_safe) #%>
                         (<%= link_to t("story.read_more"), url_story, class: "read-more" %>)
                       </p>
 
                       <p class="autor">Listed Under:
-                        <!--<a href="#">Barac Obama</a>-->
                         <% item.try(:topics).try(:each) do |itopic| %>
-                            <%= link_to topic.try(:title), topic_path(itopic) if itopic.present? and itopic.try(:id).try(:present?) %>
+                            <%= link_to itopic.try(:title), topic_path(itopic) if itopic.present? and itopic.try(:id).try(:present?) %>,
                         <% end %>
                       </p>
                     </div>
