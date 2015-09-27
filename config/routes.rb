@@ -6,12 +6,8 @@ Rails.application.routes.draw do
 
   root 'stories#index'
 
-  get 'home' => 'home#home', as: :home
-
   resources :topics do
-    resources :stories do
-      # get 'unconfirmed' => 'stories#unconfirmed', as: :story_unconfirmed
-    end
+    resources :stories
     namespace :unconfirmed do
       resources :stories
     end
