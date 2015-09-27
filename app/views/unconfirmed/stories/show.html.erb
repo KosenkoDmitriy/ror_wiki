@@ -1,7 +1,6 @@
 <div class="container container-story">
   <div class="title-header text-center">
     <% if @story.blank? %>
-
         <h3><%= t("no_story") %></h3>
     <% else %>
         <h1><%= @story.try(:title) %></h1>

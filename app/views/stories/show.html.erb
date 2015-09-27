@@ -3,7 +3,7 @@
     <% if @story.present? %>
         <h1><%= @story.try(:title) %></h1>
 
-        <p class="text-muted"><%= @story.try(:date_time).try(:strftime, "%d %B %H:%M") %></p>
+        <p class="text-muted"><%= date_time_without_time(@story.try(:date_time)) %></p>
         </div>
 
         <div class="text-center">
