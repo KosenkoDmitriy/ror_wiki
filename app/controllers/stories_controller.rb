@@ -7,6 +7,8 @@ class StoriesController < ApplicationController
 
 
   def index
+    @meta_title = t("meta.title")
+    @meta_text = t("meta.text")
     get_stories
   end
 
@@ -21,6 +23,8 @@ class StoriesController < ApplicationController
       # render(status: 404, file:"#{Rails.root}/public/404.html")
       # render(status: 404, file:"public/404")
     end
+    @meta_title = "#{@story.try(:title)} via Wikitimelines"
+    @meta_text = "look at other news sites, what do they do?"
   end
 
 

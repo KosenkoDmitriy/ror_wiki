@@ -13,6 +13,8 @@ class TopicsController < ApplicationController
       @text = "#{t(:http404)}: #{t(:no_topic)}"
       render(status: 404, template:"errors/404")
     end
+    @meta_title = "#{@topic.try(:title)} via Wikitimelines"
+    @meta_text = "Find out more about #{@topic.try(:title)} with a chronological timeline detailing recent news."
   end
 
   def ajax

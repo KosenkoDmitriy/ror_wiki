@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  meta:
+    title: "Wikitimelines.org - archive and order history."
+    text: "Wikitimelines displays and orders the world's information in timelines where anyone can help collaborate."
   http404: "404 error"
   back:
     story: "Go to Story"
