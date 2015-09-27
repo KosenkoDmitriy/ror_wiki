@@ -9,6 +9,10 @@ class TopicsController < ApplicationController
 
   def show
     get_stories_of_topic()
+    if @topic.blank?
+      @text = "#{t(:http404)}: #{t(:no_topic)}"
+      render(status: 404, template:"errors/404")
+    end
   end
 
   def ajax

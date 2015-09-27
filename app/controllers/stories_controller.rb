@@ -13,6 +13,14 @@ class StoriesController < ApplicationController
 
   def show
     @topic, @story = get_topic_story()
+    if @story.blank?
+      @text = "#{t(:http404)}: #{t(:no_story)}"
+      render(status: 404, template:"errors/404")
+      # render(status: 404, text:@text, template:"errors/404.html")
+      # render(status: 404, text: @text: #{t(:no_story)}", template:"public/404.html")
+      # render(status: 404, file:"#{Rails.root}/public/404.html")
+      # render(status: 404, file:"public/404")
+    end
   end
 
 

@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  http404: "404 error"
   back:
     story: "Go to Story"
     topic: "Go to Topic"
@@ -29,8 +30,8 @@ en:
   no_topics: "No any topics found"
   no_stories_of_the_topic: "No any stories in the topic "
   no_stories: "No any stories found "
-  no_topic: "topic is no found"
-  no_story: "no story found"
+  no_topic: "topic is not found"
+  no_story: "story is not found"
   stories: "Stories"
   topics: "Topics"
   all_stories: "All Stories"
