@@ -11,7 +11,7 @@ html, body{ height: 100%; font-family: ProximaNova; font-weight: 300;}
 .round{border-radius: 50%; border-width: 3px; border-color: #16b4bd; border-style: solid;  background-color: #ffffff;  width: 14px;  height: 14px;  position: absolute;  top: 40px;  left: -32px;  }
 
 .timeline{list-style: none;padding: 20px 0 20px;position: relative; margin-top:80px; }
-.timeline:before{top: 0;bottom: 0; content: " "; width: 3px;background-color: #eeeeee;left: 65px;  margin-left: -1.5px;position: absolute; height: calc(100% - 12.5555%);  height: -moz-calc(100% - 12.55555%);  height: -webkit-calc(100% - 12.5555%);  }
+.timeline:before{top: 0;bottom: 0; content: " "; width: 3px;background-color: #3333;left: 65px;  margin-left: -1.5px;position: absolute; height: calc(100% - 12.5555%);  height: -moz-calc(100% - 12.55555%);  height: -webkit-calc(100% - 12.5555%);  }
 .timeline > li { margin-bottom: 20px;position: relative;}
 .timeline > li:before, .timeline > li:after {content: " "; display: table;}
 .timeline > li:after {clear: both;}
