@@ -2,12 +2,12 @@
 
 one:
   title: Story 1 Title
-  text: Story 2 Text
-  stext: MyString
+  text: Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text
+  stext: Short Text of the Story 1
   is_approved:
 
 two:
-  title: Story 1 Title
-  text: Story 1 Text
-  stext: MyString
+  title: Story 2 Title
+  text: Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text
+  stext: Short Text of the Story 2
   is_approved:
