@@ -36,8 +36,13 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
     # assert_select 'a[href=?]', topic_path(topic), {text: topic.title}
     # assert_select 'p.autor.line a[href=?]', topic_path(topic), {text: topic.title}
     # assert_select 'a.topic_title', topic.title
-    story.id = -1
-    get topic_story_path(topic, story)
+    # topic_blank = Topic.new id: -1
+    # story_blank = Story.new id: -1
+    get topic_story_path(topic, -1)
+    assert_response :missing
+    get topic_story_path(-1, story)
+    assert_response :success
+    get topic_story_path(-1, -1)
     assert_response :missing
   end
 end
