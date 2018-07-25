@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   end
 
   get "ajax_all_stories" => "stories#ajax", as: :ajax_all_stories
-  # get "ajax_topic_show" => "topics#ajax", as: :ajax_topic_stories
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

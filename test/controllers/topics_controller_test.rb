@@ -15,10 +15,6 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest # ActionController:
     assert_select ".title-header h1", "Homepage"
     assert_select "p.text-center", "No any stories found"
   end
-  # test "ajax reuest" do
-  #   get '/ajax', xhr: true
-  #   assert_response :success
-  # end
   test "should get show" do
     topic = topics(:one)
     get topic_url(topic)

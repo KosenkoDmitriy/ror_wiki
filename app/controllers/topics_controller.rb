@@ -17,10 +17,6 @@ class TopicsController < ApplicationController
     @meta_text = "Find out more about #{@topic.try(:title)} with a chronological timeline detailing recent news."
   end
 
-  def ajax
-    get_stories_of_topic()
-  end
-
   private
 
   def get_stories_of_topic
