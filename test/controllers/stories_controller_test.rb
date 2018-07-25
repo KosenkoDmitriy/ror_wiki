@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController::TestCase
+
   # TODO check ajax request using capybara
   # test "ajax request" do
   #   # get ajax_all_stories_path + '?page=2', xhr: true
@@ -21,5 +22,22 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
     get topic_stories_path(topic)
     assert_equal topic.stories.count, 2
     assert_response :success
+  end
+  test "should get show" do
+    topic = topics(:one)
+    story = stories(:one)
+    get topic_story_path(topic, story)
+    assert_response :success
+    assert_select 'h1', story.title
+    # TODO can't find a tag
+    # assert_select "p.autor" do |link|
+    #   assert_equal link.text(), topic.title
+    # end
+    # assert_select 'a[href=?]', topic_path(topic), {text: topic.title}
+    # assert_select 'p.autor.line a[href=?]', topic_path(topic), {text: topic.title}
+    # assert_select 'a.topic_title', topic.title
+    story.id = -1
+    get topic_story_path(topic, story)
+    assert_response :missing
   end
 end

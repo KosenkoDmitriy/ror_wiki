@@ -1,3 +1,3 @@
 <% items.try(:each) do |topic| %>
-    <%= topic.present? ? link_to(topic.try(:title), topic_path(topic)) : "" %>,
+    <%= topic.present? ? link_to(topic.try(:title), topic_path(topic)) : "" %>
 <% end %>
