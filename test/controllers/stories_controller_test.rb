@@ -45,4 +45,29 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
     get topic_story_path(-1, -1)
     assert_response :missing
   end
+  test "should edit story" do
+    topic = topics(:one)
+    get new_topic_story_path(topic)
+    assert_response :redirect
+    # assert_redirected_to(controller: "stories", action: "new")
+    # assert_redirected_to(controller: "unconfirmed_stories", action: "new")
+    follow_redirect!
+    # get new_topic_unconfirmed_story_path(topic)
+    # ?orig_story_id=
+    # get_via_redirect new_topic_unconfirmed_story_path(-1)
+    # assert_response :redirect
+    assert_response :success
+    assert_select 'h1', 'Create New Story'
+    assert_select 'input#story_title', ''
+    story = stories(:one)
+    topic.stories << story
+    # get "/topics/#{topic.id}/stories/new?orig_story_id=#{story.id}"
+    # assert_response :redirect
+    # follow_redirect!
+    get "/topics/#{topic.id}/unconfirmed/stories/new?orig_story_id=#{story.id}"
+    assert_response :success
+    assert_select 'h1', 'Create New Story'
+    assert_select 'p.topic', topic.title
+    assert_select 'input[value=?]', story.title
+  end
 end
