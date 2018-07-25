@@ -45,7 +45,7 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
     get topic_story_path(-1, -1)
     assert_response :missing
   end
-  test "should edit story" do
+  test "should create a new unconfirmed story" do
     topic = topics(:one)
     get new_topic_story_path(topic)
     assert_response :redirect
