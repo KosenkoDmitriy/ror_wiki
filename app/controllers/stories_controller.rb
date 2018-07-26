@@ -1,5 +1,7 @@
 class StoriesController < ApplicationController
   include SimpleCaptcha::ControllerHelpers
+  # protect_from_forgery except: :ajax
+  # skip_before_action :verify_authenticity_token, :only => [:ajax, ]
 
   def ajax
     get_stories

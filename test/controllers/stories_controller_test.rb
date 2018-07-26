@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController::TestCase
-
   # TODO check ajax request using capybara
   # test "ajax request" do
   #   # get ajax_all_stories_path + '?page=2', xhr: true
@@ -79,7 +78,13 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
     assert_select ".timeline-title", 20
 
     # TODO click on "load more" button
-    assert_select "a.form-control"
-    assert_select ".timeline-title", 40
+    # assert_select "a.form-control"
+    # assert_select ".timeline-title", 40
+    # get ajax_all_stories_path + '?page=2'#, xhr: true
+    get "/ajax_all_stories?page=1", xhr: true
+    # assert_equal 'hello world', @response.body
+    # assert_equal "text/javascript", @response.content_type
+    assert_select ".timeline-title", 20
+    assert_response :success
   end
 end
