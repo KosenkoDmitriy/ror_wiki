@@ -5,11 +5,11 @@ one:
   text: Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text Story 1 Text
   stext: Short Text of the Story 1
   date_time: "2018-07-25 17:04:27"
-  is_approved:
+  is_approved: true
 
 two:
   title: Story 2 Title
   text: Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text Story 2 Text
   stext: Short Text of the Story 2
   date_time: "2018-07-23 17:04:27"
-  is_approved:
+  is_approved: true

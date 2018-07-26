@@ -1,4 +1,6 @@
 class Story < ActiveRecord::Base
+  # validates :title, presence: true
+
   has_many :topic_story
   has_many :topics, through: :topic_story
   accepts_nested_attributes_for :topics, allow_destroy: true

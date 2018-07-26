@@ -5,11 +5,11 @@ one:
   text: MyText
   stext: MyString
   text: MyString
-  is_approved:
+  is_approved: true
 
 two:
   title: Topic 2
   text: MyText
   stext: MyString
   text: MyString
-  is_approved:
+  is_approved: true
