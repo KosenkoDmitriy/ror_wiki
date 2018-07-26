@@ -16,7 +16,7 @@ class Unconfirmed::StoriesControllerTest < ActionDispatch::IntegrationTest #Acti
     Rails.cache.clear
   end
 
-  test "show" do
+  test "should get show story" do
     get topic_unconfirmed_story_path @topic, @story
     assert_equal "show", @controller.action_name
     assert_match @story.title, @response.body
@@ -35,7 +35,7 @@ class Unconfirmed::StoriesControllerTest < ActionDispatch::IntegrationTest #Acti
     assert_response :success
   end
 
-  test "edit" do
+  test "should get edit page" do
     get edit_topic_unconfirmed_story_path @topic, @story
     assert_response :success
     assert_match @story.title, @response.body
@@ -54,7 +54,7 @@ class Unconfirmed::StoriesControllerTest < ActionDispatch::IntegrationTest #Acti
     assert_equal "updated story", @story.title
   end
 
-  test "should not update story if invalid story's data" do #TODO handle exception 
+  test "should not update story if invalid story's data" do #TODO handle exception
     patch topic_unconfirmed_story_path @topic, @story, params: { story: {title: nil, is_approved: 123}}
     assert_redirected_to topic_unconfirmed_story_path @topic, @story
     @story.reload
@@ -69,4 +69,18 @@ class Unconfirmed::StoriesControllerTest < ActionDispatch::IntegrationTest #Acti
   #   assert_redirected_to topic_unconfirmed_stories_path
   # end
 
+  test "should create a new unconfirmed story" do
+    assert_equal Story.count, 2
+    article_title = 'Story New Title'
+    assert_difference('Story.count') do
+      post topic_unconfirmed_stories_path(@topic), params: { story: { title: article_title } }
+    end
+    assert_equal Story.count, 3
+    story = Story.last
+    # follow_redirect!
+    assert_redirected_to topic_unconfirmed_story_path(@topic, story)
+    assert_equal I18n.t("story.success.create"), flash[:notice]
+    assert_equal story.is_approved, false
+    # assert_equal story.title, article_title # TODO why story.title is nil ?
+  end
 end

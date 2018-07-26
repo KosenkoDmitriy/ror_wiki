@@ -61,6 +61,7 @@ class Unconfirmed::StoriesController < ApplicationController
       # @story.try(:topics) << @topic if !@story.try(:topics).try(:exists?, @topic.try(:id))
       @story.try(:topics) << @topic if !@story.try(:topics).try(:exists?, @topic)
       if @story.save!
+        flash[:notice] = I18n.t("story.success.create")
         redirect_to topic_unconfirmed_story_path(@topic, @story)
       else
         @errors << I18n.t("story.error.create")

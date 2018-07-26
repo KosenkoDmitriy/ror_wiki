@@ -52,6 +52,8 @@ en:
     no_title: "Empty title"
     not_found: "Moderation is not found"
   story:
+    success:
+      create: "Story was successfully created."
     error:
       edit: "can't update a story"
       create: "can't create a story"
