@@ -16,11 +16,12 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
   setup do
     @topic = topics(:one)
     @story = stories(:one)
+    @topic.stories << @story
+    @story.sources << sources(:two)
   end
 
   test "should get index" do
     story2 = stories(:two)
-    @topic.stories << @story
     @topic.stories << story2
     get topic_stories_path(@topic)
     assert_equal @topic.stories.count, 2
@@ -37,6 +38,18 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest #ActionController:
     assert_response :success
     get topic_story_path(-1, -1)
     assert_response :missing
+  end
+
+  test "should edit story" do
+    get_via_redirect edit_topic_story_path @topic, @story
+    assert_response :success
+    assert_match @story.title, @response.body
+    assert_match @story.text, @response.body
+    assert_match @story.sources.first.url, @response.body
+    assert_match @topic.title, @response.body
+
+    assert_select "input[value=?]", @story.title
+    assert_select "input[type=submit]"
   end
 
   test "should create a new unconfirmed story" do

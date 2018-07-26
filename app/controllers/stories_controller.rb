@@ -39,7 +39,7 @@ class StoriesController < ApplicationController
   def edit
     @errors = []
     @topic, @story = get_topic_story()
-    redirect_to_unconfirmed_new_url()
+    redirect_to_unconfirmed_edit_url()
   end
 
 
@@ -78,13 +78,14 @@ class StoriesController < ApplicationController
     return topic, story
   end
 
-  def redirect_to_edit story
-    if story.present?
-      redirect_to edit_topic_story_path(@topic, story)
-    else
-      redirect_to edit_topic_path(story)
-    end
-  end
+  # unused because we will redirect to unconfirmed stories controller
+  # def redirect_to_edit story
+  #   if story.present?
+  #     redirect_to edit_topic_story_path(@topic, story)
+  #   else
+  #     redirect_to edit_topic_path(story)
+  #   end
+  # end
 
   def get_stories
     page = params[:page] || 1
